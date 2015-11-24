@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Linux | Topking's Blog]]></title>
+  <link href="http://swmwlm.github.io/blog/categories/linux/atom.xml" rel="self"/>
+  <link href="http://swmwlm.github.io/"/>
+  <updated>2015-11-24T10:48:53+08:00</updated>
+  <id>http://swmwlm.github.io/</id>
+  <author>
+    <name><![CDATA[Topking]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[[JIRA] 最新Linux安装版本jira6.3.6安装破解以及数据导入的详细步骤]]></title>
+    <link href="http://swmwlm.github.io/blog/2015/11/21/projectmanagementtools/"/>
+    <updated>2015-11-21T18:42:49+08:00</updated>
+    <id>http://swmwlm.github.io/blog/2015/11/21/projectmanagementtools</id>
+    <content type="html"><![CDATA[<blockquote><p>参考文档:<a href="http://blog.itpub.net/26230597/viewspace-1275597/" title="参考文档">http://blog.itpub.net/26230597/viewspace-1275597/</a></p></blockquote>
+
+<p> 序言：</p>
+
+<p>JIRA 是澳大利亚 Atlassian 公司开发的一款优秀的问题跟踪管理软件工具，可以对各种类型的问题进行跟踪管理，包括缺陷、任务、需求、改进等。JIRA采用J2EE技术，能够跨平台部署。它正被广泛的开源软件组织，以及全球著名的公司使用。</p>
+
+<p>JIRA产品非常完善且功能强大，安装配置简单，多语言支持、界面十分友好，和其他系统如CVS、Subversion（SVN）、VSS、LDAP、邮件服务整合得相当好，文档齐全，可用性以及可扩展性方面都十分出色，拥有完整的用户权限管理。</p>
+
+<!--more-->
+
+
+<p>环境：jira软件，192.xx8.171.xx0；jira数据库，192.xx8.171.xx2。
+1，下载</p>
+
+<p>官网下载地址：<a href="https://www.atlassian.com/software/jira/download%EF%BC%8C%E5%8F%AA%E7%9C%8B%E5%88%B0window%E4%B8%8B%E7%9A%84%E5%AE%89%E8%A3%85%E7%89%88%E6%9C%AC%EF%BC%8C%E8%BF%99%E4%B8%AA%E6%97%B6%E5%80%99%E9%9C%80%E8%A6%81%E7%82%B9%E5%87%BB?">https://www.atlassian.com/software/jira/download%EF%BC%8C%E5%8F%AA%E7%9C%8B%E5%88%B0window%E4%B8%8B%E7%9A%84%E5%AE%89%E8%A3%85%E7%89%88%E6%9C%AC%EF%BC%8C%E8%BF%99%E4%B8%AA%E6%97%B6%E5%80%99%E9%9C%80%E8%A6%81%E7%82%B9%E5%87%BB?</a> All JIRA download options选项，打开linux下载页面栏选项，选择JIRA 6.3.6 (TAR.GZ Archive)进行下载。wget <a href="http://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-6.3.6.tar.gz%EF%BC%8C%E4%B8%8D%E8%BF%87%E4%B8%8B%E6%AF%94%E8%BE%83%E7%BC%93%E6%85%A2%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%8E%BB%E6%88%91%E7%9A%84%E7%99%BE%E5%BA%A6%E4%BA%91%E7%BD%91%E7%9B%98%E5%9C%B0%E5%9D%80http://pan.baidu.com/s/1eQgTYKE%E4%B8%8B%E8%BD%BD%E3%80%82">http://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-6.3.6.tar.gz%EF%BC%8C%E4%B8%8D%E8%BF%87%E4%B8%8B%E6%AF%94%E8%BE%83%E7%BC%93%E6%85%A2%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%8E%BB%E6%88%91%E7%9A%84%E7%99%BE%E5%BA%A6%E4%BA%91%E7%BD%91%E7%9B%98%E5%9C%B0%E5%9D%80http://pan.baidu.com/s/1eQgTYKE%E4%B8%8B%E8%BD%BD%E3%80%82</a>
+2，安装
+2.1，安装jdk环境</p>
+
+<p>Linux下安装tomcat环境，参考：<a href="http://blog.csdn.net/mchdba/article/details/23769731">http://blog.csdn.net/mchdba/article/details/23769731</a></p>
+
+<p>Linux下安装jdk环境，参考：<a href="http://blog.csdn.net/mchdba/article/details/38768513">http://blog.csdn.net/mchdba/article/details/38768513</a></p>
+
+<p>2.2，建立目录</p>
+
+<p> mkdir –p /home/jira</p>
+
+<p> mv /root/atlassian-jira-6.3.6.tar.gz ./</p>
+
+<p>2.3，解压缩安装</p>
+
+<p> tar -xvf atlassian-jira-6.3.6.tar.gz</p>
+
+<p> cd atlassian-jira-6.3.6-standalone</p>
+
+<p> 因为8080端口已经被占用了，所以启动jira的时候会报错，找到server.xml，需要把默认的8080端口改成8081，大概在文件的第49行附件，修改方法如下：</p>
+
+<h1>先看下8081端口是否被占用</h1>
+
+<p>[root@name01 conf]# lsof -i:8081</p>
+
+<p>[root@name01 conf]#</p>
+
+<p>[root@name01 conf]# vim /home/jira/atlassian-jira-6.3.6-standalone/conf/server.xml</p>
+
+<h1>，</h1>
+
+<p>[root@name01 conf]# more server.xml |grep 8080</p>
+
+<p>[root@name01 conf]# more server.xml |grep 8081</p>
+
+<p>[root@name01 conf]#</p>
+
+<p>配置jira_home</p>
+
+<p>vim /home/jira/atlassian-jira-6.3.6-standalone/atlassian-jira/WEB-INF/classes/jira-application.properties</p>
+
+<p>jira.home = /home/jira_home
+2.4，启动jira</p>
+
+<p>[root@name01 bin]# /home/jira/atlassian-jira-6.3.6-standalone/bin/start-jira.sh</p>
+
+<p>To run JIRA in the foreground, start the server with start-jira.sh -fg</p>
+
+<p>……</p>
+
+<p>Server startup logs are located in /home/jira/atlassian-jira-6.3.6-standalone/logs/catalina.out</p>
+
+<p>Using CATALINA_BASE:   /home/jira/atlassian-jira-6.3.6-standalone</p>
+
+<p>Using CATALINA_HOME:   /home/jira/atlassian-jira-6.3.6-standalone</p>
+
+<p>Using CATALINA_TMPDIR: /home/jira/atlassian-jira-6.3.6-standalone/temp</p>
+
+<p>Using JRE_HOME:        /usr/lib/jvm/jdk1.6.0_35/jre</p>
+
+<p>Using CLASSPATH:       /home/jira/atlassian-jira-6.3.6-standalone/bin/bootstrap.jar:/home/jira/atlassian-jira-6.3.6-standalone/bin/tomcat-juli.jar</p>
+
+<p>Using CATALINA_PID:    /home/jira/atlassian-jira-6.3.6-standalone/work/catalina.pid</p>
+
+<p>Tomcat started.</p>
+
+<p>[root@name01 bin]#</p>
+
+<p>看到jira所在的Tomcat容器 已经启动成功。</p>
+
+<p>打开网址<a href="http://192.xx8.171.xxx:8081/%EF%BC%8C%E5%90%8E%E5%8F%B0tomcat%E6%97%A5%E5%BF%97%E6%8A%A5%E9%94%99%E5%A6%82%E4%B8%8B%EF%BC%9A">http://192.xx8.171.xxx:8081/%EF%BC%8C%E5%90%8E%E5%8F%B0tomcat%E6%97%A5%E5%BF%97%E6%8A%A5%E9%94%99%E5%A6%82%E4%B8%8B%EF%BC%9A</a></p>
+
+<p>2014-9-17 18:46:02 org.apache.catalina.core.StandardServer await</p>
+
+<p>严重: StandardServer.await: create[localhost:8005]:</p>
+
+<p>java.net.BindException: Address already in use</p>
+
+<pre><code>   at java.net.PlainSocketImpl.socketBind(Native Method)
+
+   at java.net.PlainSocketImpl.bind(PlainSocketImpl.java:383)
+
+   at java.net.ServerSocket.bind(ServerSocket.java:328)
+
+   at java.net.ServerSocket.(ServerSocket.java:194)
+
+   at org.apache.catalina.core.StandardServer.await(StandardServer.java:427)
+
+   at org.apache.catalina.startup.Catalina.await(Catalina.java:777)
+
+   at org.apache.catalina.startup.Catalina.start(Catalina.java:723)
+
+   at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+
+   at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+
+   at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+
+   at java.lang.reflect.Method.invoke(Method.java:597)
+
+   at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:321)
+
+   at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:455)
+</code></pre>
+
+<p>2014-9-17 18:46:02 org.apache.coyote.AbstractProtocol pause</p>
+
+<p>页面报错信息如下：</p>
+
+<p>JIRA Startup Failed</p>
+
+<p>Configured jira.home &lsquo;/home/jira/atlassian-jira-6.3.6-standalone&rsquo; must not be a parent directory of the webapp servlet path &lsquo;/home/jira/atlassian-jira-6.3.6-standalone/atlassian-jira&rsquo;</p>
+
+<hr />
+
+<p>Configured jira.home &lsquo;/home/jira/atlassian-jira-6.3.6-standalone&rsquo; must not be a parent directory of the webapp servlet path &lsquo;/home/jira/atlassian-jira-6.3.6-standalone/atlassian-jira&rsquo;</p>
+
+<p>重新设置一下jira.home，设置成不在本jira安装软件目录下，然后重启jira服务，打开jira网址，OK了，可以看到页面如下：</p>
+
+<p>3，汉化</p>
+
+<p>汉化包下载地址为：<a href="http://download.csdn.net/detail/mchdba/7941381%EF%BC%8C%E5%B0%86JIRA-Language-STD-CN.jar%E6%B1%89%E5%8C%96%E5%8C%85copy%E5%88%B0linux%E7%9A%84jira%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95">http://download.csdn.net/detail/mchdba/7941381%EF%BC%8C%E5%B0%86JIRA-Language-STD-CN.jar%E6%B1%89%E5%8C%96%E5%8C%85copy%E5%88%B0linux%E7%9A%84jira%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95</a> ，启动的时候注意jdk版本为jdk1.6系列，/home/jira/atlassian-jira-6.3.6-standalone/atlassian-jira/WEB-INF/lib下面，之后重启jira服务</p>
+
+<p>/home/jira/atlassian-jira-6.3.6-standalone/bin/shutdown.sh</p>
+
+<p>/home/jira/atlassian-jira-6.3.6-standalone/bin/start-jira.sh</p>
+
+<p>再打开<a href="http://192.168.171.230:8081/secure/SetupDatabase!default.jspa%EF%BC%8C%E5%B0%B1%E4%BC%9A%E7%9C%8B%E5%88%B0%E5%A6%82%E4%B8%8B%E6%B1%89%E5%8C%96%E7%95%8C%E9%9D%A2%EF%BC%9A">http://192.168.171.230:8081/secure/SetupDatabase!default.jspa%EF%BC%8C%E5%B0%B1%E4%BC%9A%E7%9C%8B%E5%88%B0%E5%A6%82%E4%B8%8B%E6%B1%89%E5%8C%96%E7%95%8C%E9%9D%A2%EF%BC%9A</a></p>
+
+<p>4，jira配置</p>
+
+<p>先建立jira数据库以及账号密码：
+mysql> CREATE DATABASE <code>jira636</code> /<em>!40100 DEFAULT CHARACTER SET utf8</em>/;</p>
+
+<p>Query OK, 1 row affected (0.13 sec)</p>
+
+<p>mysql> GRANT ALL ON jira636.* TO jira_user@&lsquo;%&rsquo; IDENTIFIED BY &lsquo;jira_user0919&rsquo;;</p>
+
+<p>Query OK, 0 rows affected (0.38 sec)</p>
+
+<p>mysql></p>
+
+<p>在界面配置好数据库连接信息，然后点击“下一”按钮，如下图所示：</p>
+
+<p>如果报错，找不到类: com.mysql.jdbc.Driver</p>
+
+<p>需要将jdbc驱动包mysql-connector-java-5.1.25-bin.jar复制到/home/jira/atlassian-jira-6.3.6-standalone/atlassian-jira/WEB-INF/lib目录下面，然后重启，有报错信息如下：</p>
+
+<p>JIRA Startup Failed</p>
+
+<p>org.ofbiz.core.entity.GenericDataSourceException: SQL Exception while executing the following:SELECT pluginkey, pluginenabled FROM pluginstate (Table &lsquo;jira636.pluginstate&rsquo; doesn&rsquo;t exist)</p>
+
+<p>解决办法：删除数据库配置文件dbconfig.xml，然后重新启动jira，重新配置</p>
+
+<p>PS：汉化后报错，是因为汉化版本有问题，将JIRA-Language-STD-CN.jar汉化包换成JIRA-6.3.3-language-pack-zh_CN.jar新的汉化包下载地址为：</p>
+
+<p><a href="http://download.csdn.net/download/mchdba/7943421%EF%BC%8C%E5%85%88%E9%85%8D%E7%BD%AEDB%EF%BC%8C%E5%A6%82%E4%B8%8B%E5%9B%BE%E6%89%80%E7%A4%BA%EF%BC%9A">http://download.csdn.net/download/mchdba/7943421%EF%BC%8C%E5%85%88%E9%85%8D%E7%BD%AEDB%EF%BC%8C%E5%A6%82%E4%B8%8B%E5%9B%BE%E6%89%80%E7%A4%BA%EF%BC%9A</a></p>
+
+<p>配置完数据库之后，在新界面录入程序标题，点击“向后”按钮</p>
+
+<p>输入临时授权码，进行注册：</p>
+
+<p>注册完之后，填写管理员账户和密码</p>
+
+<p>之后配置邮件服务器，点击“完成”按钮，如下所示，</p>
+
+<p>之后，JIRA安装正式完成，如下自动跳转到JIRA管理页面，如下所示：</p>
+
+<p>5，破解授权</p>
+
+<p>点击右上角齿轮形状的管理图标，选择“系统”，再选择“授权”，看到使用日期不到1个月，如下所示：</p>
+
+<p>将附件中的atlassian-extras-2.2.2.jar替换你的JIRA的安装目录的\atlassian-jira\WEB-INF\lib同名jar包，破解包下载地址为：<a href="http://download.csdn.net/detail/mchdba/7950429%E3%80%82">http://download.csdn.net/detail/mchdba/7950429%E3%80%82</a></p>
+
+<p>填写授权码，授权码参数范例如下：</p>
+
+<p>Description=JIRA: Commercial,</p>
+
+<p>CreationDate=你的安装日期，格式（yyyy-mm-dd）,</p>
+
+<p>jira.LicenseEdition=ENTERPRISE,</p>
+
+<p>Evaluation=false,</p>
+
+<p>jira.LicenseTypeName=COMMERCIAL,</p>
+
+<p>jira.active=true,</p>
+
+<p>licenseVersion=2,</p>
+
+<p>MaintenanceExpiryDate=你想设置的失效日期如：2099-12-31,</p>
+
+<p>Organisation=joiandjoin,</p>
+
+<p>SEN=你申请到的SEN注意没有前缀LID,</p>
+
+<p>ServerID=你申请到的ServerID,</p>
+
+<p>jira.NumberOfUsers=-1,</p>
+
+<p>LicenseID=LID你申请到的SEN，注意LID前缀不要丢掉,</p>
+
+<p>LicenseExpiryDate=你想设置的失效日期如：2099-12-31,</p>
+
+<p>PurchaseDate=你的安装日期，格式（yyyy-mm-dd）</p>
+
+<p>本次安装授权码实例为：</p>
+
+<p>Description=JIRA: Commercial,</p>
+
+<p>CreationDate=2014-09-20,</p>
+
+<p>jira.LicenseEdition=ENTERPRISE,</p>
+
+<p>Evaluation=false,</p>
+
+<p>jira.LicenseTypeName=COMMERCIAL,</p>
+
+<p>jira.active=true,</p>
+
+<p>licenseVersion=2,</p>
+
+<p>MaintenanceExpiryDate=2099-12-31,</p>
+
+<p>Organisation=pl,</p>
+
+<p>SEN=SEN-L4572887,</p>
+
+<p>ServerID=BPT3-4QRK-FCRR-HEP3,</p>
+
+<p>jira.NumberOfUsers=-1,</p>
+
+<p>LicenseID=AAABBw0ODAoPeNptkFtLxDAQhd/zKwI+R9Kwy66FPKxthGhvtF0p4kuso0a6sUwvuP/edissyj4MD</p>
+
+<p>HPOfHOYqzu0tICWeoJy4a+FzzkNwpIK7q1ICF2Ntu3tl5P3Ot89+1SNphnMPCEBwqkJTQ9y9jN+w</p>
+
+<p>zxBPi2a68jW4DpQr/a0rZJS5VmuC0XOBNnjAH/s5bGFxBxABmkcqzzQu2jRTd3bEZaFZvE+AnYzR</p>
+
+<p>JDYWNeDM64G9d1aPJ4TeXxOlOK7cbZbjrbNgkyGwwtg+rbvJpBkHikAR0Adytt0XzFV7R5Y+qQzV</p>
+
+<p>kWZIoVK5FQsWq03YrvdkN/Ekz3S4SXlcpRswPrDdPD/aT+P1nzDMC0CFQCM9+0LlHVNnZQnSTwuR</p>
+
+<p>O3eK+2gVgIUCteTs4Q3khIgrnsY64hxYB/d8bM=X02dh,</p>
+
+<p>LicenseExpiryDate=2099-12-31,</p>
+
+<p>PurchaseDate=2014-09-20</p>
+
+<p>将以上授权码信息填入授权码输入框，点击“增加”按钮，如下所示：</p>
+
+<p>之后，看到授权信息更新了，就表示破解成功，会看到如下成功信息, 如下图：</p>
+
+<p>6，恢复数据</p>
+
+<p>输入授权码：</p>
+
+<p>AAABBw0ODAoPeNptkFtLxDAQhd/zKwI+R9Kwy66FPKxthGhvtF0p4kuso0a6sUwvuP/edissyj4MD</p>
+
+<p>HPOfHOYqzu0tICWeoJy4a+FzzkNwpIK7q1ICF2Ntu3tl5P3Ot89+1SNphnMPCEBwqkJTQ9y9jN+w</p>
+
+<p>zxBPi2a68jW4DpQr/a0rZJS5VmuC0XOBNnjAH/s5bGFxBxABmkcqzzQu2jRTd3bEZaFZvE+AnYzR</p>
+
+<p>JDYWNeDM64G9d1aPJ4TeXxOlOK7cbZbjrbNgkyGwwtg+rbvJpBkHikAR0Adytt0XzFV7R5Y+qQzV</p>
+
+<p>kWZIoVK5FQsWq03YrvdkN/Ekz3S4SXlcpRswPrDdPD/aT+P1nzDMC0CFQCM9+0LlHVNnZQnSTwuR</p>
+
+<p>O3eK+2gVgIUCteTs4Q3khIgrnsY64hxYB/d8bM=X02dh</p>
+
+<p>点击恢复，开始恢复数据，如下所示：</p>
+
+<p>Linux下24M的jira数据文件导入很快，4分钟导入完毕，如下所示：</p>
+
+<p>如果导入报错：</p>
+
+<p>解析文件时发生错误。你的导入文件不正确。 可能是由于文件中含有旧版本的CDATA (<a href="http://jira.atlassian.com/browse/JRA-4980">http://jira.atlassian.com/browse/JRA-4980</a>)。 异常错误 org.xml.sax.SAXParseException; lineNumber: 168270; columnNumber: 16; XML document structures must start and end within the same entity.</p>
+
+<p>解决办法：选择Disable按钮而不选择Enable按钮，如下所示：</p>
+
+<p> 此致，JIRA最新Linux版本6.3.6安装破解以及数据迁移，成功完毕。</p>
+]]></content>
+  </entry>
+  
+</feed>
