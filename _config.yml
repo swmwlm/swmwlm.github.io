@@ -51,7 +51,8 @@ titlecase: true       # Converts page and post titles to titlecase
 
 # list each of the sidebar modules you want to include, in the order you want them to appear.
 # To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
-default_asides: [custom/asides/introduction.html, custom/asides/weibo.html, asides/category_list.html, asides/recent_posts.html, asides/github.html, custom/asides/blog_link.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
+#default_asides: [custom/asides/introduction.html, custom/asides/weibo.html, asides/top_category_list.html, asides/category_cloud.html, asides/category_list_other.html, asides/recent_posts.html, asides/github.html, custom/asides/blog_link.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
+default_asides: [custom/asides/introduction.html, custom/asides/weibo.html, asides/category_cloud.html, asides/top_category_list.html, asides/recent_posts.html, asides/github.html, custom/asides/blog_link.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
 
 # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
 # and add an array with the asides you want to use.
@@ -106,3 +107,13 @@ duoshuo_short_name: swmwlm
 
 # jiathis
 jia_share: true
+
+
+#This will list your categories by the number of posts in descending order. The default number of categories listed in the top category list is 10. 
+#Change this by setting "top_category_limit: " in _config.yml. 
+#If you'd like to list all of the categories by number of posts (like, for instance, on a devoted page) without making the top categories list in the sidebar list every single category,
+# add "include_all:true" to the arguments to top_category_list, like {% top_category_list [counter:true,include_all:true] %}. 
+#If you don't care about limiting the sidebar aside thing, go ahead and set top_category_limit in _config.yml to 0.
+top_category_limit: 0
+include_all: true
+counter: true

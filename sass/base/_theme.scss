@@ -9,7 +9,8 @@ $link-color-active: adjust-color($link-color-hover, $lightness: -15) !default;
 
 // Main Section Colors
 $main-bg: #f8f8f8 !default;
-$page-bg: #252525 !default;
+//$page-bg: #252525 !default;
+$page-bg: #E2E2E2 !default;
 $article-border: #eeeeee !default;
 
 $header-bg: #333 !default;
@@ -82,4 +83,11 @@ body {
       border-right: 1px solid $sidebar-border;
     }
   }
+}
+
+#banner_img {
+    height: 300px;
+    width: 1200px;
+    background-image: url("/images/banner.jpg");
+    background-repeat: no-repeat;
 }
