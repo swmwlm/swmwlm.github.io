@@ -4,6 +4,9 @@ title: "[JIRA] 最新Linux安装版本jira6.3.6安装破解以及数据导入的
 date: 2015-11-21 18:42:49 +0800
 comments: true
 categories: [Linux,Java]
+tags: [octopress, SEO]
+keywords: JIRA, Linux, analytics, 安装破解
+description: JIRA安装学习记录
 ---
 
 
