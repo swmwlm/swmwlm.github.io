@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Topking's Blog]]></title>
-  <link href="http://swmwlm.github.io/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Java | Topking's Blog]]></title>
+  <link href="http://swmwlm.github.io/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://swmwlm.github.io/"/>
   <updated>2015-11-24T15:23:36+08:00</updated>
   <id>http://swmwlm.github.io/</id>
@@ -12,17 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[[Confluence] 最新Linux安装版本Confluence安装破解以及数据导入的详细步骤]]></title>
-    <link href="http://swmwlm.github.io/blog/2015/11/21/projectmanagementtools2/"/>
-    <updated>2015-11-21T18:42:49+08:00</updated>
-    <id>http://swmwlm.github.io/blog/2015/11/21/projectmanagementtools2</id>
-    <content type="html"><![CDATA[<h1>Confluence安装与配置</h1>
-
-<h2>带你装B带你飞</h2>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[[JIRA] 最新Linux安装版本jira6.3.6安装破解以及数据导入的详细步骤]]></title>
