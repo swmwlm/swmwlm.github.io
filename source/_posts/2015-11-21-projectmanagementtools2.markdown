@@ -6,5 +6,5 @@ comments: true
 categories: [项目管理工具]
 ---
 
-# Confluence安装与配置
-## 带你装B带你飞 ##
+Confluence安装与配置
+带你装B带你飞
