@@ -12,13 +12,22 @@
     <loc>http://swmwlm.github.io/404.html</loc>
   </url>
   <url>
-    <loc>http://swmwlm.github.io/</loc>
-  </url>
-  <url>
     <loc>http://swmwlm.github.io/blog/archives/</loc>
   </url>
   <url>
+    <loc>http://swmwlm.github.io/</loc>
+  </url>
+  <url>
     <loc>http://swmwlm.github.io/aboutme/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/archives/tags.html</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/tags/octopress/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/tags/seo/</loc>
   </url>
   <url>
     <loc>http://swmwlm.github.io/blog/categories/linux/</loc>
