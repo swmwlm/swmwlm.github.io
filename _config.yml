@@ -52,7 +52,7 @@ titlecase: true       # Converts page and post titles to titlecase
 # list each of the sidebar modules you want to include, in the order you want them to appear.
 # To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
 #default_asides: [custom/asides/introduction.html, custom/asides/weibo.html, asides/top_category_list.html, asides/category_cloud.html, asides/category_list_other.html, asides/recent_posts.html, asides/github.html, custom/asides/blog_link.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
-default_asides: [custom/asides/introduction.html, custom/asides/weibo.html, asides/category_cloud.html, asides/top_category_list.html, asides/recent_posts.html, asides/github.html, custom/asides/blog_link.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
+default_asides: [custom/asides/introduction.html, custom/asides/weibo.html, custom/asides/tag_cloud.html, asides/category_cloud.html, asides/top_category_list.html, asides/recent_posts.html, asides/github.html, custom/asides/blog_link.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
 
 # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
 # and add an array with the asides you want to use.
@@ -117,3 +117,8 @@ jia_share: true
 top_category_limit: 0
 include_all: true
 counter: true
+
+
+tag_dir: tags
+
+tag_title_prefix: "Tag:"
