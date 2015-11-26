@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[JIRA] 最新Linux安装版本jira6.3.6安装破解以及数据导入的详细步骤"
+title: "Linux安装jira6.3.6,安装破解以及数据导入的详细步骤"
 date: 2015-11-21 18:42:49 +0800
 comments: true
 categories: [Linux,Java]
@@ -9,19 +9,14 @@ keywords: JIRA, Linux, analytics, 安装破解
 description: JIRA安装学习记录
 ---
 
-
-
-> 参考文档:[http://blog.itpub.net/26230597/viewspace-1275597/](http://blog.itpub.net/26230597/viewspace-1275597/ "参考文档")
-
- 序言：
+序言：
 
 JIRA 是澳大利亚 Atlassian 公司开发的一款优秀的问题跟踪管理软件工具，可以对各种类型的问题进行跟踪管理，包括缺陷、任务、需求、改进等。JIRA采用J2EE技术，能够跨平台部署。它正被广泛的开源软件组织，以及全球著名的公司使用。
 
- 
+ <!--more-->
 
 JIRA产品非常完善且功能强大，安装配置简单，多语言支持、界面十分友好，和其他系统如CVS、Subversion（SVN）、VSS、LDAP、邮件服务整合得相当好，文档齐全，可用性以及可扩展性方面都十分出色，拥有完整的用户权限管理。
 
-<!--more-->
 
 环境：jira软件，192.xx8.171.xx0；jira数据库，192.xx8.171.xx2。
 1，下载
@@ -364,3 +359,5 @@ Linux下24M的jira数据文件导入很快，4分钟导入完毕，如下所示�
  
 
  此致，JIRA最新Linux版本6.3.6安装破解以及数据迁移，成功完毕。 
+
+ > 参考文档:[http://blog.itpub.net/26230597/viewspace-1275597/](http://blog.itpub.net/26230597/viewspace-1275597/ "参考文档")
