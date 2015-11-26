@@ -4,7 +4,7 @@
   <title><![CDATA[Tag:SEO | Topking's Blog]]></title>
   <link href="http://swmwlm.github.io/tags/seo/atom.xml" rel="self"/>
   <link href="http://swmwlm.github.io/"/>
-  <updated>2015-11-25T12:09:46+08:00</updated>
+  <updated>2015-11-26T14:47:42+08:00</updated>
   <id>http://swmwlm.github.io/</id>
   <author>
     <name><![CDATA[Topking]]></name>
@@ -14,20 +14,17 @@
 
   
   <entry>
-    <title type="html"><![CDATA[[JIRA] 最新Linux安装版本jira6.3.6安装破解以及数据导入的详细步骤]]></title>
+    <title type="html"><![CDATA[Linux安装jira6.3.6,安装破解以及数据导入的详细步骤]]></title>
     <link href="http://swmwlm.github.io/blog/2015/11/21/projectmanagementtools/"/>
     <updated>2015-11-21T18:42:49+08:00</updated>
     <id>http://swmwlm.github.io/blog/2015/11/21/projectmanagementtools</id>
-    <content type="html"><![CDATA[<blockquote><p>参考文档:<a href="http://blog.itpub.net/26230597/viewspace-1275597/" title="参考文档">http://blog.itpub.net/26230597/viewspace-1275597/</a></p></blockquote>
-
-<p> 序言：</p>
+    <content type="html"><![CDATA[<p>序言：</p>
 
 <p>JIRA 是澳大利亚 Atlassian 公司开发的一款优秀的问题跟踪管理软件工具，可以对各种类型的问题进行跟踪管理，包括缺陷、任务、需求、改进等。JIRA采用J2EE技术，能够跨平台部署。它正被广泛的开源软件组织，以及全球著名的公司使用。</p>
 
+<p> <!--more--></p>
+
 <p>JIRA产品非常完善且功能强大，安装配置简单，多语言支持、界面十分友好，和其他系统如CVS、Subversion（SVN）、VSS、LDAP、邮件服务整合得相当好，文档齐全，可用性以及可扩展性方面都十分出色，拥有完整的用户权限管理。</p>
-
-<!--more-->
-
 
 <p>环境：jira软件，192.xx8.171.xx0；jira数据库，192.xx8.171.xx2。
 1，下载</p>
@@ -312,6 +309,8 @@ mysql> CREATE DATABASE <code>jira636</code> /<em>!40100 DEFAULT CHARACTER SET ut
 <p>解决办法：选择Disable按钮而不选择Enable按钮，如下所示：</p>
 
 <p> 此致，JIRA最新Linux版本6.3.6安装破解以及数据迁移，成功完毕。</p>
+
+<blockquote><p>参考文档:<a href="http://blog.itpub.net/26230597/viewspace-1275597/" title="参考文档">http://blog.itpub.net/26230597/viewspace-1275597/</a></p></blockquote>
 ]]></content>
   </entry>
   
