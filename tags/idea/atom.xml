@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag:idea | Topking's Blog]]></title>
+  <link href="http://swmwlm.github.io/tags/idea/atom.xml" rel="self"/>
+  <link href="http://swmwlm.github.io/"/>
+  <updated>2015-11-26T16:23:53+08:00</updated>
+  <id>http://swmwlm.github.io/</id>
+  <author>
+    <name><![CDATA[Topking]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Intellij IDEA自动编译不用每次make]]></title>
+    <link href="http://swmwlm.github.io/blog/2015/11/26/idea/"/>
+    <updated>2015-11-26T16:04:58+08:00</updated>
+    <id>http://swmwlm.github.io/blog/2015/11/26/idea</id>
+    <content type="html"><![CDATA[<p>最近使用IDEA来开发JAVA应用，对IDEA的界面很有爱，但是缺受不了它的运行速度。每次运行都要编译，所以就有了这边文章
+总感觉IDEA的编译速度比eclipse慢，eclipse每次保存都自动编译，而且运行的时候如果代码没有改变根本不会重新编译，但是IDEA这方便却不是，每次都要编译。通过google和自己的测试解决了这个问题。</p>
+
+<!--more-->
+
+
+<p>1：开启自动测试
+File->setting->compiler
+<img src="http://www.mincoder.com/images/201442/1oWXVOqCUeWWbu2w.png" alt="idea" />
+勾选上上面的，</p>
+
+<p>2修改run/debug配置
+Run->Edit Configurations</p>
+
+<p><img src="http://www.mincoder.com/images/201442/rUCWqfipDv3U7zYH.png" alt="idea" />
+看图 在Before Launch下面的make去掉了。到了这里还要做一件事情，执行File->Invalidate Caches /Restart</p>
+
+<p>到这里IDEA配置好了</p>
+]]></content>
+  </entry>
+  
+</feed>
