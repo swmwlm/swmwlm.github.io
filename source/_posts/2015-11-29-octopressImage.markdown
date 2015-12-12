@@ -14,12 +14,16 @@ description: octopress博客加入代码、图片、带标题图片方法
 
 1：插入代码[language] [title] [url] [link text]
 
-```
+```java Hello World http://baidu.com 更多
 public static void main(String[] args){
-	System.out.println("Holle World");
+	System.out.println("Hello World");
 }
 
 ```
+
+{% codeblock title lang:java url link text %}
+code snippet
+{% endcodeblock %}
 
 2：增加引用
 >引用
