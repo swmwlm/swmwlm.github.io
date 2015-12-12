@@ -92,4 +92,3 @@ e，查看所有用户
 [root@www ~]# cut -d : -f 1 /etc/passwd 
 [root@www ~]# cat /etc/passwd |awk -F : '{print $1}'
 ```
- 
