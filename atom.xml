@@ -4,7 +4,7 @@
   <title><![CDATA[Topking's Blog]]></title>
   <link href="http://swmwlm.github.io/atom.xml" rel="self"/>
   <link href="http://swmwlm.github.io/"/>
-  <updated>2015-11-26T16:23:53+08:00</updated>
+  <updated>2015-12-17T17:13:35+08:00</updated>
   <id>http://swmwlm.github.io/</id>
   <author>
     <name><![CDATA[Topking]]></name>
@@ -12,6 +12,298 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Git命令]]></title>
+    <link href="http://swmwlm.github.io/blog/2015/12/17/git/"/>
+    <updated>2015-12-17T15:28:58+08:00</updated>
+    <id>http://swmwlm.github.io/blog/2015/12/17/git</id>
+    <content type="html"><![CDATA[<p>在使用Git时，经常需要查询的命令。</p>
+
+<!--more-->
+
+
+<p>1.设置
+设置邮箱和用户名</p>
+
+<pre><code>git config --global user.email "xu.jin.smile@gmail.com"
+git config --global user.name "GinSmile"
+</code></pre>
+
+<p>生成SSH Key</p>
+
+<pre><code>ssh-keygen -t rsa -C "example@163.com"
+</code></pre>
+
+<p>创建</p>
+
+<p>初始化本地库</p>
+
+<pre><code>git init
+</code></pre>
+
+<p>克隆远程版本库</p>
+
+<pre><code>git clone git@github.com:GinSmile/Algorithms.git
+</code></pre>
+
+<p>添加远程分支(添加Algorithm项目的dev分支到本地)</p>
+
+<pre><code>git remote add dev git@github.com:GinSmile/Algorithms.git
+</code></pre>
+
+<p>查看远程分支</p>
+
+<pre><code>git remote -v
+</code></pre>
+
+<p>提交</p>
+
+<pre><code>git add .
+git commit -m "some comment"
+</code></pre>
+
+<p>更改上次提交的comment注释</p>
+
+<pre><code>git commit -amend "new comment"
+</code></pre>
+
+<p>查看状态，即查看那些文章被修改了</p>
+
+<pre><code>git status
+</code></pre>
+
+<p>查看提交的历史记录</p>
+
+<pre><code>git log
+</code></pre>
+
+<p>删除</p>
+
+<p>从当前跟踪列表中移除文件，并完全删除</p>
+
+<pre><code>git rm Readme.md
+</code></pre>
+
+<p>仅仅在暂存区删除，不再跟踪该文件，并在目录中保留</p>
+
+<pre><code>git rm --cached Readme.md
+</code></pre>
+
+<p>分支</p>
+
+<p>创建一个名为dev的分支</p>
+
+<pre><code>git branch dev
+</code></pre>
+
+<p>切换到dev分支</p>
+
+<pre><code>git checkout dev
+</code></pre>
+
+<p>创建并切换到dev分支（等同于以上两个命令）</p>
+
+<pre><code>git checkout -b dev
+</code></pre>
+
+<p>合并</p>
+
+<p>从远程库中拉去最新文件，并自动合并</p>
+
+<pre><code>git pull
+</code></pre>
+
+<p>合并分支（当前分支为master，要合并dev的更改）</p>
+
+<pre><code>git merge dev
+</code></pre>
+
+<p>忽略
+即.gitignore文件，可忽略文件夹和文件 忽略文件夹</p>
+
+<pre><code>bin
+</code></pre>
+
+<p>忽略文件</p>
+
+<pre><code>*.c
+</code></pre>
+
+<p>互联网有一张特别棒的Git命令思维导图，特拿来分享，感谢原作者:
+<img src="http://swmwlm.github.io/images/git/git-operate.png"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Linux下新增修改删除查看用户和用户组]]></title>
+    <link href="http://swmwlm.github.io/blog/2015/12/12/linuxgroup/"/>
+    <updated>2015-12-12T12:28:58+08:00</updated>
+    <id>http://swmwlm.github.io/blog/2015/12/12/linuxgroup</id>
+    <content type="html"><![CDATA[<p>linux下添加，删除，修改，查看用户和用户组</p>
+
+<!--more-->
+
+
+<p>1：创建组
+groupadd test</p>
+
+<p>2：修改组，将test1组改为test2
+groupmod -n test2 test1</p>
+
+<p>3，删除组
+groupdel test2</p>
+
+<p>4，查看组</p>
+
+<p>a，查看当前登录用户所在的组groups。
+查看mysql所在组:groups mysql</p>
+
+<p>b，查看所有组cat /etc/group</p>
+
+<p>c，有的linux系统没有/etc/group文件，使用下面命令</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cat /etc/passwd |awk -F : '{print $4}' |sort|uniq | getent group |awk -F : '{print $1}'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中，命令getent,</p>
+
+<p>可以通过组ID来查找组信息，例如：getent group mysql</p>
+
+<p>二，用户操作</p>
+
+<p>1，增加用户</p>
+
+<p>useradd –-help</p>
+
+<p>2，修改用户
+usermod –-help
+gpasswd –-help
+例如,修改test用户，更改家目录/home/test,并加入test2组：
+usermod -d /home/test -G test2 test</p>
+
+<p>将用户test加入到test2组
+gpasswd -a test test2</p>
+
+<p>将用户test从test2组中移出
+gpasswd -d test test2</p>
+
+<p>3，删除用户
+userdel test</p>
+
+<p>4，查看用户</p>
+
+<p>a，查看当前登录用户</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# w 
+</span><span class='line'>[root@www ~]# who </span></code></pre></td></tr></table></div></figure>
+
+
+<p>b，查看自己的用户名
+[root@www ~]# whoami</p>
+
+<p>c，查看单个用户信息</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# finger apacheuser 
+</span><span class='line'>[root@www ~]# id apacheuser </span></code></pre></td></tr></table></div></figure>
+
+
+<p>d，查看用户登录记录</p>
+
+<p>[root@www ~]# last 查看登录成功的用户记录
+[root@www ~]# lastb 查看登录不成功的用户记录</p>
+
+<p>e，查看所有用户</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# cut -d : -f 1 /etc/passwd 
+</span><span class='line'>[root@www ~]# cat /etc/passwd |awk -F : '{print $1}'</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress写博客常用加入代码、图片、带标题图片方法]]></title>
+    <link href="http://swmwlm.github.io/blog/2015/11/29/octopressImage/"/>
+    <updated>2015-11-29T19:04:58+08:00</updated>
+    <id>http://swmwlm.github.io/blog/2015/11/29/octopressImage</id>
+    <content type="html"><![CDATA[<p>用Octopress写博客时，经常使用的方法，用以插入代码片段、图片：</p>
+
+<!--more-->
+
+
+<blockquote><p><a href="http://wowubuntu.com/markdown/#autoescape">请参考MarkDown文档</a></p></blockquote>
+
+<p>1：插入代码[language] [title] [url] [link text]</p>
+
+<figure class='code'><figcaption><span>Hello World</span><a href='http://baidu.com'>更多</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello World&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>title url link text </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">code</span> <span class="n">snippet</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p>注意：当上面方式报错时，需要Pygments安装</p></blockquote>
+
+<pre><code>安装 Python
+    1.前往 http://www.python.org/download/
+    2.下载合适的 Python windows 安装包，如 Python 2.7.6 Windows Installer。 请注意，Python 2 可能会更合适，因为暂时 Python 3 可能不会正常工作。
+    3.安装
+    4.添加安装路径 (如： C:\Python27) 至 PATH。(如何操作? 请参见 故障诊断 #1)
+    5.检验 Python 安装是否成功
+    python –V
+    输出示例：
+    Python 2.7.6
+
+安装 ‘Easy Install’
+    1.浏览https://pypi.python.org/pypi/setuptools#installation-instructions来查看详细的安装指南。
+    2.对于 Windows 7 的机器，下载 ez_setup.py 并保存，例如，至C:\。 然后从命令行使用 Python 运行此文件：
+    python “C:\ez_setup.py”
+    3.添加 ‘Python Scripts’ 路径 (如： C:\Python27\Scripts) 至 PATH
+
+安装 Pygments
+    1.确保 easy_install 已经正确安装
+    easy_install --version
+    输出示例：
+    setuptools 3.1
+    2.使用 “easy_install” 来安装 Pygments:
+    easy_install Pygments
+</code></pre>
+
+<p>2：增加引用</p>
+
+<blockquote><p>引用</p></blockquote>
+
+<p>3：增加链接
+<a href="http://www.baidu.com/">测试链接</a></p>
+
+<p>4.图片
+<img src="http://www.mincoder.com/images/201442/rUCWqfipDv3U7zYH.png" alt="图片属性" /></p>
+
+<p>博客中引用图片
+在路径D:\octopress\source\images里面保存对应的图像，在文章中引用
+{ % img /images/email.png % },注意，去除{ % 中间的空格</p>
+
+<p>5.视频
+<video width='640' height='320' preload='metadata' controls poster='http://www.mincoder.com/images/201442/rUCWqfipDv3U7zYH.png'><source src='http://static-jkxy.qiniudn.com/event/jkxy_profile20150318.mp4' type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></video></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Windows查看端口占用以及关闭相应的进程]]></title>

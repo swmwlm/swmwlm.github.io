@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Topking's Blog]]></title>
   <link href="http://swmwlm.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://swmwlm.github.io/"/>
-  <updated>2015-11-26T16:23:53+08:00</updated>
+  <updated>2015-12-17T17:13:35+08:00</updated>
   <id>http://swmwlm.github.io/</id>
   <author>
     <name><![CDATA[Topking]]></name>
@@ -12,6 +12,92 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Linux下新增修改删除查看用户和用户组]]></title>
+    <link href="http://swmwlm.github.io/blog/2015/12/12/linuxgroup/"/>
+    <updated>2015-12-12T12:28:58+08:00</updated>
+    <id>http://swmwlm.github.io/blog/2015/12/12/linuxgroup</id>
+    <content type="html"><![CDATA[<p>linux下添加，删除，修改，查看用户和用户组</p>
+
+<!--more-->
+
+
+<p>1：创建组
+groupadd test</p>
+
+<p>2：修改组，将test1组改为test2
+groupmod -n test2 test1</p>
+
+<p>3，删除组
+groupdel test2</p>
+
+<p>4，查看组</p>
+
+<p>a，查看当前登录用户所在的组groups。
+查看mysql所在组:groups mysql</p>
+
+<p>b，查看所有组cat /etc/group</p>
+
+<p>c，有的linux系统没有/etc/group文件，使用下面命令
+<code>
+cat /etc/passwd |awk -F : '{print $4}' |sort|uniq | getent group |awk -F : '{print $1}'
+</code></p>
+
+<p>其中，命令getent,</p>
+
+<p>可以通过组ID来查找组信息，例如：getent group mysql</p>
+
+<p>二，用户操作</p>
+
+<p>1，增加用户</p>
+
+<p>useradd –-help</p>
+
+<p>2，修改用户
+usermod –-help
+gpasswd –-help
+例如,修改test用户，更改家目录/home/test,并加入test2组：
+usermod -d /home/test -G test2 test</p>
+
+<p>将用户test加入到test2组
+gpasswd -a test test2</p>
+
+<p>将用户test从test2组中移出
+gpasswd -d test test2</p>
+
+<p>3，删除用户
+userdel test</p>
+
+<p>4，查看用户</p>
+
+<p>a，查看当前登录用户</p>
+
+<pre><code>[root@www ~]# w 
+[root@www ~]# who 
+</code></pre>
+
+<p>b，查看自己的用户名
+[root@www ~]# whoami</p>
+
+<p>c，查看单个用户信息</p>
+
+<pre><code>[root@www ~]# finger apacheuser 
+[root@www ~]# id apacheuser 
+</code></pre>
+
+<p>d，查看用户登录记录</p>
+
+<p>[root@www ~]# last 查看登录成功的用户记录
+[root@www ~]# lastb 查看登录不成功的用户记录</p>
+
+<p>e，查看所有用户
+<code>
+[root@www ~]# cut -d : -f 1 /etc/passwd
+[root@www ~]# cat /etc/passwd |awk -F : '{print $1}'
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Linux安装jira6.3.6,安装破解以及数据导入的详细步骤]]></title>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Git | Topking's Blog]]></title>
+  <link href="http://swmwlm.github.io/blog/categories/git/atom.xml" rel="self"/>
+  <link href="http://swmwlm.github.io/"/>
+  <updated>2015-12-17T17:13:35+08:00</updated>
+  <id>http://swmwlm.github.io/</id>
+  <author>
+    <name><![CDATA[Topking]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Git命令]]></title>
+    <link href="http://swmwlm.github.io/blog/2015/12/17/git/"/>
+    <updated>2015-12-17T15:28:58+08:00</updated>
+    <id>http://swmwlm.github.io/blog/2015/12/17/git</id>
+    <content type="html"><![CDATA[<p>在使用Git时，经常需要查询的命令。</p>
+
+<!--more-->
+
+
+<p>1.设置
+设置邮箱和用户名</p>
+
+<pre><code>git config --global user.email "xu.jin.smile@gmail.com"
+git config --global user.name "GinSmile"
+</code></pre>
+
+<p>生成SSH Key</p>
+
+<pre><code>ssh-keygen -t rsa -C "example@163.com"
+</code></pre>
+
+<p>创建</p>
+
+<p>初始化本地库</p>
+
+<pre><code>git init
+</code></pre>
+
+<p>克隆远程版本库</p>
+
+<pre><code>git clone git@github.com:GinSmile/Algorithms.git
+</code></pre>
+
+<p>添加远程分支(添加Algorithm项目的dev分支到本地)</p>
+
+<pre><code>git remote add dev git@github.com:GinSmile/Algorithms.git
+</code></pre>
+
+<p>查看远程分支</p>
+
+<pre><code>git remote -v
+</code></pre>
+
+<p>提交</p>
+
+<pre><code>git add .
+git commit -m "some comment"
+</code></pre>
+
+<p>更改上次提交的comment注释</p>
+
+<pre><code>git commit -amend "new comment"
+</code></pre>
+
+<p>查看状态，即查看那些文章被修改了</p>
+
+<pre><code>git status
+</code></pre>
+
+<p>查看提交的历史记录</p>
+
+<pre><code>git log
+</code></pre>
+
+<p>删除</p>
+
+<p>从当前跟踪列表中移除文件，并完全删除</p>
+
+<pre><code>git rm Readme.md
+</code></pre>
+
+<p>仅仅在暂存区删除，不再跟踪该文件，并在目录中保留</p>
+
+<pre><code>git rm --cached Readme.md
+</code></pre>
+
+<p>分支</p>
+
+<p>创建一个名为dev的分支</p>
+
+<pre><code>git branch dev
+</code></pre>
+
+<p>切换到dev分支</p>
+
+<pre><code>git checkout dev
+</code></pre>
+
+<p>创建并切换到dev分支（等同于以上两个命令）</p>
+
+<pre><code>git checkout -b dev
+</code></pre>
+
+<p>合并</p>
+
+<p>从远程库中拉去最新文件，并自动合并</p>
+
+<pre><code>git pull
+</code></pre>
+
+<p>合并分支（当前分支为master，要合并dev的更改）</p>
+
+<pre><code>git merge dev
+</code></pre>
+
+<p>忽略
+即.gitignore文件，可忽略文件夹和文件 忽略文件夹</p>
+
+<pre><code>bin
+</code></pre>
+
+<p>忽略文件</p>
+
+<pre><code>*.c
+</code></pre>
+
+<p>互联网有一张特别棒的Git命令思维导图，特拿来分享，感谢原作者:
+<img src="/images/git/git-operate.png"></p>
+]]></content>
+  </entry>
+  
+</feed>

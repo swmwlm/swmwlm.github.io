@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Linux - Topking's Blog</title>
+  <title>Linux下新增修改删除查看用户和用户组 - Topking's Blog</title>
   <meta name="author" content="Topking">
 
   
-  <meta name="description" content="Category: linux">
-  
+  <meta name="description" content="linux下新增修改删除查看用户和用户组">
+  <meta name="keywords" content="linux, 查看用户, 用户组">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://swmwlm.github.io/blog/categories/linux/">
+  <link rel="canonical" href="http://swmwlm.github.io/blog/2015/12/12/linuxgroup/">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Topking's Blog" type="application/atom+xml">
@@ -83,63 +83,204 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Linux</h1>
+    
+      <h2 class="entry-title">Linux下新增修改删除查看用户和用户组</h2>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-12-12T12:28:58+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:28 pm</span></time>
+        
+        
+            | <a href="#comments">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>linux下添加，删除，修改，查看用户和用户组</p>
 
-  
-  <h2>2015</h2>
-
-<article>
-  
-
-<h1><a href="/blog/2015/12/12/linuxgroup/">linux下新增修改删除查看用户和用户组</a></h1>
-<time datetime="2015-12-12T12:28:58+08:00" pubdate><span class='month'>Dec</span> <span class='day'>12</span> <span class='year'>2015</span></time>
-
-<footer>
-
-  <span class="categories">posted in <a class='category' href='/blog/categories/linux/'>linux</a></span>
+<!--more-->
 
 
-  <span class="tags">tagged with <a class='tag' href='/tags/linux/'>Linux</a></span>
+<p>1：创建组
+groupadd test</p>
 
-</footer>
+<p>2：修改组，将test1组改为test2
+groupmod -n test2 test1</p>
 
+<p>3，删除组
+groupdel test2</p>
 
-</article>
+<p>4，查看组</p>
 
+<p>a，查看当前登录用户所在的组groups。
+查看mysql所在组:groups mysql</p>
 
+<p>b，查看所有组cat /etc/group</p>
 
-<article>
-  
+<p>c，有的linux系统没有/etc/group文件，使用下面命令</p>
 
-<h1><a href="/blog/2015/11/21/projectmanagementtools/">Linux安装jira6.3.6,安装破解以及数据导入的详细步骤</a></h1>
-<time datetime="2015-11-21T18:42:49+08:00" pubdate><span class='month'>Nov</span> <span class='day'>21</span> <span class='year'>2015</span></time>
-
-<footer>
-
-  <span class="categories">posted in <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/linux/'>linux</a></span>
-
-
-  <span class="tags">tagged with <a class='tag' href='/tags/seo/'>SEO</a>, <a class='tag' href='/tags/octopress/'>octopress</a></span>
-
-</footer>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cat /etc/passwd |awk -F : '{print $4}' |sort|uniq | getent group |awk -F : '{print $1}'</span></code></pre></td></tr></table></div></figure>
 
 
-</article>
+<p>其中，命令getent,</p>
+
+<p>可以通过组ID来查找组信息，例如：getent group mysql</p>
+
+<p>二，用户操作</p>
+
+<p>1，增加用户</p>
+
+<p>useradd –-help</p>
+
+<p>2，修改用户
+usermod –-help
+gpasswd –-help
+例如,修改test用户，更改家目录/home/test,并加入test2组：
+usermod -d /home/test -G test2 test</p>
+
+<p>将用户test加入到test2组
+gpasswd -a test test2</p>
+
+<p>将用户test从test2组中移出
+gpasswd -d test test2</p>
+
+<p>3，删除用户
+userdel test</p>
+
+<p>4，查看用户</p>
+
+<p>a，查看当前登录用户</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# w 
+</span><span class='line'>[root@www ~]# who </span></code></pre></td></tr></table></div></figure>
+
+
+<p>b，查看自己的用户名
+[root@www ~]# whoami</p>
+
+<p>c，查看单个用户信息</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# finger apacheuser 
+</span><span class='line'>[root@www ~]# id apacheuser </span></code></pre></td></tr></table></div></figure>
+
+
+<p>d，查看用户登录记录</p>
+
+<p>[root@www ~]# last 查看登录成功的用户记录
+[root@www ~]# lastb 查看登录不成功的用户记录</p>
+
+<p>e，查看所有用户</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# cut -d : -f 1 /etc/passwd 
+</span><span class='line'>[root@www ~]# cat /etc/passwd |awk -F : '{print $1}'</span></code></pre></td></tr></table></div></figure>
+
 
 </div>
 
+
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Topking</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-12-12T12:28:58+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:28 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>linux</a>
+  
+</span>
+
+
+      
+
+<span class="tags">
+  
+    <a class='tag' href='/tags/linux/'>Linux</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  
+    <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/11/29/octopressImage/" title="Previous Post: octopress写博客常用加入代码、图片、带标题图片方法">&laquo; octopress写博客常用加入代码、图片、带标题图片方法</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/12/17/git/" title="Next Post: git命令">git命令 &raquo;</a>
+      
+    </p>
+  </footer>
 </article>
 
+
+  <section>
+    <h1>Comments</h1>
+    <div id="comments" aria-live="polite"><!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/blog/2015/12/12/linuxgroup" data-title="linux下新增修改删除查看用户和用户组" data-url="http://swmwlm.github.io/blog/2015/12/12/linuxgroup/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"swmwlm"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end --></div>
+  </section>
 
 </div>
 

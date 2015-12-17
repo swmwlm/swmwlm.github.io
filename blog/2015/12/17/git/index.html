@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Linux - Topking's Blog</title>
+  <title>Git命令 - Topking's Blog</title>
   <meta name="author" content="Topking">
 
   
-  <meta name="description" content="Category: linux">
-  
+  <meta name="description" content="git命令备忘查询">
+  <meta name="keywords" content="git, git命令">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://swmwlm.github.io/blog/categories/linux/">
+  <link rel="canonical" href="http://swmwlm.github.io/blog/2015/12/17/git/">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Topking's Blog" type="application/atom+xml">
@@ -83,63 +83,231 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Linux</h1>
+    
+      <h2 class="entry-title">Git命令</h2>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-12-17T15:28:58+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>3:28 pm</span></time>
+        
+        
+            | <a href="#comments">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>在使用Git时，经常需要查询的命令。</p>
 
-  
-  <h2>2015</h2>
-
-<article>
-  
-
-<h1><a href="/blog/2015/12/12/linuxgroup/">linux下新增修改删除查看用户和用户组</a></h1>
-<time datetime="2015-12-12T12:28:58+08:00" pubdate><span class='month'>Dec</span> <span class='day'>12</span> <span class='year'>2015</span></time>
-
-<footer>
-
-  <span class="categories">posted in <a class='category' href='/blog/categories/linux/'>linux</a></span>
+<!--more-->
 
 
-  <span class="tags">tagged with <a class='tag' href='/tags/linux/'>Linux</a></span>
+<p>1.设置
+设置邮箱和用户名</p>
 
-</footer>
+<pre><code>git config --global user.email "xu.jin.smile@gmail.com"
+git config --global user.name "GinSmile"
+</code></pre>
 
+<p>生成SSH Key</p>
 
-</article>
+<pre><code>ssh-keygen -t rsa -C "example@163.com"
+</code></pre>
 
+<p>创建</p>
 
+<p>初始化本地库</p>
 
-<article>
-  
+<pre><code>git init
+</code></pre>
 
-<h1><a href="/blog/2015/11/21/projectmanagementtools/">Linux安装jira6.3.6,安装破解以及数据导入的详细步骤</a></h1>
-<time datetime="2015-11-21T18:42:49+08:00" pubdate><span class='month'>Nov</span> <span class='day'>21</span> <span class='year'>2015</span></time>
+<p>克隆远程版本库</p>
 
-<footer>
+<pre><code>git clone git@github.com:GinSmile/Algorithms.git
+</code></pre>
 
-  <span class="categories">posted in <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/linux/'>linux</a></span>
+<p>添加远程分支(添加Algorithm项目的dev分支到本地)</p>
 
+<pre><code>git remote add dev git@github.com:GinSmile/Algorithms.git
+</code></pre>
 
-  <span class="tags">tagged with <a class='tag' href='/tags/seo/'>SEO</a>, <a class='tag' href='/tags/octopress/'>octopress</a></span>
+<p>查看远程分支</p>
 
-</footer>
+<pre><code>git remote -v
+</code></pre>
 
+<p>提交</p>
 
-</article>
+<pre><code>git add .
+git commit -m "some comment"
+</code></pre>
+
+<p>更改上次提交的comment注释</p>
+
+<pre><code>git commit -amend "new comment"
+</code></pre>
+
+<p>查看状态，即查看那些文章被修改了</p>
+
+<pre><code>git status
+</code></pre>
+
+<p>查看提交的历史记录</p>
+
+<pre><code>git log
+</code></pre>
+
+<p>删除</p>
+
+<p>从当前跟踪列表中移除文件，并完全删除</p>
+
+<pre><code>git rm Readme.md
+</code></pre>
+
+<p>仅仅在暂存区删除，不再跟踪该文件，并在目录中保留</p>
+
+<pre><code>git rm --cached Readme.md
+</code></pre>
+
+<p>分支</p>
+
+<p>创建一个名为dev的分支</p>
+
+<pre><code>git branch dev
+</code></pre>
+
+<p>切换到dev分支</p>
+
+<pre><code>git checkout dev
+</code></pre>
+
+<p>创建并切换到dev分支（等同于以上两个命令）</p>
+
+<pre><code>git checkout -b dev
+</code></pre>
+
+<p>合并</p>
+
+<p>从远程库中拉去最新文件，并自动合并</p>
+
+<pre><code>git pull
+</code></pre>
+
+<p>合并分支（当前分支为master，要合并dev的更改）</p>
+
+<pre><code>git merge dev
+</code></pre>
+
+<p>忽略
+即.gitignore文件，可忽略文件夹和文件 忽略文件夹</p>
+
+<pre><code>bin
+</code></pre>
+
+<p>忽略文件</p>
+
+<pre><code>*.c
+</code></pre>
+
+<p>互联网有一张特别棒的Git命令思维导图，特拿来分享，感谢原作者:
+<img src="/images/git/git-operate.png"></p>
 
 </div>
 
+
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Topking</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-12-17T15:28:58+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>3:28 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/git/'>git</a>
+  
+</span>
+
+
+      
+
+<span class="tags">
+  
+    <a class='tag' href='/tags/git/'>Git</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  
+    <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/12/12/linuxgroup/" title="Previous Post: linux下新增修改删除查看用户和用户组">&laquo; linux下新增修改删除查看用户和用户组</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
+
+  <section>
+    <h1>Comments</h1>
+    <div id="comments" aria-live="polite"><!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/blog/2015/12/17/git" data-title="git命令" data-url="http://swmwlm.github.io/blog/2015/12/17/git/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"swmwlm"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end --></div>
+  </section>
 
 </div>
 

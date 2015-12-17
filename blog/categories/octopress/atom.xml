@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Tag:OctoPress | Topking's Blog]]></title>
-  <link href="http://swmwlm.github.io/tags/octopress/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Octopress | Topking's Blog]]></title>
+  <link href="http://swmwlm.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://swmwlm.github.io/"/>
   <updated>2015-12-17T17:13:35+08:00</updated>
   <id>http://swmwlm.github.io/</id>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[octopress写博客常用加入代码、图片、带标题图片方法]]></title>
+    <title type="html"><![CDATA[Octopress写博客常用加入代码、图片、带标题图片方法]]></title>
     <link href="http://swmwlm.github.io/blog/2015/11/29/octopressImage/"/>
     <updated>2015-11-29T19:04:58+08:00</updated>
     <id>http://swmwlm.github.io/blog/2015/11/29/octopressImage</id>
