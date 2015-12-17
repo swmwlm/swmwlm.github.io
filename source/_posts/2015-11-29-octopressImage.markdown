@@ -12,6 +12,8 @@ description: octopress博客加入代码、图片、带标题图片方法
 用Octopress写博客时，经常使用的方法，用以插入代码片段、图片：
 <!--more-->
 
+>[请参考MarkDown文档](http://wowubuntu.com/markdown/#autoescape)
+
 1：插入代码[language] [title] [url] [link text]
 
 ```java Hello World http://baidu.com 更多
@@ -63,7 +65,7 @@ code snippet
 
 博客中引用图片
 在路径D:\octopress\source\images里面保存对应的图像，在文章中引用
-{% img /images/pic.png %}  
+{ % img /images/email.png % },注意，去除{ % 中间的空格
 
 
 5.视频
