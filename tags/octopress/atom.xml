@@ -4,7 +4,7 @@
   <title><![CDATA[Tag:OctoPress | Topking's Blog]]></title>
   <link href="http://swmwlm.github.io/tags/octopress/atom.xml" rel="self"/>
   <link href="http://swmwlm.github.io/"/>
-  <updated>2015-12-17T17:13:35+08:00</updated>
+  <updated>2015-12-18T15:58:16+08:00</updated>
   <id>http://swmwlm.github.io/</id>
   <author>
     <name><![CDATA[Topking]]></name>
@@ -77,6 +77,24 @@
 <p>博客中引用图片
 在路径D:\octopress\source\images里面保存对应的图像，在文章中引用
 { % img /images/email.png % },注意，去除{ % 中间的空格</p>
+
+<blockquote><p>4.1.imagepop plugin
+这是一个添加图片的插件，可以按照比例缩放图片，点击图片可以查看原图，项目地址在<a href="https://bitbucket.org/fudanchii/imgpop/src/2fc043b1713e5de401edb0eea8639502bcc250a8?at=default">imgpop</a>
+这里重复一下安装过程：
+在octopress/Gemfile中添加以下代码，就可以得到相应依赖：</p></blockquote>
+
+<pre><code>gem 'erubis'
+gem 'mini_magick'
+
+运行bundle install,安装相应依赖 将开源项目中的_style.scss中的内容添加到octopress/sass/custom/_styles.scss中 
+将开源项目中plugins中的两个文件复制octopress/plugins文件夹下 
+将开源项目中的imgpop.js文件复制octopress/source/javascripts文件夹下 
+文件引用图片的方式为：{ % imgpop /images/awesomeimage.jpg 50% center Awesome image taken hundred years ago. % }，去除{ %之间的空格。
+过程中出现的问题记录：
+***利用Chocolatey 安装imagemagick ，命令为：choco install imagemagick 
+***修改img_popup.rb中的safe_wrap(@template.result(vars))为TemplateWrapper.safe_wrap(@template.result(vars))
+***如果jquery版本比较高，需要修改jquery.live方法为jquery.on
+</code></pre>
 
 <p>5.视频
 <video width='640' height='320' preload='metadata' controls poster='http://www.mincoder.com/images/201442/rUCWqfipDv3U7zYH.png">http://www.mincoder.com/images/201442/rUCWqfipDv3U7zYH.png</a>'><source src='http://static-jkxy.qiniudn.com/event/jkxy_profile20150318.mp4">http://static-jkxy.qiniudn.com/event/jkxy_profile20150318.mp4</a>' ></video></p>

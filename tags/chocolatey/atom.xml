@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Tag:Windows | Topking's Blog]]></title>
-  <link href="http://swmwlm.github.io/tags/windows/atom.xml" rel="self"/>
+  <title><![CDATA[Tag:chocolatey | Topking's Blog]]></title>
+  <link href="http://swmwlm.github.io/tags/chocolatey/atom.xml" rel="self"/>
   <link href="http://swmwlm.github.io/"/>
   <updated>2015-12-18T15:58:16+08:00</updated>
   <id>http://swmwlm.github.io/</id>
