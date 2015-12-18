@@ -2,6 +2,7 @@
 <!--删除Google font-->
 <!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+
 <!-- 设置链接在新窗口打开 -->
 <script>
   function addBlankTargetForLinks () {
@@ -12,4 +13,16 @@
   $(document).bind('DOMNodeInserted', function(event) {
     addBlankTargetForLinks();
   });
+</script>
+
+<!-- 展示图片 -->
+<script type="text/javascript">
+//jQuery.noConflict(); // ender.js conflicts with jQuery
+</script>
+
+<script language="Javascript" type="text/javascript">
+// ender.js gobbles jQuery's ready event: Use ender.js $ instead
+$(document).ready(function() {
+    jQuery(".fancybox").fancybox();
+});
 </script>

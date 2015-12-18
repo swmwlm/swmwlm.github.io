@@ -9,3 +9,5 @@ footer: true
 
 
 AboutMe Page!!!
+
+{{ 'gallery_1' | image_list }}
