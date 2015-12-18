@@ -102,4 +102,4 @@ description: git命令备忘查询
 	*.c
 
 互联网有一张特别棒的Git命令思维导图，特拿来分享，感谢原作者:
-{% img /images/git/git-operate.png %}
+{% imgpop /images/git/git-operate.png 100% center 棒棒的Git. %}
