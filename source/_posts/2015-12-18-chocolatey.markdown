@@ -17,7 +17,7 @@ Chocolatey NuGet is a Machine Package Manager, somewhat like apt-get, but built 
 
 **如何安装**： 具体参见 [Chocolatey主页](https://chocolatey.org/) ，就现在 （2015-12-18） 的安装方式如下：
 
-	iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+	@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
 
 安装软命令 choco install, 短写是 cinst
 
