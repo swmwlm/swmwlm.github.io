@@ -1,24 +1,133 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Topking's Blog]]></title>
-  <link href="http://swmwlm.github.io/atom.xml" rel="self"/>
-  <link href="http://swmwlm.github.io/"/>
-  <updated>2015-12-25T16:27:56+08:00</updated>
-  <id>http://swmwlm.github.io/</id>
-  <author>
-    <name><![CDATA[Topking]]></name>
-    
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>MySQL数据库存储过程动态表建立 - Topking's Blog</title>
+  <meta name="author" content="Topking">
 
   
-  <entry>
-    <title type="html"><![CDATA[MySQL数据库存储过程动态表建立]]></title>
-    <link href="http://swmwlm.github.io/blog/2015/12/25/mysql-procedure/"/>
-    <updated>2015-12-25T14:28:58+08:00</updated>
-    <id>http://swmwlm.github.io/blog/2015/12/25/mysql-procedure</id>
-    <content type="html"><![CDATA[<h2>1. 存储过程简介</h2>
+  <meta name="description" content="MySQL数据库存储过程动态表建立">
+  <meta name="keywords" content="create procedure, 创建存储过程临时表">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://swmwlm.github.io/blog/2015/12/25/mysql-procedure/">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Topking's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+
+  <!--点击图片弹出层-->
+  <script src="/javascripts/libs/jquery-ui.js"></script>
+  <link href="/stylesheets/jquery-ui.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/imgpop.js"></script>
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" />
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!--删除Google font-->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+
+<!-- 设置链接在新窗口打开 -->
+<script>
+  function addBlankTargetForLinks () {
+    $('a[href^="http"]').each(function(){
+      $(this).attr('target', '_blank');
+    });
+  }
+  $(document).bind('DOMNodeInserted', function(event) {
+    addBlankTargetForLinks();
+  });
+</script>
+
+<!-- 展示图片 -->
+<script type="text/javascript">
+//jQuery.noConflict(); // ender.js conflicts with jQuery
+</script>
+
+<script language="Javascript" type="text/javascript">
+// ender.js gobbles jQuery's ready event: Use ender.js $ instead
+$(document).ready(function() {
+    jQuery(".fancybox").fancybox();
+});
+</script>
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1></h1>
+  <div>
+  	<a style="font-size: 2.2em;color: #F2F2F2;text-decoration: none;" href="/">Topking's Blog</a>
+	  
+	    <h2>Seize the day, enjoy my life!</h2>
+	  
+  </div>
+  
+</hgroup>
+
+</header>
+<!--   <div id="banner_img"></div> -->
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.baidu.com" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="swmwlm.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <!-- <li><a href="/blog/categories/projecmanagementtools">ProjecManagementTools</a></li> -->
+  <li><a href="/aboutme">AboutMe</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h2 class="entry-title">MySQL数据库存储过程动态表建立</h2>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-12-25T14:28:58+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>2:28 pm</span></time>
+        
+        
+            | <a href="#comments">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>1. 存储过程简介</h2>
 
 <p>　　我们常用的操作数据库语言SQL语句在执行的时候需要要先编译，然后执行，而存储过程（Stored Procedure）是一组为了完成特定功能的SQL语句集，经编译后存储在数据库中，用户通过指定存储过程的名字并给定参数（如果该存储过程带有参数）来调用执行它。</p>
 
@@ -760,815 +869,256 @@ DELIMITER ;
 </span><span class='line'><span class="n">end</span><span class="p">;</span>
 </span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
+
+</div>
+
+
+
+  <footer>
+    <p class="meta">
+      
   
-  <entry>
-    <title type="html"><![CDATA[利用Chocolatey快速在Windows下搭建一个开发环境]]></title>
-    <link href="http://swmwlm.github.io/blog/2015/12/18/chocolatey/"/>
-    <updated>2015-12-18T15:28:58+08:00</updated>
-    <id>http://swmwlm.github.io/blog/2015/12/18/chocolatey</id>
-    <content type="html"><![CDATA[<p>在 Linux 下，可以使用 apt-get或者yum 来安装应用程序，在 windows 下，现在可以使用 Chocolatey 来载搭建一个开发环境。</p>
 
-<!--more-->
+<span class="byline author vcard">Posted by <span class="fn">Topking</span></span>
+
+      
 
 
-<p>Chocolatey NuGet is a Machine Package Manager, somewhat like apt-get, but built with Windows in mind.</p>
 
-<p>注： Chocolatey 只是把官方下载路径封装到了 Chocolatey 中，所以下载源都是其官方路径，所以下载的一定是合法的，但是如果原软件是需要 Licence 注册的话，那么 Chocolatey 下载安装好的软件还是需要你去购买注册。不过 Chocolatey 一般还是会选用免费 Licence 可用的软件。</p>
 
-<p><strong>如何安装</strong>： 具体参见 <a href="https://chocolatey.org/">Chocolatey主页</a> ，就现在 （2015-12-18） 的安装方式如下：</p>
+<time class='entry-date' datetime='2015-12-25T14:28:58+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>2:28 pm</span></time>
+      
 
-<pre><code>@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" &amp;&amp; SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
-</code></pre>
-
-<p>安装软命令 choco install, 短写是 cinst</p>
-
-<p>可安装的应用程序，可以参见其 <a href="https://chocolatey.org/packages">Package 列表</a></p>
-
-<p>安装 git</p>
-
-<pre><code>choco install git.install 
-</code></pre>
-
-<p>安装 node</p>
-
-<pre><code>choco install nodejs.install 
-</code></pre>
-
-<p>安装 Microsoft Visual C++ 2010 Redistributable Package</p>
-
-<pre><code>choco install nodejs.install 
-</code></pre>
-
-<p>安装 vagrant</p>
-
-<pre><code>choco install vagrant
-</code></pre>
-
-<p>安装 virtual box</p>
-
-<pre><code>choco install virtualbox 
-</code></pre>
-
-<p>安装编辑器 notepad++/atom/sublime （另外还有各种IDE，不列出了）</p>
-
-<pre><code>choco install notepadplusplus.install
-choco install Atom
-choco install SublimeText3 
-</code></pre>
-
-<p>安装 Ruby</p>
-
-<pre><code>choco install ruby
-</code></pre>
-
-<p>安装 Python</p>
-
-<pre><code>choco install python
-</code></pre>
-
-<p>另外，如果要搭建一个本地的CI系统，可以下载Java环境和Jenkins</p>
-
-<p>安装 Java JDK7 或 JDK8</p>
-
-<pre><code>choco install jdk7 
-</code></pre>
-
-<p>或</p>
-
-<pre><code>choco install jdk8 
-</code></pre>
-
-<p>安装 Jenkins</p>
-
-<pre><code>choco install jenkins 
-</code></pre>
-
-<p>这样基本上就可以建立一个强大开发环境了，包含了基本上所有的命令行语言运行环境，构建依赖库，Vagrant， 编辑器， virtual box 以及一个 强大 CI 系统。 其他应用可以根据自己需要从 Package 列表中寻找。</p>
-]]></content>
-  </entry>
+<span class="categories">
   
-  <entry>
-    <title type="html"><![CDATA[Git命令]]></title>
-    <link href="http://swmwlm.github.io/blog/2015/12/17/git/"/>
-    <updated>2015-12-17T15:28:58+08:00</updated>
-    <id>http://swmwlm.github.io/blog/2015/12/17/git</id>
-    <content type="html"><![CDATA[<p>在使用Git时，经常需要查询的命令。</p>
-
-<!--more-->
+    <a class='category' href='/blog/categories/mysql/'>mysql</a>
+  
+</span>
 
 
-<p>1.设置
-设置邮箱和用户名</p>
+      
 
-<pre><code>git config --global user.email "xu.jin.smile@gmail.com"
-git config --global user.name "GinSmile"
-</code></pre>
+<span class="tags">
+  
+    <a class='tag' href='/tags/mysql/'>mysql</a>, <a class='tag' href='/tags/procedure/'>procedure</a>
+  
+</span>
 
-<p>生成SSH Key</p>
 
-<pre><code>ssh-keygen -t rsa -C "example@163.com"
-</code></pre>
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  
+    <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+  
+</div>
 
-<p>创建</p>
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/12/18/chocolatey/" title="Previous Post: 利用Chocolatey快速在Windows下搭建一个开发环境">&laquo; 利用Chocolatey快速在Windows下搭建一个开发环境</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-<p>初始化本地库</p>
 
-<pre><code>git init
-</code></pre>
+  <section>
+    <h1>Comments</h1>
+    <div id="comments" aria-live="polite"><!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/blog/2015/12/25/mysql-procedure" data-title="MySQL数据库存储过程动态表建立" data-url="http://swmwlm.github.io/blog/2015/12/25/mysql-procedure/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"swmwlm"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end --></div>
+  </section>
 
-<p>克隆远程版本库</p>
+</div>
 
-<pre><code>git clone git@github.com:GinSmile/Algorithms.git
-</code></pre>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Bo main introduction</h1>
+  <ul id="myprofile">
+      <li>
+        Omitted here a million words...
+      </li>
+  </ul>
+</section><section>
+  <h1>Sina Weibo</h1>
+  <ul id="weibo">
+      <li>
+        <!-- 在此插入获得的微博秀代码 -->
+    	<iframe width="100%" height="120" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=120&fansRow=2&ptype=1&speed=0&skin=2&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=3243057067&verifier=cf37004f&dpc=1"></iframe>
+      </li>
+  </ul>
+</section><section>
+<h1>Tag Cloud</h1>
+    <!-- <span id="Tag-cloud"><li><a style="font-size: 100%" href="/tags/git/">Git</a></li>
+<li><a style="font-size: 100%" href="/tags/linux/">Linux</a></li>
+<li><a style="font-size: 100%" href="/tags/octopress/">OctoPress</a></li>
+<li><a style="font-size: 100%" href="/tags/seo/">SEO</a></li>
+<li><a style="font-size: 100%" href="/tags/windows/">Windows</a></li>
+<li><a style="font-size: 100%" href="/tags/chocolatey/">chocolatey</a></li>
+<li><a style="font-size: 100%" href="/tags/idea/">idea</a></li>
+<li><a style="font-size: 100%" href="/tags/mysql/">mysql</a></li>
+<li><a style="font-size: 100%" href="/tags/octopress/">octopress</a></li>
+<li><a style="font-size: 100%" href="/tags/procedure/">procedure</a></li>
+<li><a style="font-size: 100%" href="/tags/windows/">windows</a></li>
+</span> -->
+    <span id="Tag-cloud"><a style="font-size: 100%" href="/tags/git/">Git</a>
+<a style="font-size: 100%" href="/tags/linux/">Linux</a>
+<a style="font-size: 100%" href="/tags/octopress/">OctoPress</a>
+<a style="font-size: 100%" href="/tags/seo/">SEO</a>
+<a style="font-size: 100%" href="/tags/windows/">Windows</a>
+<a style="font-size: 100%" href="/tags/chocolatey/">chocolatey</a>
+<a style="font-size: 100%" href="/tags/idea/">idea</a>
+<a style="font-size: 100%" href="/tags/mysql/">mysql</a>
+<a style="font-size: 100%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 100%" href="/tags/procedure/">procedure</a>
+<a style="font-size: 100%" href="/tags/windows/">windows</a>
+</span>
+</ul>
+</section>
+<section>
+  <h1>Category Cloud</h1>
+    <span id="category-tag-cloud"><a href='/blog/categories/git' style='font-size: 130.0%'>Git(1)</a> <a href='/blog/categories/java' style='font-size: 160.0%'>Java(2)</a> <a href='/blog/categories/linux' style='font-size: 160.0%'>Linux(2)</a> <a href='/blog/categories/mysql' style='font-size: 130.0%'>Mysql(1)</a> <a href='/blog/categories/octopress' style='font-size: 130.0%'>Octopress(1)</a> <a href='/blog/categories/windows' style='font-size: 160.0%'>Windows(2)</a> </span>
+</section>
+<section>
+  <h1>Top Categories</h1>
+    <ul id="top-category-list"><li><a href='/blog/categories/linux'>Linux (2)</a></li><li><a href='/blog/categories/java'>Java (2)</a></li><li><a href='/blog/categories/windows'>Windows (2)</a></li><li><a href='/blog/categories/octopress'>Octopress (1)</a></li><li><a href='/blog/categories/git'>Git (1)</a></li><li><a href='/blog/categories/mysql'>Mysql (1)</a></li></ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/12/25/mysql-procedure/">MySQL数据库存储过程动态表建立</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/12/18/chocolatey/">利用Chocolatey快速在Windows下搭建一个开发环境</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/12/17/git/">Git命令</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/12/12/linuxgroup/">Linux下新增修改删除查看用户和用户组</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/29/octopressImage/">Octopress写博客常用加入代码、图片、带标题图片方法</a>
+      </li>
+    
+  </ul>
+</section>
 
-<p>添加远程分支(添加Algorithm项目的dev分支到本地)</p>
-
-<pre><code>git remote add dev git@github.com:GinSmile/Algorithms.git
-</code></pre>
-
-<p>查看远程分支</p>
-
-<pre><code>git remote -v
-</code></pre>
-
-<p>提交</p>
-
-<pre><code>git add .
-git commit -m "some comment"
-</code></pre>
-
-<p>更改上次提交的comment注释</p>
-
-<pre><code>git commit -amend "new comment"
-</code></pre>
-
-<p>查看状态，即查看那些文章被修改了</p>
-
-<pre><code>git status
-</code></pre>
-
-<p>查看提交的历史记录</p>
-
-<pre><code>git log
-</code></pre>
-
-<p>删除</p>
-
-<p>从当前跟踪列表中移除文件，并完全删除</p>
-
-<pre><code>git rm Readme.md
-</code></pre>
-
-<p>仅仅在暂存区删除，不再跟踪该文件，并在目录中保留</p>
-
-<pre><code>git rm --cached Readme.md
-</code></pre>
-
-<p>分支</p>
-
-<p>创建一个名为dev的分支</p>
-
-<pre><code>git branch dev
-</code></pre>
-
-<p>切换到dev分支</p>
-
-<pre><code>git checkout dev
-</code></pre>
-
-<p>创建并切换到dev分支（等同于以上两个命令）</p>
-
-<pre><code>git checkout -b dev
-</code></pre>
-
-<p>合并</p>
-
-<p>从远程库中拉去最新文件，并自动合并</p>
-
-<pre><code>git pull
-</code></pre>
-
-<p>合并分支（当前分支为master，要合并dev的更改）</p>
-
-<pre><code>git merge dev
-</code></pre>
-
-<p>忽略
-即.gitignore文件，可忽略文件夹和文件 忽略文件夹</p>
-
-<pre><code>bin
-</code></pre>
-
-<p>忽略文件</p>
-
-<pre><code>*.c
-</code></pre>
-
-<p>互联网有一张特别棒的Git命令思维导图，特拿来分享，感谢原作者:</p>
-
-<!-- -*- html -*- -->
-<a href='http://swmwlm.github.io/images/git/git-operate.png' style="text-decoration: none" id="image-1"><img src="http://swmwlm.github.io/images/git/resized_git-operate.png" alt="Click me." class="center"/></a>
-  <div id="image-dialog-1" style="display:none; overflow:hidden;" class="noTitle">
-    <div class="image-caption" align="center">
-      <div class="capt-left">棒棒的Git.</div>
-      <div class="capt-right">
-        <a href="http://swmwlm.github.io/images/git/git-operate.png">permalink</a>
-      </div>
-    </div>
-    <div id="proxy1" align="center" class="proxy-container">
-      <img class="image-drag" src="http://swmwlm.github.io/images/logo.jpg" id="full_image-1" />
-    </div>
-  </div>
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/swmwlm">@swmwlm</a> on GitHub
+  
   <script type="text/javascript">
-    jQuery(document).ready(function() {
-        jQuery.imgpop({
-          id: "1",
-          full_image: "/images/git/git-operate.png",
-          full_width: 1759,
-          full_height: 3162,
-          title: "棒棒的Git."
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'swmwlm',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
         });
     });
   </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+<section>
+<h1>Blog Href</h1>
+<ul>
+        <li>
+        <a href="http://812lcl.com//">812lcl的博客</a>
+        </li>
+        <li>
+        <a href="http://www.csdn.net/">CSDN</a>
+        </li>
+        <li>
+        <a href="http://www.cnblogs.com/">博客园</a>
+        </li>
+        <li>
+        <a href="http://coolshell.cn/">酷壳CoolShell</a>
+        </li>
+        <li>
+        <a href="http://www.cnblogs.com/Solstice/">陈硕</a>
+        </li>
+</ul>
+</section>
 
 
-]]></content>
-  </entry>
+
+
   
-  <entry>
-    <title type="html"><![CDATA[Linux下新增修改删除查看用户和用户组]]></title>
-    <link href="http://swmwlm.github.io/blog/2015/12/12/linuxgroup/"/>
-    <updated>2015-12-12T12:28:58+08:00</updated>
-    <id>http://swmwlm.github.io/blog/2015/12/12/linuxgroup</id>
-    <content type="html"><![CDATA[<p>linux下添加，删除，修改，查看用户和用户组</p>
-
-<!--more-->
+</aside>
 
 
-<p>1：创建组
-groupadd test</p>
-
-<p>2：修改组，将test1组改为test2
-groupmod -n test2 test1</p>
-
-<p>3，删除组
-groupdel test2</p>
-
-<p>4，查看组</p>
-
-<p>a，查看当前登录用户所在的组groups。
-查看mysql所在组:groups mysql</p>
-
-<p>b，查看所有组cat /etc/group</p>
-
-<p>c，有的linux系统没有/etc/group文件，使用下面命令</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cat /etc/passwd |awk -F : '{print $4}' |sort|uniq | getent group |awk -F : '{print $1}'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>其中，命令getent,</p>
-
-<p>可以通过组ID来查找组信息，例如：getent group mysql</p>
-
-<p>二，用户操作</p>
-
-<p>1，增加用户</p>
-
-<p>useradd –-help</p>
-
-<p>2，修改用户
-usermod –-help
-gpasswd –-help
-例如,修改test用户，更改家目录/home/test,并加入test2组：
-usermod -d /home/test -G test2 test</p>
-
-<p>将用户test加入到test2组
-gpasswd -a test test2</p>
-
-<p>将用户test从test2组中移出
-gpasswd -d test test2</p>
-
-<p>3，删除用户
-userdel test</p>
-
-<p>4，查看用户</p>
-
-<p>a，查看当前登录用户</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# w 
-</span><span class='line'>[root@www ~]# who </span></code></pre></td></tr></table></div></figure>
-
-
-<p>b，查看自己的用户名
-[root@www ~]# whoami</p>
-
-<p>c，查看单个用户信息</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# finger apacheuser 
-</span><span class='line'>[root@www ~]# id apacheuser </span></code></pre></td></tr></table></div></figure>
-
-
-<p>d，查看用户登录记录</p>
-
-<p>[root@www ~]# last 查看登录成功的用户记录
-[root@www ~]# lastb 查看登录不成功的用户记录</p>
-
-<p>e，查看所有用户</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# cut -d : -f 1 /etc/passwd 
-</span><span class='line'>[root@www ~]# cat /etc/passwd |awk -F : '{print $1}'</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Topking -
+  <span class="credit">Powered by <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256815831'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1256815831%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script></span>
+</p>
+<div id="full" style="width:0px; height:0px; position:fixed; right:180px; bottom:150px; z-index:100; text-align:center; background-color:transparent; cursor:pointer;">
+        <a href="#" onclick="goTop();return false;"><img src="/images/top.png" border=0 alt="返回顶部"></a>
+</div>
+<script src="/javascripts/top.js" type="text/javascript"></script>
+</footer>
   
-  <entry>
-    <title type="html"><![CDATA[Octopress写博客常用加入代码、图片、带标题图片方法]]></title>
-    <link href="http://swmwlm.github.io/blog/2015/11/29/octopressImage/"/>
-    <updated>2015-11-29T19:04:58+08:00</updated>
-    <id>http://swmwlm.github.io/blog/2015/11/29/octopressImage</id>
-    <content type="html"><![CDATA[<p>用Octopress写博客时，经常使用的方法，用以插入代码片段、图片：</p>
 
-<!--more-->
 
 
-<blockquote><p><a href="http://wowubuntu.com/markdown/#autoescape">请参考MarkDown文档</a></p></blockquote>
 
-<p>1：插入代码[language] [title] [url] [link text]</p>
 
-<figure class='code'><figcaption><span>Hello World</span><a href='http://baidu.com'>更多</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
-</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello World&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
 
+<!-- 
+ -->
 
 
 
-<figure class='code'><figcaption><span>title url link text </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">code</span> <span class="n">snippet</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<blockquote><p>注意：当上面方式报错时，需要Pygments安装</p></blockquote>
-
-<pre><code>安装 Python
-    1.前往 http://www.python.org/download/
-    2.下载合适的 Python windows 安装包，如 Python 2.7.6 Windows Installer。 请注意，Python 2 可能会更合适，因为暂时 Python 3 可能不会正常工作。
-    3.安装
-    4.添加安装路径 (如： C:\Python27) 至 PATH。(如何操作? 请参见 故障诊断 #1)
-    5.检验 Python 安装是否成功
-    python –V
-    输出示例：
-    Python 2.7.6
-
-安装 ‘Easy Install’
-    1.浏览https://pypi.python.org/pypi/setuptools#installation-instructions来查看详细的安装指南。
-    2.对于 Windows 7 的机器，下载 ez_setup.py 并保存，例如，至C:\。 然后从命令行使用 Python 运行此文件：
-    python “C:\ez_setup.py”
-    3.添加 ‘Python Scripts’ 路径 (如： C:\Python27\Scripts) 至 PATH
-
-安装 Pygments
-    1.确保 easy_install 已经正确安装
-    easy_install --version
-    输出示例：
-    setuptools 3.1
-    2.使用 “easy_install” 来安装 Pygments:
-    easy_install Pygments
-</code></pre>
-
-<p>2：增加引用</p>
-
-<blockquote><p>引用</p></blockquote>
-
-<p>3：增加链接
-<a href="http://www.baidu.com/">测试链接</a></p>
-
-<p>4.图片
-<img src="http://www.mincoder.com/images/201442/rUCWqfipDv3U7zYH.png" alt="图片属性" /></p>
-
-<p>博客中引用图片
-在路径D:\octopress\source\images里面保存对应的图像，在文章中引用
-{ % img /images/email.png % },注意，去除{ % 中间的空格</p>
-
-<blockquote><p>4.1.imagepop plugin
-这是一个添加图片的插件，可以按照比例缩放图片，点击图片可以查看原图，项目地址在<a href="https://bitbucket.org/fudanchii/imgpop/src/2fc043b1713e5de401edb0eea8639502bcc250a8?at=default">imgpop</a>
-这里重复一下安装过程：
-在octopress/Gemfile中添加以下代码，就可以得到相应依赖：</p></blockquote>
-
-<pre><code>gem 'erubis'
-gem 'mini_magick'
-
-运行bundle install,安装相应依赖 将开源项目中的_style.scss中的内容添加到octopress/sass/custom/_styles.scss中 
-将开源项目中plugins中的两个文件复制octopress/plugins文件夹下 
-将开源项目中的imgpop.js文件复制octopress/source/javascripts文件夹下 
-文件引用图片的方式为：{ % imgpop /images/awesomeimage.jpg 50% center Awesome image taken hundred years ago. % }，去除{ %之间的空格。
-过程中出现的问题记录：
-***利用Chocolatey 安装imagemagick ，命令为：choco install imagemagick 
-***修改img_popup.rb中的safe_wrap(@template.result(vars))为TemplateWrapper.safe_wrap(@template.result(vars))
-***如果jquery版本比较高，需要修改jquery.live方法为jquery.on
-</code></pre>
-
-<p>5.视频
-<video width='640' height='320' preload='metadata' controls poster='http://www.mincoder.com/images/201442/rUCWqfipDv3U7zYH.png'><source src='http://static-jkxy.qiniudn.com/event/jkxy_profile20150318.mp4' type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></video></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Windows查看端口占用以及关闭相应的进程]]></title>
-    <link href="http://swmwlm.github.io/blog/2015/11/26/projectmanagementtools2/"/>
-    <updated>2015-11-26T22:40:49+08:00</updated>
-    <id>http://swmwlm.github.io/blog/2015/11/26/projectmanagementtools2</id>
-    <content type="html"><![CDATA[<p>进入命令提示符 输入netstat -ano 即可看到所有连接的PID 之后在任务管理器中找到这个PID所对应的程序如果任务管理器中没有PID这一项,可以在任务管理器中选"查看"-&ldquo;选择列&rdquo;</p>
-
-<p>经常，我们在启动应用的时候发现系统需要的端口被别的程序占用，如何知道谁占有了我们需要的端口，很多人都比较头疼，下面就介绍一种非常简单的方法，希望对大家有用</p>
-
-<!--more-->
-
-
-<p>假如我们需要确定谁占用了我们的9050端口
-1、Windows平台
-在windows命令行窗口下执行：
-1.查看所有的端口占用情况</p>
-
-<p>C:>netstat -ano</p>
-
-<p>  协议    本地地址                     外部地址               状态                   PID</p>
-
-<p>  TCP    127.0.0.1:1434         0.0.0.0:0              LISTENING       3236
-  TCP    127.0.0.1:5679         0.0.0.0:0              LISTENING       4168
-  TCP    127.0.0.1:7438         0.0.0.0:0              LISTENING       4168
-  TCP    127.0.0.1:8015         0.0.0.0:0              LISTENING       1456
-  TCP    192.168.3.230:139      0.0.0.0:0              LISTENING       4
-  TCP    192.168.3.230:1957     220.181.31.225:443     ESTABLISHED     3068
-  TCP    192.168.3.230:2020     183.62.96.189:1522     ESTABLISHED     1456
-  TCP    192.168.3.230:2927     117.79.91.18:80        ESTABLISHED     4732
-  TCP    192.168.3.230:2929     117.79.91.18:80        ESTABLISHED     4732
-  TCP    192.168.3.230:2930     117.79.91.18:80        ESTABLISHED     4732
-  TCP    192.168.3.230:2931     117.79.91.18:80        ESTABLISHED     4732</p>
-
-<p>2.查看指定端口的占用情况
-C:>netstat -aon|findstr &ldquo;9050&rdquo;</p>
-
-<p>  协议    本地地址                     外部地址               状态                   PID</p>
-
-<p>  TCP    127.0.0.1:9050         0.0.0.0:0              LISTENING       2016</p>
-
-<p>P: 看到了吗，端口被进程号为2016的进程占用，继续执行下面命令： （也可以去任务管理器中查看pid对应的进程）</p>
-
-<p>3.查看PID对应的进程
-C:>tasklist|findstr &ldquo;2016&rdquo;</p>
-
-<p> 映像名称                       PID 会话名              会话#       内存使用
- ========================= ======== ================
-  tor.exe                     2016 Console                 0     16,064 K</p>
-
-<p>P:很清楚吧，tor占用了你的端口。</p>
-
-<p>4.结束该进程</p>
-
-<p>C:>taskkill /f /t /im tor.exe</p>
-
-<blockquote><p>参考文档:<a href="http://www.cnblogs.com/moodlxs/p/4145384.html" title="参考文档">http://www.cnblogs.com/moodlxs/p/4145384.html</a></p></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Intellij IDEA自动编译不用每次make]]></title>
-    <link href="http://swmwlm.github.io/blog/2015/11/26/idea/"/>
-    <updated>2015-11-26T16:04:58+08:00</updated>
-    <id>http://swmwlm.github.io/blog/2015/11/26/idea</id>
-    <content type="html"><![CDATA[<p>最近使用IDEA来开发JAVA应用，对IDEA的界面很有爱，但是缺受不了它的运行速度。每次运行都要编译，所以就有了这边文章
-总感觉IDEA的编译速度比eclipse慢，eclipse每次保存都自动编译，而且运行的时候如果代码没有改变根本不会重新编译，但是IDEA这方便却不是，每次都要编译。通过google和自己的测试解决了这个问题。</p>
-
-<!--more-->
-
-
-<p>1：开启自动测试
-File->setting->compiler
-<img src="http://www.mincoder.com/images/201442/1oWXVOqCUeWWbu2w.png" alt="idea" />
-勾选上上面的，</p>
-
-<p>2修改run/debug配置
-Run->Edit Configurations</p>
-
-<p><img src="http://www.mincoder.com/images/201442/rUCWqfipDv3U7zYH.png" alt="idea" />
-看图 在Before Launch下面的make去掉了。到了这里还要做一件事情，执行File->Invalidate Caches /Restart</p>
-
-<p>到这里IDEA配置好了</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Linux安装jira6.3.6,安装破解以及数据导入的详细步骤]]></title>
-    <link href="http://swmwlm.github.io/blog/2015/11/21/projectmanagementtools/"/>
-    <updated>2015-11-21T18:42:49+08:00</updated>
-    <id>http://swmwlm.github.io/blog/2015/11/21/projectmanagementtools</id>
-    <content type="html"><![CDATA[<p>序言：</p>
-
-<p>JIRA 是澳大利亚 Atlassian 公司开发的一款优秀的问题跟踪管理软件工具，可以对各种类型的问题进行跟踪管理，包括缺陷、任务、需求、改进等。JIRA采用J2EE技术，能够跨平台部署。它正被广泛的开源软件组织，以及全球著名的公司使用。</p>
-
-<p> <!--more--></p>
-
-<p>JIRA产品非常完善且功能强大，安装配置简单，多语言支持、界面十分友好，和其他系统如CVS、Subversion（SVN）、VSS、LDAP、邮件服务整合得相当好，文档齐全，可用性以及可扩展性方面都十分出色，拥有完整的用户权限管理。</p>
-
-<p>环境：jira软件，192.xx8.171.xx0；jira数据库，192.xx8.171.xx2。
-1，下载</p>
-
-<p>官网下载地址：<a href="https://www.atlassian.com/software/jira/download%EF%BC%8C%E5%8F%AA%E7%9C%8B%E5%88%B0window%E4%B8%8B%E7%9A%84%E5%AE%89%E8%A3%85%E7%89%88%E6%9C%AC%EF%BC%8C%E8%BF%99%E4%B8%AA%E6%97%B6%E5%80%99%E9%9C%80%E8%A6%81%E7%82%B9%E5%87%BB?">https://www.atlassian.com/software/jira/download%EF%BC%8C%E5%8F%AA%E7%9C%8B%E5%88%B0window%E4%B8%8B%E7%9A%84%E5%AE%89%E8%A3%85%E7%89%88%E6%9C%AC%EF%BC%8C%E8%BF%99%E4%B8%AA%E6%97%B6%E5%80%99%E9%9C%80%E8%A6%81%E7%82%B9%E5%87%BB?</a> All JIRA download options选项，打开linux下载页面栏选项，选择JIRA 6.3.6 (TAR.GZ Archive)进行下载。wget <a href="http://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-6.3.6.tar.gz%EF%BC%8C%E4%B8%8D%E8%BF%87%E4%B8%8B%E6%AF%94%E8%BE%83%E7%BC%93%E6%85%A2%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%8E%BB%E6%88%91%E7%9A%84%E7%99%BE%E5%BA%A6%E4%BA%91%E7%BD%91%E7%9B%98%E5%9C%B0%E5%9D%80http://pan.baidu.com/s/1eQgTYKE%E4%B8%8B%E8%BD%BD%E3%80%82">http://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-6.3.6.tar.gz%EF%BC%8C%E4%B8%8D%E8%BF%87%E4%B8%8B%E6%AF%94%E8%BE%83%E7%BC%93%E6%85%A2%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%8E%BB%E6%88%91%E7%9A%84%E7%99%BE%E5%BA%A6%E4%BA%91%E7%BD%91%E7%9B%98%E5%9C%B0%E5%9D%80http://pan.baidu.com/s/1eQgTYKE%E4%B8%8B%E8%BD%BD%E3%80%82</a>
-2，安装
-2.1，安装jdk环境</p>
-
-<p>Linux下安装tomcat环境，参考：<a href="http://blog.csdn.net/mchdba/article/details/23769731">http://blog.csdn.net/mchdba/article/details/23769731</a></p>
-
-<p>Linux下安装jdk环境，参考：<a href="http://blog.csdn.net/mchdba/article/details/38768513">http://blog.csdn.net/mchdba/article/details/38768513</a></p>
-
-<p>2.2，建立目录</p>
-
-<p> mkdir –p /home/jira</p>
-
-<p> mv /root/atlassian-jira-6.3.6.tar.gz ./</p>
-
-<p>2.3，解压缩安装</p>
-
-<p> tar -xvf atlassian-jira-6.3.6.tar.gz</p>
-
-<p> cd atlassian-jira-6.3.6-standalone</p>
-
-<p> 因为8080端口已经被占用了，所以启动jira的时候会报错，找到server.xml，需要把默认的8080端口改成8081，大概在文件的第49行附件，修改方法如下：</p>
-
-<h1>先看下8081端口是否被占用</h1>
-
-<p>[root@name01 conf]# lsof -i:8081</p>
-
-<p>[root@name01 conf]#</p>
-
-<p>[root@name01 conf]# vim /home/jira/atlassian-jira-6.3.6-standalone/conf/server.xml</p>
-
-<h1>，</h1>
-
-<p>[root@name01 conf]# more server.xml |grep 8080</p>
-
-<p>[root@name01 conf]# more server.xml |grep 8081</p>
-
-<p>[root@name01 conf]#</p>
-
-<p>配置jira_home</p>
-
-<p>vim /home/jira/atlassian-jira-6.3.6-standalone/atlassian-jira/WEB-INF/classes/jira-application.properties</p>
-
-<p>jira.home = /home/jira_home
-2.4，启动jira</p>
-
-<p>[root@name01 bin]# /home/jira/atlassian-jira-6.3.6-standalone/bin/start-jira.sh</p>
-
-<p>To run JIRA in the foreground, start the server with start-jira.sh -fg</p>
-
-<p>……</p>
-
-<p>Server startup logs are located in /home/jira/atlassian-jira-6.3.6-standalone/logs/catalina.out</p>
-
-<p>Using CATALINA_BASE:   /home/jira/atlassian-jira-6.3.6-standalone</p>
-
-<p>Using CATALINA_HOME:   /home/jira/atlassian-jira-6.3.6-standalone</p>
-
-<p>Using CATALINA_TMPDIR: /home/jira/atlassian-jira-6.3.6-standalone/temp</p>
-
-<p>Using JRE_HOME:        /usr/lib/jvm/jdk1.6.0_35/jre</p>
-
-<p>Using CLASSPATH:       /home/jira/atlassian-jira-6.3.6-standalone/bin/bootstrap.jar:/home/jira/atlassian-jira-6.3.6-standalone/bin/tomcat-juli.jar</p>
-
-<p>Using CATALINA_PID:    /home/jira/atlassian-jira-6.3.6-standalone/work/catalina.pid</p>
-
-<p>Tomcat started.</p>
-
-<p>[root@name01 bin]#</p>
-
-<p>看到jira所在的Tomcat容器 已经启动成功。</p>
-
-<p>打开网址<a href="http://192.xx8.171.xxx:8081/%EF%BC%8C%E5%90%8E%E5%8F%B0tomcat%E6%97%A5%E5%BF%97%E6%8A%A5%E9%94%99%E5%A6%82%E4%B8%8B%EF%BC%9A">http://192.xx8.171.xxx:8081/%EF%BC%8C%E5%90%8E%E5%8F%B0tomcat%E6%97%A5%E5%BF%97%E6%8A%A5%E9%94%99%E5%A6%82%E4%B8%8B%EF%BC%9A</a></p>
-
-<p>2014-9-17 18:46:02 org.apache.catalina.core.StandardServer await</p>
-
-<p>严重: StandardServer.await: create[localhost:8005]:</p>
-
-<p>java.net.BindException: Address already in use</p>
-
-<pre><code>   at java.net.PlainSocketImpl.socketBind(Native Method)
-
-   at java.net.PlainSocketImpl.bind(PlainSocketImpl.java:383)
-
-   at java.net.ServerSocket.bind(ServerSocket.java:328)
-
-   at java.net.ServerSocket.(ServerSocket.java:194)
-
-   at org.apache.catalina.core.StandardServer.await(StandardServer.java:427)
-
-   at org.apache.catalina.startup.Catalina.await(Catalina.java:777)
-
-   at org.apache.catalina.startup.Catalina.start(Catalina.java:723)
-
-   at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-
-   at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
-
-   at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
-
-   at java.lang.reflect.Method.invoke(Method.java:597)
-
-   at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:321)
-
-   at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:455)
-</code></pre>
-
-<p>2014-9-17 18:46:02 org.apache.coyote.AbstractProtocol pause</p>
-
-<p>页面报错信息如下：</p>
-
-<p>JIRA Startup Failed</p>
-
-<p>Configured jira.home &lsquo;/home/jira/atlassian-jira-6.3.6-standalone&rsquo; must not be a parent directory of the webapp servlet path &lsquo;/home/jira/atlassian-jira-6.3.6-standalone/atlassian-jira&rsquo;</p>
-
-<hr />
-
-<p>Configured jira.home &lsquo;/home/jira/atlassian-jira-6.3.6-standalone&rsquo; must not be a parent directory of the webapp servlet path &lsquo;/home/jira/atlassian-jira-6.3.6-standalone/atlassian-jira&rsquo;</p>
-
-<p>重新设置一下jira.home，设置成不在本jira安装软件目录下，然后重启jira服务，打开jira网址，OK了，可以看到页面如下：</p>
-
-<p>3，汉化</p>
-
-<p>汉化包下载地址为：<a href="http://download.csdn.net/detail/mchdba/7941381%EF%BC%8C%E5%B0%86JIRA-Language-STD-CN.jar%E6%B1%89%E5%8C%96%E5%8C%85copy%E5%88%B0linux%E7%9A%84jira%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95">http://download.csdn.net/detail/mchdba/7941381%EF%BC%8C%E5%B0%86JIRA-Language-STD-CN.jar%E6%B1%89%E5%8C%96%E5%8C%85copy%E5%88%B0linux%E7%9A%84jira%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95</a> ，启动的时候注意jdk版本为jdk1.6系列，/home/jira/atlassian-jira-6.3.6-standalone/atlassian-jira/WEB-INF/lib下面，之后重启jira服务</p>
-
-<p>/home/jira/atlassian-jira-6.3.6-standalone/bin/shutdown.sh</p>
-
-<p>/home/jira/atlassian-jira-6.3.6-standalone/bin/start-jira.sh</p>
-
-<p>再打开<a href="http://192.168.171.230:8081/secure/SetupDatabase!default.jspa%EF%BC%8C%E5%B0%B1%E4%BC%9A%E7%9C%8B%E5%88%B0%E5%A6%82%E4%B8%8B%E6%B1%89%E5%8C%96%E7%95%8C%E9%9D%A2%EF%BC%9A">http://192.168.171.230:8081/secure/SetupDatabase!default.jspa%EF%BC%8C%E5%B0%B1%E4%BC%9A%E7%9C%8B%E5%88%B0%E5%A6%82%E4%B8%8B%E6%B1%89%E5%8C%96%E7%95%8C%E9%9D%A2%EF%BC%9A</a></p>
-
-<p>4，jira配置</p>
-
-<p>先建立jira数据库以及账号密码：
-mysql> CREATE DATABASE <code>jira636</code> /<em>!40100 DEFAULT CHARACTER SET utf8</em>/;</p>
-
-<p>Query OK, 1 row affected (0.13 sec)</p>
-
-<p>mysql> GRANT ALL ON jira636.* TO jira_user@&lsquo;%&rsquo; IDENTIFIED BY &lsquo;jira_user0919&rsquo;;</p>
-
-<p>Query OK, 0 rows affected (0.38 sec)</p>
-
-<p>mysql></p>
-
-<p>在界面配置好数据库连接信息，然后点击“下一”按钮，如下图所示：</p>
-
-<p>如果报错，找不到类: com.mysql.jdbc.Driver</p>
-
-<p>需要将jdbc驱动包mysql-connector-java-5.1.25-bin.jar复制到/home/jira/atlassian-jira-6.3.6-standalone/atlassian-jira/WEB-INF/lib目录下面，然后重启，有报错信息如下：</p>
-
-<p>JIRA Startup Failed</p>
-
-<p>org.ofbiz.core.entity.GenericDataSourceException: SQL Exception while executing the following:SELECT pluginkey, pluginenabled FROM pluginstate (Table &lsquo;jira636.pluginstate&rsquo; doesn&rsquo;t exist)</p>
-
-<p>解决办法：删除数据库配置文件dbconfig.xml，然后重新启动jira，重新配置</p>
-
-<p>PS：汉化后报错，是因为汉化版本有问题，将JIRA-Language-STD-CN.jar汉化包换成JIRA-6.3.3-language-pack-zh_CN.jar新的汉化包下载地址为：</p>
-
-<p><a href="http://download.csdn.net/download/mchdba/7943421%EF%BC%8C%E5%85%88%E9%85%8D%E7%BD%AEDB%EF%BC%8C%E5%A6%82%E4%B8%8B%E5%9B%BE%E6%89%80%E7%A4%BA%EF%BC%9A">http://download.csdn.net/download/mchdba/7943421%EF%BC%8C%E5%85%88%E9%85%8D%E7%BD%AEDB%EF%BC%8C%E5%A6%82%E4%B8%8B%E5%9B%BE%E6%89%80%E7%A4%BA%EF%BC%9A</a></p>
-
-<p>配置完数据库之后，在新界面录入程序标题，点击“向后”按钮</p>
-
-<p>输入临时授权码，进行注册：</p>
-
-<p>注册完之后，填写管理员账户和密码</p>
-
-<p>之后配置邮件服务器，点击“完成”按钮，如下所示，</p>
-
-<p>之后，JIRA安装正式完成，如下自动跳转到JIRA管理页面，如下所示：</p>
-
-<p>5，破解授权</p>
-
-<p>点击右上角齿轮形状的管理图标，选择“系统”，再选择“授权”，看到使用日期不到1个月，如下所示：</p>
-
-<p>将附件中的atlassian-extras-2.2.2.jar替换你的JIRA的安装目录的\atlassian-jira\WEB-INF\lib同名jar包，破解包下载地址为：<a href="http://download.csdn.net/detail/mchdba/7950429%E3%80%82">http://download.csdn.net/detail/mchdba/7950429%E3%80%82</a></p>
-
-<p>填写授权码，授权码参数范例如下：</p>
-
-<p>Description=JIRA: Commercial,</p>
-
-<p>CreationDate=你的安装日期，格式（yyyy-mm-dd）,</p>
-
-<p>jira.LicenseEdition=ENTERPRISE,</p>
-
-<p>Evaluation=false,</p>
-
-<p>jira.LicenseTypeName=COMMERCIAL,</p>
-
-<p>jira.active=true,</p>
-
-<p>licenseVersion=2,</p>
-
-<p>MaintenanceExpiryDate=你想设置的失效日期如：2099-12-31,</p>
-
-<p>Organisation=joiandjoin,</p>
-
-<p>SEN=你申请到的SEN注意没有前缀LID,</p>
-
-<p>ServerID=你申请到的ServerID,</p>
-
-<p>jira.NumberOfUsers=-1,</p>
-
-<p>LicenseID=LID你申请到的SEN，注意LID前缀不要丢掉,</p>
-
-<p>LicenseExpiryDate=你想设置的失效日期如：2099-12-31,</p>
-
-<p>PurchaseDate=你的安装日期，格式（yyyy-mm-dd）</p>
-
-<p>本次安装授权码实例为：</p>
-
-<p>Description=JIRA: Commercial,</p>
-
-<p>CreationDate=2014-09-20,</p>
-
-<p>jira.LicenseEdition=ENTERPRISE,</p>
-
-<p>Evaluation=false,</p>
-
-<p>jira.LicenseTypeName=COMMERCIAL,</p>
-
-<p>jira.active=true,</p>
-
-<p>licenseVersion=2,</p>
-
-<p>MaintenanceExpiryDate=2099-12-31,</p>
-
-<p>Organisation=pl,</p>
-
-<p>SEN=SEN-L4572887,</p>
-
-<p>ServerID=BPT3-4QRK-FCRR-HEP3,</p>
-
-<p>jira.NumberOfUsers=-1,</p>
-
-<p>LicenseID=AAABBw0ODAoPeNptkFtLxDAQhd/zKwI+R9Kwy66FPKxthGhvtF0p4kuso0a6sUwvuP/edissyj4MD</p>
-
-<p>HPOfHOYqzu0tICWeoJy4a+FzzkNwpIK7q1ICF2Ntu3tl5P3Ot89+1SNphnMPCEBwqkJTQ9y9jN+w</p>
-
-<p>zxBPi2a68jW4DpQr/a0rZJS5VmuC0XOBNnjAH/s5bGFxBxABmkcqzzQu2jRTd3bEZaFZvE+AnYzR</p>
-
-<p>JDYWNeDM64G9d1aPJ4TeXxOlOK7cbZbjrbNgkyGwwtg+rbvJpBkHikAR0Adytt0XzFV7R5Y+qQzV</p>
-
-<p>kWZIoVK5FQsWq03YrvdkN/Ekz3S4SXlcpRswPrDdPD/aT+P1nzDMC0CFQCM9+0LlHVNnZQnSTwuR</p>
-
-<p>O3eK+2gVgIUCteTs4Q3khIgrnsY64hxYB/d8bM=X02dh,</p>
-
-<p>LicenseExpiryDate=2099-12-31,</p>
-
-<p>PurchaseDate=2014-09-20</p>
-
-<p>将以上授权码信息填入授权码输入框，点击“增加”按钮，如下所示：</p>
-
-<p>之后，看到授权信息更新了，就表示破解成功，会看到如下成功信息, 如下图：</p>
-
-<p>6，恢复数据</p>
-
-<p>输入授权码：</p>
-
-<p>AAABBw0ODAoPeNptkFtLxDAQhd/zKwI+R9Kwy66FPKxthGhvtF0p4kuso0a6sUwvuP/edissyj4MD</p>
-
-<p>HPOfHOYqzu0tICWeoJy4a+FzzkNwpIK7q1ICF2Ntu3tl5P3Ot89+1SNphnMPCEBwqkJTQ9y9jN+w</p>
-
-<p>zxBPi2a68jW4DpQr/a0rZJS5VmuC0XOBNnjAH/s5bGFxBxABmkcqzzQu2jRTd3bEZaFZvE+AnYzR</p>
-
-<p>JDYWNeDM64G9d1aPJ4TeXxOlOK7cbZbjrbNgkyGwwtg+rbvJpBkHikAR0Adytt0XzFV7R5Y+qQzV</p>
-
-<p>kWZIoVK5FQsWq03YrvdkN/Ekz3S4SXlcpRswPrDdPD/aT+P1nzDMC0CFQCM9+0LlHVNnZQnSTwuR</p>
-
-<p>O3eK+2gVgIUCteTs4Q3khIgrnsY64hxYB/d8bM=X02dh</p>
-
-<p>点击恢复，开始恢复数据，如下所示：</p>
-
-<p>Linux下24M的jira数据文件导入很快，4分钟导入完毕，如下所示：</p>
-
-<p>如果导入报错：</p>
-
-<p>解析文件时发生错误。你的导入文件不正确。 可能是由于文件中含有旧版本的CDATA (<a href="http://jira.atlassian.com/browse/JRA-4980">http://jira.atlassian.com/browse/JRA-4980</a>)。 异常错误 org.xml.sax.SAXParseException; lineNumber: 168270; columnNumber: 16; XML document structures must start and end within the same entity.</p>
-
-<p>解决办法：选择Disable按钮而不选择Enable按钮，如下所示：</p>
-
-<p> 此致，JIRA最新Linux版本6.3.6安装破解以及数据迁移，成功完毕。</p>
-
-<blockquote><p>参考文档:<a href="http://blog.itpub.net/26230597/viewspace-1275597/" title="参考文档">http://blog.itpub.net/26230597/viewspace-1275597/</a></p></blockquote>
-]]></content>
-  </entry>
-  
-</feed>
+</body>
+</html>

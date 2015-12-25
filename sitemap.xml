@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://swmwlm.github.io/blog/2015/12/25/mysql-procedure/</loc>
+    <lastmod>2015-12-25T14:28:58+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://swmwlm.github.io/blog/2015/12/18/chocolatey/</loc>
     <lastmod>2015-12-18T15:28:58+08:00</lastmod>
   </url>
@@ -44,25 +48,10 @@
     <loc>http://swmwlm.github.io/archives/tags.html</loc>
   </url>
   <url>
-    <loc>http://swmwlm.github.io/blog/categories/linux/</loc>
-  </url>
-  <url>
-    <loc>http://swmwlm.github.io/blog/categories/java/</loc>
-  </url>
-  <url>
-    <loc>http://swmwlm.github.io/blog/categories/windows/</loc>
-  </url>
-  <url>
-    <loc>http://swmwlm.github.io/blog/categories/octopress/</loc>
-  </url>
-  <url>
-    <loc>http://swmwlm.github.io/blog/categories/git/</loc>
+    <loc>http://swmwlm.github.io/tags/octopress/</loc>
   </url>
   <url>
     <loc>http://swmwlm.github.io/tags/seo/</loc>
-  </url>
-  <url>
-    <loc>http://swmwlm.github.io/tags/octopress/</loc>
   </url>
   <url>
     <loc>http://swmwlm.github.io/tags/idea/</loc>
@@ -84,5 +73,29 @@
   </url>
   <url>
     <loc>http://swmwlm.github.io/tags/chocolatey/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/tags/mysql/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/tags/procedure/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/blog/categories/linux/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/blog/categories/java/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/blog/categories/windows/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/blog/categories/octopress/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/blog/categories/git/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/blog/categories/mysql/</loc>
   </url>
 </urlset>

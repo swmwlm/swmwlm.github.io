@@ -4,7 +4,7 @@
   <title><![CDATA[Tag:Windows | Topking's Blog]]></title>
   <link href="http://swmwlm.github.io/tags/windows/atom.xml" rel="self"/>
   <link href="http://swmwlm.github.io/"/>
-  <updated>2015-12-18T17:34:43+08:00</updated>
+  <updated>2015-12-25T16:27:56+08:00</updated>
   <id>http://swmwlm.github.io/</id>
   <author>
     <name><![CDATA[Topking]]></name>
@@ -29,7 +29,7 @@
 
 <p><strong>如何安装</strong>： 具体参见 <a href="https://chocolatey.org/">Chocolatey主页</a> ，就现在 （2015-12-18） 的安装方式如下：</p>
 
-<pre><code>iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+<pre><code>@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" &amp;&amp; SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
 </code></pre>
 
 <p>安装软命令 choco install, 短写是 cinst</p>
