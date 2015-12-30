@@ -1,0 +1,559 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>ajax分页时，点击第N页链接，回退会返回第一页解决方法 - Topking's Blog</title>
+  <meta name="author" content="Topking">
+
+  
+  <meta name="description" content="ajax分页时，点击第N页链接，回退会返回第一页解决方法">
+  <meta name="keywords" content="ajax分页,回退">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://swmwlm.github.io/blog/2015/12/30/ajax-backspace/">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Topking's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+
+  <!--点击图片弹出层-->
+  <script src="/javascripts/libs/jquery-ui.js"></script>
+  <link href="/stylesheets/jquery-ui.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/imgpop.js"></script>
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" />
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!--删除Google font-->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+
+<!-- 设置链接在新窗口打开 -->
+<script>
+  function addBlankTargetForLinks () {
+    $('a[href^="http"]').each(function(){
+      $(this).attr('target', '_blank');
+    });
+  }
+  $(document).bind('DOMNodeInserted', function(event) {
+    addBlankTargetForLinks();
+  });
+</script>
+
+<!-- 展示图片 -->
+<script type="text/javascript">
+//jQuery.noConflict(); // ender.js conflicts with jQuery
+</script>
+
+<script language="Javascript" type="text/javascript">
+// ender.js gobbles jQuery's ready event: Use ender.js $ instead
+$(document).ready(function() {
+    jQuery(".fancybox").fancybox();
+});
+</script>
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1></h1>
+  <div>
+  	<a style="font-size: 2.2em;color: #F2F2F2;text-decoration: none;" href="/">Topking's Blog</a>
+	  
+	    <h2>Seize the day, enjoy my life!</h2>
+	  
+  </div>
+  
+</hgroup>
+
+</header>
+<!--   <div id="banner_img"></div> -->
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.baidu.com" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="swmwlm.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <!-- <li><a href="/blog/categories/projecmanagementtools">ProjecManagementTools</a></li> -->
+  <li><a href="/aboutme">AboutMe</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h2 class="entry-title">ajax分页时，点击第N页链接，回退会返回第一页解决方法</h2>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-12-30T14:28:58+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>2:28 pm</span></time>
+        
+        
+            | <a href="#comments">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>1. 问题产生的描述</h2>
+
+<p>　　ajax做列表数据分页时，例如，当点击跳转至第三页后，点击一个链接，跳转至详情页，再点后退就是返回第一页列表数据了，怎么能使他还是第三页？</p>
+
+<!--more-->
+
+
+<p>　　AJAX可以做出各种效果来，但是有一点始终是不好解决，那就是回退和刷新的问题。
+由于在AJAX的异步机制，即使页面大部分被替换掉，浏览器地址栏也不会有变化，地址栏没有变化，当然就不存在历史记录了，没有历史纪录，of course就没有办法回退或者在刷新之后出现期望的内容了。
+　　所以问题的所在就是地址栏，如何产生有效地地址呢？那首先就要明白一个URL是如何构成的：例如：</p>
+
+<p>　　　　<a href="http://www.example.com:8080/test.cgi?op=hello&amp;cd=1#339933=ass?xa">http://www.example.com:8080/test.cgi?op=hello&amp;cd=1#339933=ass?xa</a></p>
+
+<p>　　　　这个URL地址分为几个部分：</p>
+
+<p>　　　　协议：http</p>
+
+<p>　　　　主机：www.example.com</p>
+
+<p>　　　　端口：8080 （http的缺省端口是80）</p>
+
+<p>　　　　路径：/test.cgi</p>
+
+<p>　　　　search键：?op=hello&amp;cp=1</p>
+
+<p>　　　　hash键：#339933=ass?xa</p>
+
+<p>　　除了hash键的更动，其他任意部分的更动都会引起页面的重载。所以只有选择hash键来保存一些状态了。</p>
+
+<p>　　也就是说，我们记录中间状态的存储器有了，但是该如何使用呢，这就需要解释器来重现存储器的内容了。
+说的更基础原理一点（相信不懂基础原理的专业人士还是不多，而不是专业人员也没兴趣看这个），就像内存映像，多任务OS切换任务是很频繁的，在每次切换任务的时候操统要干两件事：一个就是保存上一个程序的中间状态，以方便下次加载程序；另一件事就是加载下一个程序的状态，使得这个程序能接着上次调度的结果运行。</p>
+
+<p>所以，我们要做一个类似于切换程序用的解释器。这里解释器大致有三件事：1.定义存储器的使用规则，也就是说hash键主要有哪些部分组成，什么字段用在什么地方干嘛用；二：切换之前清场，将该保存的保存，该为新页面铺垫也不能漏了；三：根据新的hash键生成新的页面。</p>
+
+<p>这个解释器呢，是与具体应用相关的，所以具体细节是需要研究业务的。但是在其中有个技术问题需要注意：
+解释器是如何激活的？这里面涉及到IE和firefox的差异。</p>
+
+<p>HASH键的改变在FireFox是会产生历史纪录的，而在IE中没这回事，所以这需要区别对待。以下是基本流程：
+1）onload函数调用解释器的加载页面部分；
+2）加载新页面之前生成相对应得HASH键；
+3）针对FireFox可以直接更改地址栏，加载页面；针对IE要使用IFRAME，更改IFRAME的src的URL的search键为hash键，然后再由IFRAME加载的页面的onload函数调用解释器的加载页面部分，要记得一点：IFRAME的display样式设为none，要不会有些小毛小病的。</p>
+
+<p>具体技术呢，大致写两页投稿是没有问题的，我还是比较懒，就不多写了。大致原理讲到了，能者就会了，不能者可以钻研一下。</p>
+
+<p>忘了说了，刷新的问题实在是没有什么好招了，以上的方法虽然可以在刷新之后得到正确的页面，但是地址栏的历史纪录大概是丢了不少了，这也是没有办法的事情，有得必有失，浏览器在平衡安全和性能，使用浏览器的也需要权衡些东东。</p>
+
+<h2>2. 案例解决</h2>
+
+<p>　　有了上面的理论作为支撑，也找到了在实际开发中的解决方案： 比较好的方法是用location.hash 来记录，比如在跳转至第3页的时候，先用js 保存当前的location.hash为3：</p>
+
+<pre><code>location.hash="3"; 
+</code></pre>
+
+<p>这样的操作不会导致页面刷新，但是却会被记录到浏览器历史里面。等到返回上一页等操作的时候，在加载初始化数据之前，先看看有没有location.hash，有的话就从里面恢复当前的页码，否则就加载第一页。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">currentPage</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//location.hash会以#3形式出现；截去#，保留页数进行传递</span>
+</span><span class='line'><span class="k">if</span><span class="p">(</span><span class="nx">location</span><span class="p">.</span><span class="nx">hash</span><span class="p">){</span><span class="c1">//////////////////////////////////第二步.根据页面跳转时，存在于location.hash记录的页码进行调用ajax</span>
+</span><span class='line'>    <span class="nx">currentPage</span><span class="o">=</span><span class="nx">location</span><span class="p">.</span><span class="nx">hash</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="nx">location</span><span class="p">.</span><span class="nx">hash</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="c1">//使用kkpager，产生分页</span>
+</span><span class='line'><span class="nx">template</span><span class="p">.</span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;generPagination&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">pageNo</span><span class="p">,</span> <span class="nx">totalPage</span><span class="p">,</span> <span class="nx">totalRecord</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//生成分页控件</span>
+</span><span class='line'>    <span class="nx">kkpager</span><span class="p">.</span><span class="nx">generPageHtml</span><span class="p">({</span>
+</span><span class='line'>        <span class="nx">pagerid</span><span class="o">:</span> <span class="s1">&#39;kkpager&#39;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">pno</span><span class="o">:</span> <span class="nx">pageNo</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">mode</span><span class="o">:</span> <span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="c1">//设置为click模式</span>
+</span><span class='line'>        <span class="c1">//总页码</span>
+</span><span class='line'>        <span class="nx">total</span><span class="o">:</span> <span class="nx">totalPage</span><span class="p">,</span>
+</span><span class='line'>        <span class="c1">//总数据条数</span>
+</span><span class='line'>        <span class="nx">totalRecords</span><span class="o">:</span> <span class="nx">totalRecord</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">isGoPage</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">isShowCurrPage</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">isShowTotalPage</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>        <span class="c1">//点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click</span>
+</span><span class='line'>        <span class="c1">//适用于不刷新页面，比如ajax</span>
+</span><span class='line'>        <span class="nx">click</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="c1">//这里可以做自已的处理</span>
+</span><span class='line'>            <span class="nx">searchPro</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
+</span><span class='line'>            <span class="c1">//处理完后可以手动条用selectPage进行页码选中切换</span>
+</span><span class='line'>            <span class="k">this</span><span class="p">.</span><span class="nx">selectPage</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
+</span><span class='line'>            <span class="nx">location</span><span class="p">.</span><span class="nx">hash</span><span class="o">=</span><span class="nx">n</span><span class="p">;</span><span class="c1">///////////////////////////第一步.在做页面点击跳转的时候，记录当前的页码</span>
+</span><span class='line'>            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="c1">//getHref是在click模式下链接算法，一般不需要配置，默认代码如下</span>
+</span><span class='line'>        <span class="nx">getHref</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="s1">&#39;#&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">},</span> <span class="kc">true</span><span class="p">);</span><span class="c1">//这里true，很重要，自己扒源码看</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//ajax搜索项目</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">searchPro</span><span class="p">(</span><span class="nx">pageNo</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+</span><span class='line'>        <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;${path}/activity/searchProjectList&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;post&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">pageNo</span><span class="o">:</span> <span class="nx">pageNo</span><span class="p">,</span> <span class="nx">words</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#words&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span> <span class="nx">orderBy</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.xmzs .p-top ul .selectblue&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;orderBy&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="nx">dataType</span><span class="o">:</span> <span class="s2">&quot;json&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">template</span><span class="p">(</span><span class="s1">&#39;searchProjectsTemplate&#39;</span><span class="p">,</span> <span class="nx">result</span><span class="p">.</span><span class="nx">mapRet</span><span class="p">);</span>
+</span><span class='line'>                <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#projectList&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">html</span><span class="p">);</span>
+</span><span class='line'>                <span class="nx">fnRadialIndicatorExec</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+</div>
+
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Topking</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-12-30T14:28:58+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>2:28 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ajax/'>ajax</a>
+  
+</span>
+
+
+      
+
+<span class="tags">
+  
+    <a class='tag' href='/tags/ajax/'>ajax</a>, <a class='tag' href='/tags/kkpager/'>kkpager</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  
+    <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/12/25/mysql-procedure/" title="Previous Post: MySQL数据库存储过程动态表建立">&laquo; MySQL数据库存储过程动态表建立</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="comments" aria-live="polite"><!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/blog/2015/12/30/ajax-backspace" data-title="ajax分页时，点击第N页链接，回退会返回第一页解决方法" data-url="http://swmwlm.github.io/blog/2015/12/30/ajax-backspace/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"swmwlm"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end --></div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Bo main introduction</h1>
+  <ul id="myprofile">
+      <li>
+        Omitted here a million words...
+      </li>
+  </ul>
+</section><section>
+  <h1>Sina Weibo</h1>
+  <ul id="weibo">
+      <li>
+        <!-- 在此插入获得的微博秀代码 -->
+    	<iframe width="100%" height="120" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=120&fansRow=2&ptype=1&speed=0&skin=2&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=3243057067&verifier=cf37004f&dpc=1"></iframe>
+      </li>
+  </ul>
+</section><section>
+<h1>Tag Cloud</h1>
+    <!-- <span id="Tag-cloud"><li><a style="font-size: 100%" href="/tags/git/">Git</a></li>
+<li><a style="font-size: 100%" href="/tags/linux/">Linux</a></li>
+<li><a style="font-size: 100%" href="/tags/octopress/">OctoPress</a></li>
+<li><a style="font-size: 100%" href="/tags/seo/">SEO</a></li>
+<li><a style="font-size: 100%" href="/tags/windows/">Windows</a></li>
+<li><a style="font-size: 100%" href="/tags/ajax/">ajax</a></li>
+<li><a style="font-size: 100%" href="/tags/chocolatey/">chocolatey</a></li>
+<li><a style="font-size: 100%" href="/tags/idea/">idea</a></li>
+<li><a style="font-size: 100%" href="/tags/kkpager/">kkpager</a></li>
+<li><a style="font-size: 100%" href="/tags/mysql/">mysql</a></li>
+<li><a style="font-size: 100%" href="/tags/octopress/">octopress</a></li>
+<li><a style="font-size: 100%" href="/tags/procedure/">procedure</a></li>
+<li><a style="font-size: 100%" href="/tags/windows/">windows</a></li>
+</span> -->
+    <span id="Tag-cloud"><a style="font-size: 100%" href="/tags/git/">Git</a>
+<a style="font-size: 100%" href="/tags/linux/">Linux</a>
+<a style="font-size: 100%" href="/tags/octopress/">OctoPress</a>
+<a style="font-size: 100%" href="/tags/seo/">SEO</a>
+<a style="font-size: 100%" href="/tags/windows/">Windows</a>
+<a style="font-size: 100%" href="/tags/ajax/">ajax</a>
+<a style="font-size: 100%" href="/tags/chocolatey/">chocolatey</a>
+<a style="font-size: 100%" href="/tags/idea/">idea</a>
+<a style="font-size: 100%" href="/tags/kkpager/">kkpager</a>
+<a style="font-size: 100%" href="/tags/mysql/">mysql</a>
+<a style="font-size: 100%" href="/tags/octopress/">octopress</a>
+<a style="font-size: 100%" href="/tags/procedure/">procedure</a>
+<a style="font-size: 100%" href="/tags/windows/">windows</a>
+</span>
+</ul>
+</section>
+<section>
+  <h1>Category Cloud</h1>
+    <span id="category-tag-cloud"><a href='/blog/categories/ajax' style='font-size: 130.0%'>Ajax(1)</a> <a href='/blog/categories/git' style='font-size: 130.0%'>Git(1)</a> <a href='/blog/categories/java' style='font-size: 160.0%'>Java(2)</a> <a href='/blog/categories/linux' style='font-size: 160.0%'>Linux(2)</a> <a href='/blog/categories/mysql' style='font-size: 130.0%'>Mysql(1)</a> <a href='/blog/categories/octopress' style='font-size: 130.0%'>Octopress(1)</a> <a href='/blog/categories/windows' style='font-size: 160.0%'>Windows(2)</a> </span>
+</section>
+<section>
+  <h1>Top Categories</h1>
+    <ul id="top-category-list"><li><a href='/blog/categories/linux'>Linux (2)</a></li><li><a href='/blog/categories/java'>Java (2)</a></li><li><a href='/blog/categories/windows'>Windows (2)</a></li><li><a href='/blog/categories/octopress'>Octopress (1)</a></li><li><a href='/blog/categories/git'>Git (1)</a></li><li><a href='/blog/categories/mysql'>Mysql (1)</a></li><li><a href='/blog/categories/ajax'>Ajax (1)</a></li></ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/12/30/ajax-backspace/">ajax分页时，点击第N页链接，回退会返回第一页解决方法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/12/25/mysql-procedure/">MySQL数据库存储过程动态表建立</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/12/18/chocolatey/">利用Chocolatey快速在Windows下搭建一个开发环境</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/12/17/git/">Git命令</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/12/12/linuxgroup/">Linux下新增修改删除查看用户和用户组</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/swmwlm">@swmwlm</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'swmwlm',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+<section>
+<h1>Blog Href</h1>
+<ul>
+        <li>
+        <a href="http://812lcl.com//">812lcl的博客</a>
+        </li>
+        <li>
+        <a href="http://www.csdn.net/">CSDN</a>
+        </li>
+        <li>
+        <a href="http://www.cnblogs.com/">博客园</a>
+        </li>
+        <li>
+        <a href="http://coolshell.cn/">酷壳CoolShell</a>
+        </li>
+        <li>
+        <a href="http://www.cnblogs.com/Solstice/">陈硕</a>
+        </li>
+</ul>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Topking -
+  <span class="credit">Powered by <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256815831'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1256815831%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script></span>
+</p>
+<div id="full" style="width:0px; height:0px; position:fixed; right:180px; bottom:150px; z-index:100; text-align:center; background-color:transparent; cursor:pointer;">
+        <a href="#" onclick="goTop();return false;"><img src="/images/top.png" border=0 alt="返回顶部"></a>
+</div>
+<script src="/javascripts/top.js" type="text/javascript"></script>
+</footer>
+  
+
+
+
+
+
+
+<!-- 
+ -->
+
+
+
+</body>
+</html>

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://swmwlm.github.io/blog/2015/12/30/ajax-backspace/</loc>
+    <lastmod>2015-12-30T14:28:58+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://swmwlm.github.io/blog/2015/12/25/mysql-procedure/</loc>
     <lastmod>2015-12-25T14:28:58+08:00</lastmod>
   </url>
@@ -81,6 +85,12 @@
     <loc>http://swmwlm.github.io/tags/procedure/</loc>
   </url>
   <url>
+    <loc>http://swmwlm.github.io/tags/ajax/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/tags/kkpager/</loc>
+  </url>
+  <url>
     <loc>http://swmwlm.github.io/blog/categories/linux/</loc>
   </url>
   <url>
@@ -97,5 +107,8 @@
   </url>
   <url>
     <loc>http://swmwlm.github.io/blog/categories/mysql/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/blog/categories/ajax/</loc>
   </url>
 </urlset>

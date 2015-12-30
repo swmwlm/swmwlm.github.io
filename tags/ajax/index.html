@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>利用Chocolatey快速在Windows下搭建一个开发环境 - Topking's Blog</title>
+  <title>Tag:ajax - Topking's Blog</title>
   <meta name="author" content="Topking">
 
   
-  <meta name="description" content="利用choco快速在Windows下搭建一个开发环境">
-  <meta name="keywords" content="choco install, chocolatey">
+  <meta name="description" content="Tag: ajax">
+  
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://swmwlm.github.io/blog/2015/12/18/chocolatey/">
+  <link rel="canonical" href="http://swmwlm.github.io/tags/ajax/">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Topking's Blog" type="application/atom+xml">
@@ -104,197 +104,43 @@ $(document).ready(function() {
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry" role="article">
+<article role="article">
   
   <header>
-    
-      <h2 class="entry-title">利用Chocolatey快速在Windows下搭建一个开发环境</h2>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-12-18T15:28:58+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>3:28 pm</span></time>
-        
-        
-            | <a href="#comments">Comments</a>
-        
-      </p>
+    <h1 class="entry-title">Tag:ajax</h1>
     
   </header>
-
-
-<div class="entry-content"><p>在 Linux 下，可以使用 apt-get或者yum 来安装应用程序，在 windows 下，现在可以使用 Chocolatey 来载搭建一个开发环境。</p>
-
-<!--more-->
-
-
-<p>Chocolatey NuGet is a Machine Package Manager, somewhat like apt-get, but built with Windows in mind.</p>
-
-<p>注： Chocolatey 只是把官方下载路径封装到了 Chocolatey 中，所以下载源都是其官方路径，所以下载的一定是合法的，但是如果原软件是需要 Licence 注册的话，那么 Chocolatey 下载安装好的软件还是需要你去购买注册。不过 Chocolatey 一般还是会选用免费 Licence 可用的软件。</p>
-
-<p><strong>如何安装</strong>： 具体参见 <a href="https://chocolatey.org/">Chocolatey主页</a> ，就现在 （2015-12-18） 的安装方式如下：</p>
-
-<pre><code>@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" &amp;&amp; SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
-</code></pre>
-
-<p>安装软命令 choco install, 短写是 cinst</p>
-
-<p>可安装的应用程序，可以参见其 <a href="https://chocolatey.org/packages">Package 列表</a></p>
-
-<p>安装 git</p>
-
-<pre><code>choco install git.install 
-</code></pre>
-
-<p>安装 node</p>
-
-<pre><code>choco install nodejs.install 
-</code></pre>
-
-<p>安装 Microsoft Visual C++ 2010 Redistributable Package</p>
-
-<pre><code>choco install nodejs.install 
-</code></pre>
-
-<p>安装 vagrant</p>
-
-<pre><code>choco install vagrant
-</code></pre>
-
-<p>安装 virtual box</p>
-
-<pre><code>choco install virtualbox 
-</code></pre>
-
-<p>安装编辑器 notepad++/atom/sublime （另外还有各种IDE，不列出了）</p>
-
-<pre><code>choco install notepadplusplus.install
-choco install Atom
-choco install SublimeText3 
-</code></pre>
-
-<p>安装 Ruby</p>
-
-<pre><code>choco install ruby
-</code></pre>
-
-<p>安装 Python</p>
-
-<pre><code>choco install python
-</code></pre>
-
-<p>另外，如果要搭建一个本地的CI系统，可以下载Java环境和Jenkins</p>
-
-<p>安装 Java JDK7 或 JDK8</p>
-
-<pre><code>choco install jdk7 
-</code></pre>
-
-<p>或</p>
-
-<pre><code>choco install jdk8 
-</code></pre>
-
-<p>安装 Jenkins</p>
-
-<pre><code>choco install jenkins 
-</code></pre>
-
-<p>这样基本上就可以建立一个强大开发环境了，包含了基本上所有的命令行语言运行环境，构建依赖库，Vagrant， 编辑器， virtual box 以及一个 强大 CI 系统。 其他应用可以根据自己需要从 Package 列表中寻找。</p>
-
-</div>
+  
+  <div id="blog-archives" class="tag">
 
 
 
-  <footer>
-    <p class="meta">
-      
+  
+  <h2>2015</h2>
+
+<article>
   
 
-<span class="byline author vcard">Posted by <span class="fn">Topking</span></span>
+<h1><a href="/blog/2015/12/30/ajax-backspace/">ajax分页时，点击第N页链接，回退会返回第一页解决方法</a></h1>
+<time datetime="2015-12-30T14:28:58+08:00" pubdate><span class='month'>Dec</span> <span class='day'>30</span> <span class='year'>2015</span></time>
 
-      
+<footer>
 
-
-
-
-<time class='entry-date' datetime='2015-12-18T15:28:58+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>3:28 pm</span></time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/windows/'>windows</a>
-  
-</span>
+  <span class="categories">posted in <a class='category' href='/blog/categories/ajax/'>ajax</a></span>
 
 
-      
+  <span class="tags">tagged with <a class='tag' href='/tags/ajax/'>ajax</a>, <a class='tag' href='/tags/kkpager/'>kkpager</a></span>
 
-<span class="tags">
-  
-    <a class='tag' href='/tags/windows/'>Windows</a>, <a class='tag' href='/tags/chocolatey/'>chocolatey</a>
-  
-</span>
+</footer>
 
 
-    </p>
-    
-      <div class="sharing">
-  
-  
-  
-  
-    <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style_24x24">
-	<a class="jiathis_button_qzone"></a>
-	<a class="jiathis_button_tsina"></a>
-	<a class="jiathis_button_tqq"></a>
-	<a class="jiathis_button_weixin"></a>
-	<a class="jiathis_button_renren"></a>
-	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-	<a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2015/12/17/git/" title="Previous Post: git命令">&laquo; git命令</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2015/12/25/mysql-procedure/" title="Next Post: MySQL数据库存储过程动态表建立">MySQL数据库存储过程动态表建立 &raquo;</a>
-      
-    </p>
-  </footer>
 </article>
 
+</div>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="comments" aria-live="polite"><!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="/blog/2015/12/18/chocolatey" data-title="利用Chocolatey快速在Windows下搭建一个开发环境" data-url="http://swmwlm.github.io/blog/2015/12/18/chocolatey/"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"swmwlm"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- 多说公共JS代码 end --></div>
-  </section>
+  
+</article>
+
 
 </div>
 
