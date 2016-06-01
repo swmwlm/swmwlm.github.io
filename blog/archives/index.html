@@ -9,9 +9,8 @@
   <meta name="author" content="Topking">
 
   
-  <meta name="description" content="Blog Archive 2015 ajax分页时，点击第N页链接，回退会返回第一页解决方法
-Dec 30 2015 posted in ajax tagged with ajax, kkpager MySQL数据库存储过程动态表建立
-Dec 25 2015 posted in mysql &hellip;">
+  <meta name="description" content="Blog Archive 2015 使用tengine DSO 来动态编译安装第三方模块（Lua-nginx-module）
+Dec 30 2015 posted in nginx tagged with nginx, tengine ajax分页时，点击第N页链接，回退会返回第一页解决方法 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -24,6 +23,7 @@ Dec 25 2015 posted in mysql &hellip;">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Topking's Blog" type="application/atom+xml">
+  <script src="/javascripts/md5.min.js"></script>
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
 
@@ -119,6 +119,26 @@ $(document).ready(function() {
 
   
   <h2>2015</h2>
+
+<article>
+  
+
+<h1><a href="/blog/2015/12/30/tengine-add-thirdparty-module-dynamic/">使用tengine DSO 来动态编译安装第三方模块（Lua-nginx-module）</a></h1>
+<time datetime="2015-12-30T14:28:58+08:00" pubdate><span class='month'>Dec</span> <span class='day'>30</span> <span class='year'>2015</span></time>
+
+<footer>
+
+  <span class="categories">posted in <a class='category' href='/blog/categories/nginx/'>nginx</a></span>
+
+
+  <span class="tags">tagged with <a class='tag' href='/tags/nginx/'>nginx</a>, <a class='tag' href='/tags/tengine/'>tengine</a></span>
+
+</footer>
+
+
+</article>
+
+
 
 <article>
   
@@ -335,8 +355,10 @@ $(document).ready(function() {
 <li><a style="font-size: 100%" href="/tags/idea/">idea</a></li>
 <li><a style="font-size: 100%" href="/tags/kkpager/">kkpager</a></li>
 <li><a style="font-size: 100%" href="/tags/mysql/">mysql</a></li>
+<li><a style="font-size: 100%" href="/tags/nginx/">nginx</a></li>
 <li><a style="font-size: 100%" href="/tags/octopress/">octopress</a></li>
 <li><a style="font-size: 100%" href="/tags/procedure/">procedure</a></li>
+<li><a style="font-size: 100%" href="/tags/tengine/">tengine</a></li>
 <li><a style="font-size: 100%" href="/tags/windows/">windows</a></li>
 </span> -->
     <span id="Tag-cloud"><a style="font-size: 100%" href="/tags/git/">Git</a>
@@ -349,23 +371,29 @@ $(document).ready(function() {
 <a style="font-size: 100%" href="/tags/idea/">idea</a>
 <a style="font-size: 100%" href="/tags/kkpager/">kkpager</a>
 <a style="font-size: 100%" href="/tags/mysql/">mysql</a>
+<a style="font-size: 100%" href="/tags/nginx/">nginx</a>
 <a style="font-size: 100%" href="/tags/octopress/">octopress</a>
 <a style="font-size: 100%" href="/tags/procedure/">procedure</a>
+<a style="font-size: 100%" href="/tags/tengine/">tengine</a>
 <a style="font-size: 100%" href="/tags/windows/">windows</a>
 </span>
 </ul>
 </section>
 <section>
   <h1>Category Cloud</h1>
-    <span id="category-tag-cloud"><a href='/blog/categories/ajax' style='font-size: 130.0%'>Ajax(1)</a> <a href='/blog/categories/git' style='font-size: 130.0%'>Git(1)</a> <a href='/blog/categories/java' style='font-size: 160.0%'>Java(2)</a> <a href='/blog/categories/linux' style='font-size: 160.0%'>Linux(2)</a> <a href='/blog/categories/mysql' style='font-size: 130.0%'>Mysql(1)</a> <a href='/blog/categories/octopress' style='font-size: 130.0%'>Octopress(1)</a> <a href='/blog/categories/windows' style='font-size: 160.0%'>Windows(2)</a> </span>
+    <span id="category-tag-cloud"><a href='/blog/categories/ajax' style='font-size: 130.0%'>Ajax(1)</a> <a href='/blog/categories/git' style='font-size: 130.0%'>Git(1)</a> <a href='/blog/categories/java' style='font-size: 160.0%'>Java(2)</a> <a href='/blog/categories/linux' style='font-size: 160.0%'>Linux(2)</a> <a href='/blog/categories/mysql' style='font-size: 130.0%'>Mysql(1)</a> <a href='/blog/categories/nginx' style='font-size: 130.0%'>Nginx(1)</a> <a href='/blog/categories/octopress' style='font-size: 130.0%'>Octopress(1)</a> <a href='/blog/categories/windows' style='font-size: 160.0%'>Windows(2)</a> </span>
 </section>
 <section>
   <h1>Top Categories</h1>
-    <ul id="top-category-list"><li><a href='/blog/categories/linux'>Linux (2)</a></li><li><a href='/blog/categories/java'>Java (2)</a></li><li><a href='/blog/categories/windows'>Windows (2)</a></li><li><a href='/blog/categories/octopress'>Octopress (1)</a></li><li><a href='/blog/categories/git'>Git (1)</a></li><li><a href='/blog/categories/mysql'>Mysql (1)</a></li><li><a href='/blog/categories/ajax'>Ajax (1)</a></li></ul>
+    <ul id="top-category-list"><li><a href='/blog/categories/linux'>Linux (2)</a></li><li><a href='/blog/categories/java'>Java (2)</a></li><li><a href='/blog/categories/windows'>Windows (2)</a></li><li><a href='/blog/categories/git'>Git (1)</a></li><li><a href='/blog/categories/octopress'>Octopress (1)</a></li><li><a href='/blog/categories/mysql'>Mysql (1)</a></li><li><a href='/blog/categories/ajax'>Ajax (1)</a></li><li><a href='/blog/categories/nginx'>Nginx (1)</a></li></ul>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/12/30/tengine-add-thirdparty-module-dynamic/">使用tengine DSO 来动态编译安装第三方模块（Lua-nginx-module）</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/12/30/ajax-backspace/">ajax分页时，点击第N页链接，回退会返回第一页解决方法</a>
@@ -381,10 +409,6 @@ $(document).ready(function() {
     
       <li class="post">
         <a href="/blog/2015/12/17/git/">Git命令</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/12/12/linuxgroup/">Linux下新增修改删除查看用户和用户组</a>
       </li>
     
   </ul>

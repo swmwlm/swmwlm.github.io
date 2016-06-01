@@ -4,7 +4,7 @@
   <title><![CDATA[Topking's Blog]]></title>
   <link href="http://swmwlm.github.io/atom.xml" rel="self"/>
   <link href="http://swmwlm.github.io/"/>
-  <updated>2016-04-07T17:06:20+08:00</updated>
+  <updated>2016-06-01T11:48:51+08:00</updated>
   <id>http://swmwlm.github.io/</id>
   <author>
     <name><![CDATA[Topking]]></name>
@@ -12,6 +12,127 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[使用tengine DSO 来动态编译安装第三方模块（Lua-nginx-module）]]></title>
+    <link href="http://swmwlm.github.io/blog/2015/12/30/tengine-add-thirdparty-module-dynamic/"/>
+    <updated>2015-12-30T14:28:58+08:00</updated>
+    <id>http://swmwlm.github.io/blog/2015/12/30/tengine-add-thirdparty-module-dynamic</id>
+    <content type="html"><![CDATA[<p>在使用nginx时，需要增加或者改动一个模块，都需要重新编译nginx文件。最近使用了tengine，它提供的DSO工具来动态加载模块。本例测试需要动态增加lua-nginx模块，记录一下安装过程。</p>
+
+<!--more-->
+
+
+<h2>1. 编译安装 luajit</h2>
+
+<p>Lua 环境推荐使用成熟快速的 luajit。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /root/Download/
+</span><span class='line'>wget http://luajit.org/download/LuaJIT-2.0.4.tar.gz
+</span><span class='line'>tar zxvf LuaJIT-2.0.4.tar.gz
+</span><span class='line'>cd /root/Downloads/LuaJIT-2.0.4
+</span><span class='line'>make && make install PREFIX=/usr/local/luajit-2.0.4
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. 设置环境变量：</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># tell nginx's build system where to find LuaJIT 2.0:
+</span><span class='line'>export LUAJIT_LIB=/usr/local/luajit-2.0.4/lib
+</span><span class='line'>export LUAJIT_INC=/usr/local/luajit-2.0.4/include/luajit-2.0</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. 你能够使用dso_tool(在Nginx安装目录的sbin下)这个工具来编译第三方模块 lua-nginx-module.</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /root/Download/
+</span><span class='line'>wget --no-check-certificate https://github.com/openresty/lua-nginx-module/archive/v0.9.19.tar.gz
+</span><span class='line'>tar zxvf v0.9.19.tar.gz 
+</span><span class='line'>cd /usr/local/tengine/sbin/
+</span><span class='line'>./dso_tool --add-module=/root/Downloads/LuaJIT-2.0.4</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. 编译成功时，如下图</h2>
+
+<!-- -*- html -*- -->
+<a href='http://swmwlm.github.io/images/tengine/tengine-lua-success.png' style="text-decoration: none" id="image-123"><img src="http://swmwlm.github.io/images/tengine/resized_tengine-lua-success.png" alt="Click me." class="center"/></a>
+  <div id="image-dialog-123" style="display:none; overflow:hidden;" class="noTitle">
+    <div class="image-caption" align="center">
+      <div class="capt-left">lua安装成功.</div>
+      <div class="capt-right">
+        <a href="http://swmwlm.github.io/images/tengine/tengine-lua-success.png">permalink</a>
+      </div>
+    </div>
+    <div id="proxy123" align="center" class="proxy-container">
+      <img class="image-drag" src="http://swmwlm.github.io/images/logo.jpg" id="full_image-123" />
+    </div>
+  </div>
+  <script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery.imgpop({
+          id: "123",
+          full_image: "/images/tengine/tengine-lua-success.png",
+          full_width: 512,
+          full_height: 182,
+          title: "lua安装成功."
+        });
+    });
+  </script>
+
+
+
+<h2>5. 设置动态库</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>echo '/usr/local/luajit-2.0.4/lib'&gt;&gt;/etc/ld.so.conf.d/usr_local_luajit_lib.conf 
+</span><span class='line'>ldconfig</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>6. 配置tengine的配置文件，动态加载模块，如下图所示：</h2>
+
+<!-- -*- html -*- -->
+<a href='http://swmwlm.github.io/images/tengine/tengine-lua-config-dso.png' style="text-decoration: none" id="image-124"><img src="http://swmwlm.github.io/images/tengine/resized_tengine-lua-config-dso.png" alt="Click me." class="center"/></a>
+  <div id="image-dialog-124" style="display:none; overflow:hidden;" class="noTitle">
+    <div class="image-caption" align="center">
+      <div class="capt-left">lua配置.</div>
+      <div class="capt-right">
+        <a href="http://swmwlm.github.io/images/tengine/tengine-lua-config-dso.png">permalink</a>
+      </div>
+    </div>
+    <div id="proxy124" align="center" class="proxy-container">
+      <img class="image-drag" src="http://swmwlm.github.io/images/logo.jpg" id="full_image-124" />
+    </div>
+  </div>
+  <script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery.imgpop({
+          id: "124",
+          full_image: "/images/tengine/tengine-lua-config-dso.png",
+          full_width: 558,
+          full_height: 639,
+          title: "lua配置."
+        });
+    });
+  </script>
+
+
+
+<p>使用./nginx -t 测试配置文件是否通过。提示成功，则打开浏览器访问/lua路径，测试第三方模块lua-nginx-module是否正常。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ajax分页时，点击第N页链接，回退会返回第一页解决方法]]></title>
@@ -1150,22 +1271,22 @@ git commit -m "some comment"
 <p>互联网有一张特别棒的Git命令思维导图，特拿来分享，感谢原作者:</p>
 
 <!-- -*- html -*- -->
-<a href='http://swmwlm.github.io/images/git/git-operate.png' style="text-decoration: none" id="image-1"><img src="http://swmwlm.github.io/images/git/resized_git-operate.png" alt="Click me." class="center"/></a>
-  <div id="image-dialog-1" style="display:none; overflow:hidden;" class="noTitle">
+<a href='http://swmwlm.github.io/images/git/git-operate.png' style="text-decoration: none" id="image-122"><img src="http://swmwlm.github.io/images/git/resized_git-operate.png" alt="Click me." class="center"/></a>
+  <div id="image-dialog-122" style="display:none; overflow:hidden;" class="noTitle">
     <div class="image-caption" align="center">
       <div class="capt-left">棒棒的Git.</div>
       <div class="capt-right">
         <a href="http://swmwlm.github.io/images/git/git-operate.png">permalink</a>
       </div>
     </div>
-    <div id="proxy1" align="center" class="proxy-container">
-      <img class="image-drag" src="http://swmwlm.github.io/images/logo.jpg" id="full_image-1" />
+    <div id="proxy122" align="center" class="proxy-container">
+      <img class="image-drag" src="http://swmwlm.github.io/images/logo.jpg" id="full_image-122" />
     </div>
   </div>
   <script type="text/javascript">
     jQuery(document).ready(function() {
         jQuery.imgpop({
-          id: "1",
+          id: "122",
           full_image: "/images/git/git-operate.png",
           full_width: 1759,
           full_height: 3162,

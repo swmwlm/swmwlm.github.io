@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag:nginx | Topking's Blog]]></title>
+  <link href="http://swmwlm.github.io/tags/nginx/atom.xml" rel="self"/>
+  <link href="http://swmwlm.github.io/"/>
+  <updated>2016-06-01T11:48:51+08:00</updated>
+  <id>http://swmwlm.github.io/</id>
+  <author>
+    <name><![CDATA[Topking]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[使用tengine DSO 来动态编译安装第三方模块（Lua-nginx-module）]]></title>
+    <link href="http://swmwlm.github.io/blog/2015/12/30/tengine-add-thirdparty-module-dynamic/"/>
+    <updated>2015-12-30T14:28:58+08:00</updated>
+    <id>http://swmwlm.github.io/blog/2015/12/30/tengine-add-thirdparty-module-dynamic</id>
+    <content type="html"><![CDATA[<p>在使用nginx时，需要增加或者改动一个模块，都需要重新编译nginx文件。最近使用了tengine，它提供的DSO工具来动态加载模块。本例测试需要动态增加lua-nginx模块，记录一下安装过程。</p>
+
+<!--more-->
+
+
+<h2>1. 编译安装 luajit</h2>
+
+<p>Lua 环境推荐使用成熟快速的 luajit。</p>
+
+<pre><code>cd /root/Download/
+wget http://luajit.org/download/LuaJIT-2.0.4.tar.gz
+tar zxvf LuaJIT-2.0.4.tar.gz
+cd /root/Downloads/LuaJIT-2.0.4
+make &amp;&amp; make install PREFIX=/usr/local/luajit-2.0.4
+</code></pre>
+
+<h2>2. 设置环境变量：</h2>
+
+<pre><code># tell nginx's build system where to find LuaJIT 2.0:
+export LUAJIT_LIB=/usr/local/luajit-2.0.4/lib
+export LUAJIT_INC=/usr/local/luajit-2.0.4/include/luajit-2.0
+</code></pre>
+
+<h2>3. 你能够使用dso_tool(在Nginx安装目录的sbin下)这个工具来编译第三方模块 lua-nginx-module.</h2>
+
+<pre><code>cd /root/Download/
+wget --no-check-certificate https://github.com/openresty/lua-nginx-module/archive/v0.9.19.tar.gz
+tar zxvf v0.9.19.tar.gz 
+cd /usr/local/tengine/sbin/
+./dso_tool --add-module=/root/Downloads/LuaJIT-2.0.4
+</code></pre>
+
+<h2>4. 编译成功时，如下图</h2>
+
+<p><!-- -*- html -*- -->
+<a href='/images/tengine/tengine-lua-success.png' style="text-decoration: none" id="image-126"><img src="/images/tengine/resized_tengine-lua-success.png" alt="Click me." class="center"/></a>
+  <div id="image-dialog-126" style="display:none; overflow:hidden;" class="noTitle">
+    <div class="image-caption" align="center">
+      <div class="capt-left">lua安装成功.</div>
+      <div class="capt-right">
+        <a href="/images/tengine/tengine-lua-success.png">permalink</a>
+      </div>
+    </div>
+    <div id="proxy126" align="center" class="proxy-container">
+      <img class="image-drag" src="/images/logo.jpg" id="full_image-126" />
+    </div>
+  </div>
+  <script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery.imgpop({
+          id: "126",
+          full_image: "/images/tengine/tengine-lua-success.png",
+          full_width: 512,
+          full_height: 182,
+          title: "lua安装成功."
+        });
+    });
+  </script>
+</p>
+
+<h2>5. 设置动态库</h2>
+
+<pre><code>echo '/usr/local/luajit-2.0.4/lib'&gt;&gt;/etc/ld.so.conf.d/usr_local_luajit_lib.conf 
+ldconfig
+</code></pre>
+
+<h2>6. 配置tengine的配置文件，动态加载模块，如下图所示：</h2>
+
+<p><!-- -*- html -*- -->
+<a href='/images/tengine/tengine-lua-config-dso.png' style="text-decoration: none" id="image-127"><img src="/images/tengine/resized_tengine-lua-config-dso.png" alt="Click me." class="center"/></a>
+  <div id="image-dialog-127" style="display:none; overflow:hidden;" class="noTitle">
+    <div class="image-caption" align="center">
+      <div class="capt-left">lua配置.</div>
+      <div class="capt-right">
+        <a href="/images/tengine/tengine-lua-config-dso.png">permalink</a>
+      </div>
+    </div>
+    <div id="proxy127" align="center" class="proxy-container">
+      <img class="image-drag" src="/images/logo.jpg" id="full_image-127" />
+    </div>
+  </div>
+  <script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery.imgpop({
+          id: "127",
+          full_image: "/images/tengine/tengine-lua-config-dso.png",
+          full_width: 558,
+          full_height: 639,
+          title: "lua配置."
+        });
+    });
+  </script>
+</p>
+
+<p>使用./nginx -t 测试配置文件是否通过。提示成功，则打开浏览器访问/lua路径，测试第三方模块lua-nginx-module是否正常。</p>
+]]></content>
+  </entry>
+  
+</feed>

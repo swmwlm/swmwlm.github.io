@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Octopress - Topking's Blog</title>
+  <title>使用tengine DSO 来动态编译安装第三方模块（Lua-nginx-module） - Topking's Blog</title>
   <meta name="author" content="Topking">
 
   
-  <meta name="description" content="Category: octopress">
-  
+  <meta name="description" content="使用tengine DSO 来动态编译安装第三方模块">
+  <meta name="keywords" content="nginx,tengine,lua">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://swmwlm.github.io/blog/categories/octopress/">
+  <link rel="canonical" href="http://swmwlm.github.io/blog/2015/12/30/tengine-add-thirdparty-module-dynamic/">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Topking's Blog" type="application/atom+xml">
@@ -105,43 +105,230 @@ $(document).ready(function() {
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Octopress</h1>
+    
+      <h2 class="entry-title">使用tengine DSO 来动态编译安装第三方模块（Lua-nginx-module）</h2>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-12-30T14:28:58+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>2:28 pm</span></time>
+        
+        
+            | <a href="#comments">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
+
+
+<div class="entry-content"><p>在使用nginx时，需要增加或者改动一个模块，都需要重新编译nginx文件。最近使用了tengine，它提供的DSO工具来动态加载模块。本例测试需要动态增加lua-nginx模块，记录一下安装过程。</p>
+
+<!--more-->
+
+
+<h2>1. 编译安装 luajit</h2>
+
+<p>Lua 环境推荐使用成熟快速的 luajit。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /root/Download/
+</span><span class='line'>wget http://luajit.org/download/LuaJIT-2.0.4.tar.gz
+</span><span class='line'>tar zxvf LuaJIT-2.0.4.tar.gz
+</span><span class='line'>cd /root/Downloads/LuaJIT-2.0.4
+</span><span class='line'>make && make install PREFIX=/usr/local/luajit-2.0.4
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. 设置环境变量：</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># tell nginx's build system where to find LuaJIT 2.0:
+</span><span class='line'>export LUAJIT_LIB=/usr/local/luajit-2.0.4/lib
+</span><span class='line'>export LUAJIT_INC=/usr/local/luajit-2.0.4/include/luajit-2.0</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. 你能够使用dso_tool(在Nginx安装目录的sbin下)这个工具来编译第三方模块 lua-nginx-module.</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /root/Download/
+</span><span class='line'>wget --no-check-certificate https://github.com/openresty/lua-nginx-module/archive/v0.9.19.tar.gz
+</span><span class='line'>tar zxvf v0.9.19.tar.gz 
+</span><span class='line'>cd /usr/local/tengine/sbin/
+</span><span class='line'>./dso_tool --add-module=/root/Downloads/LuaJIT-2.0.4</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. 编译成功时，如下图</h2>
+
+<!-- -*- html -*- -->
+<a href='/images/tengine/tengine-lua-success.png' style="text-decoration: none" id="image-123"><img src="/images/tengine/resized_tengine-lua-success.png" alt="Click me." class="center"/></a>
+  <div id="image-dialog-123" style="display:none; overflow:hidden;" class="noTitle">
+    <div class="image-caption" align="center">
+      <div class="capt-left">lua安装成功.</div>
+      <div class="capt-right">
+        <a href="/images/tengine/tengine-lua-success.png">permalink</a>
+      </div>
+    </div>
+    <div id="proxy123" align="center" class="proxy-container">
+      <img class="image-drag" src="/images/logo.jpg" id="full_image-123" />
+    </div>
+  </div>
+  <script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery.imgpop({
+          id: "123",
+          full_image: "/images/tengine/tengine-lua-success.png",
+          full_width: 512,
+          full_height: 182,
+          title: "lua安装成功."
+        });
+    });
+  </script>
 
 
 
-  
-  <h2>2015</h2>
+<h2>5. 设置动态库</h2>
 
-<article>
-  
-
-<h1><a href="/blog/2015/11/29/octopressImage/">octopress写博客常用加入代码、图片、带标题图片方法</a></h1>
-<time datetime="2015-11-29T19:04:58+08:00" pubdate><span class='month'>Nov</span> <span class='day'>29</span> <span class='year'>2015</span></time>
-
-<footer>
-
-  <span class="categories">posted in <a class='category' href='/blog/categories/octopress/'>octopress</a></span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>echo '/usr/local/luajit-2.0.4/lib'&gt;&gt;/etc/ld.so.conf.d/usr_local_luajit_lib.conf 
+</span><span class='line'>ldconfig</span></code></pre></td></tr></table></div></figure>
 
 
-  <span class="tags">tagged with <a class='tag' href='/tags/octopress/'>OctoPress</a></span>
+<h2>6. 配置tengine的配置文件，动态加载模块，如下图所示：</h2>
 
-</footer>
+<!-- -*- html -*- -->
+<a href='/images/tengine/tengine-lua-config-dso.png' style="text-decoration: none" id="image-124"><img src="/images/tengine/resized_tengine-lua-config-dso.png" alt="Click me." class="center"/></a>
+  <div id="image-dialog-124" style="display:none; overflow:hidden;" class="noTitle">
+    <div class="image-caption" align="center">
+      <div class="capt-left">lua配置.</div>
+      <div class="capt-right">
+        <a href="/images/tengine/tengine-lua-config-dso.png">permalink</a>
+      </div>
+    </div>
+    <div id="proxy124" align="center" class="proxy-container">
+      <img class="image-drag" src="/images/logo.jpg" id="full_image-124" />
+    </div>
+  </div>
+  <script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery.imgpop({
+          id: "124",
+          full_image: "/images/tengine/tengine-lua-config-dso.png",
+          full_width: 558,
+          full_height: 639,
+          title: "lua配置."
+        });
+    });
+  </script>
 
 
-</article>
+
+<p>使用./nginx -t 测试配置文件是否通过。提示成功，则打开浏览器访问/lua路径，测试第三方模块lua-nginx-module是否正常。</p>
 
 </div>
 
+
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Topking</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-12-30T14:28:58+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>2:28 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/nginx/'>nginx</a>
+  
+</span>
+
+
+      
+
+<span class="tags">
+  
+    <a class='tag' href='/tags/nginx/'>nginx</a>, <a class='tag' href='/tags/tengine/'>tengine</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  
+    <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/12/30/ajax-backspace/" title="Previous Post: ajax分页时，点击第N页链接，回退会返回第一页解决方法">&laquo; ajax分页时，点击第N页链接，回退会返回第一页解决方法</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
+
+  <section>
+    <h1>Comments</h1>
+    <div id="comments" aria-live="polite"><!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/blog/2015/12/30/tengine-add-thirdparty-module-dynamic" data-title="使用tengine DSO 来动态编译安装第三方模块（Lua-nginx-module）" data-url="http://swmwlm.github.io/blog/2015/12/30/tengine-add-thirdparty-module-dynamic/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"swmwlm"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end --></div>
+  </section>
 
 </div>
 
