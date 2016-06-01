@@ -48,8 +48,7 @@ cd /usr/local/tengine/sbin/
 ```
 
 ##4. 编译成功时，如下图
-
-{% imgpop /images/tengine/tengine-lua-success.png 100% center lua安装成功. %}
+{% img /images/tengine/tengine-2.png %}
 
 ##5. 设置动态库
 
@@ -60,8 +59,6 @@ ldconfig
 ```
 
 ##6. 配置tengine的配置文件，动态加载模块，如下图所示：
-
-{% imgpop /images/tengine/tengine-lua-config-dso.png 100% center lua配置. %}
+{% img /images/tengine/tengine-1.png %}
 
 使用./nginx -t 测试配置文件是否通过。提示成功，则打开浏览器访问/lua路径，测试第三方模块lua-nginx-module是否正常。
-
