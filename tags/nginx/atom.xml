@@ -4,7 +4,7 @@
   <title><![CDATA[Tag:nginx | Topking's Blog]]></title>
   <link href="http://swmwlm.github.io/tags/nginx/atom.xml" rel="self"/>
   <link href="http://swmwlm.github.io/"/>
-  <updated>2016-06-01T14:18:35+08:00</updated>
+  <updated>2016-06-01T16:30:20+08:00</updated>
   <id>http://swmwlm.github.io/</id>
   <author>
     <name><![CDATA[Topking]]></name>
@@ -65,6 +65,138 @@ ldconfig
 <p><img src="/images/tengine/tengine-1.png"></p>
 
 <p>使用./nginx -t 测试配置文件是否通过。提示成功，则打开浏览器访问/lua路径，测试第三方模块lua-nginx-module是否正常。</p>
+
+<h2>7. 全新编译安装Tengine+Lua</h2>
+
+<h3>7.1 编译安装nginx需要的依赖包</h3>
+
+<pre><code>yum install gcc gcc-c++ make automake autoconf libtool pcre pcre-devel zlib zlib-devel openssl openssl-devel
+</code></pre>
+
+<h3>7.2 编译安装Lua需要的依赖包（centos默认可能装过了，可省略，rpm -qa|grep readline查询）</h3>
+
+<pre><code>yum install readline readline-devel
+
+或者手动编译安装
+
+wget -c ftp://ftp.gnu.org/gnu/readline/readline-6.2.tar.gz 
+tar -zxvf readline-6.2.tar.gz 
+cd readline-6.2
+./configure
+make &amp;&amp; make installl
+
+手动编译后如果指定了 prefix ，要修改一下 lua 的编译脚本
+修改lua src/Makefile
+修改MYCFLAGS=-I/usr/local/readline/include
+修改MYLDFLAGS=-L/usr/local/readline/lib
+直接执行lua命令，出现加载不了readline.so的问题，软链接 /usr/local/readline/lib/libreadline.so.6 到 /usr/lib/
+</code></pre>
+
+<h3>7.3 安装lua</h3>
+
+<pre><code>yum安装:
+yum install lua lua-devel
+
+安装Lua或者LuaJIT都是可以的，但是出于效率的考虑，推荐安装LuaJIT。源码安装LuaGIT如下：
+LuaGIT官方地址: http://luajit.org/
+</code></pre>
+
+<pre><code>    wget http://luajit.org/download/LuaJIT-2.0.4.tar.gz
+    cd /usr/local/src 
+    tar -zxvf LuaJIT-2.0.4.tar.gz 
+    cd LuaJIT-2.0.4
+    make
+    make install
+    ln -s /usr/local/lib/libluajit-5.1.so.2 /lib64/libluajit-5.1.so.2
+    export LUAJIT_LIB=/usr/local/lib
+    export LUAJIT_INC=/usr/local/include/luajit-2.0/
+</code></pre>
+
+<pre><code>因为安装在缺省路径，所以LuaJIT对应的lib，include均在/usr/local目录里。
+</code></pre>
+
+<blockquote><p><a href="http://huoding.com/2012/08/31/156">请参考博文</a></p></blockquote>
+
+<h3>7.4 编译Tengine</h3>
+
+<pre><code>shell&gt; wget http://tengine.taobao.org/download/tengine-&lt;VERSION&gt;.tar.gz
+shell&gt; tar zxvf tengine-&lt;VERSION&gt;.tar.gz
+shell&gt; cd tengine-&lt;VERSION&gt;
+shell&gt; ./configure --prefix=/usr/local/tengine-2.1.0 
+--with-pcre=/usr/include
+--with-http_lua_module
+--with-luajit-lib=/usr/local/lib/
+--with-luajit-inc=/usr/local/include/luajit-2.0/ 
+--with-lua-inc=/usr/local/include/luajit-2.0/
+--with-lua-lib=/usr/local/lib/
+--pid-path=/var/run/nginx.pid 
+--group=www --user=www
+--dso-path=/usr/local/tengine-2.1.0/modules 
+--with-http_gzip_static_module 
+--with-http_stub_status_module 
+--with-poll_module  
+--with-http_sub_module
+--with-http_realip_module
+--with-http_concat_module --with-http_lua_module  
+--http-proxy-temp-path=/var/tmp/tengine-2.1.0/proxy_temp 
+--http-fastcgi-temp-path=/var/tmp/tengine-2.1.0/fastcgi_temp 
+--http-uwsgi-temp-path=/var/tmp/tengine-2.1.0/uwsgi_temp 
+--http-scgi-temp-path=/var/tmp/tengine-2.1.0/cgi_temp 
+--http-client-body-temp-path=/var/tmp/tengine-2.1.0/client_body_temp 
+--http-log-path=/var/log/tengine-2.1.0/access.log 
+--error-log-path=/var/log/tengine-2.1.0/error.log 
+--with-ld-opt="-Wl,-rpath,$LUAJIT_LIB"
+
+shell&gt; make&amp;&amp; make install
+</code></pre>
+
+<pre><code>参数说明：由于Pcre是通过yum安装的，所以使用--with-pcre=/usr/include 指定。
+lua是手动安装的需要配置参数
+--with-http_lua_module 
+--with-luajit-lib=/usr/local/lib/ --with-luajit-inc=/usr/local/include/luajit-2.0/ 
+--with-lua-inc=/usr/local/include/luajit-2.0/ --with-lua-lib=/usr/local/lib/
+
+--prefix安装的目录
+
+作用：不指定prefix，则可执行文件默认放在/usr/local/bin,库文件默认在/usr/local/lib,配置文件在/usr/local/etc,其他资源文件放在/usr/local/share。若要卸载这个程序，要么在原来的make目录下执行make uninstall(前提是make文件指定过uninstall),要么去上述默认目录里把相关的文件夹一个个的删掉。但是，对于指定了prefix的目录的好处是卸载软件或者移植软件。当某个软件不再需要时，只须简单删除该文件安装目录，就可以把软件卸载干净；移植软件只需要拷贝整个目录到另外一个机器即可（相同的操作系统及环境依赖）。
+
+--with-ld-opt
+
+其中的 --with-ld-opt=-Wl,-rpath,/usr/local/lib:/opt/openresty/luajit/lib 意思是：这是链接器选项，目的是把/usr/loca/lib和/opt/openresty/luajit/lib这两个路径添加进nginx可执行文件的RPATH头重，这样在启动的时候，系统就可以找到正确的动态链接库文件。
+
+若不使用该参数指定动态的链接库，试着使用 ./nginx 启动tengine,如果运气不好的话，可能遇到如下错误：
+
+cannot open shared object file: No such file or directory
+
+这是什么情况呢？可以使用ldd命令来查看：
+ldd /usr/local/tengine-2.1.0/sbin/nginx
+会出现xxxx-xxxx.so =&gt; not found
+
+此类问题通常使用ldconfig命令就能解决，例如本例有可能出现的
+libluajit-&lt;VERSION&gt;.so =&gt; not found
+
+我们使用如下命令：（由于我们默认安装libluagit动态链接库默认安装至/usr/local/lib）
+</code></pre>
+
+<pre><code>shell&gt; echo "/usr/local/lib" &gt; /etc/ld.so.conf.d/usr_local_lib.conf
+shell&gt; ldconfig
+</code></pre>
+
+<pre><code>再次启动nginx，应该就OK了。
+</code></pre>
+
+<h3>7.5 测试lua是否可以使用了</h3>
+
+<p>配置下面代码至nginx.conf的server 中，并重新加载配置文件（./nginx -s reload），</p>
+
+<pre><code>location /lua {
+    set $test "hello, world.";
+    content_by_lua '
+        ngx.header.content_type = "text/plain";
+        ngx.say(ngx.var.test);
+    ';
+}
+</code></pre>
 ]]></content>
   </entry>
   

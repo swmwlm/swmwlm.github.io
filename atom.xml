@@ -4,7 +4,7 @@
   <title><![CDATA[Topking's Blog]]></title>
   <link href="http://swmwlm.github.io/atom.xml" rel="self"/>
   <link href="http://swmwlm.github.io/"/>
-  <updated>2016-06-01T14:18:35+08:00</updated>
+  <updated>2016-06-01T16:30:20+08:00</updated>
   <id>http://swmwlm.github.io/</id>
   <author>
     <name><![CDATA[Topking]]></name>
@@ -81,6 +81,188 @@
 <p><img src="http://swmwlm.github.io/images/tengine/tengine-1.png"></p>
 
 <p>使用./nginx -t 测试配置文件是否通过。提示成功，则打开浏览器访问/lua路径，测试第三方模块lua-nginx-module是否正常。</p>
+
+<h2>7. 全新编译安装Tengine+Lua</h2>
+
+<h3>7.1 编译安装nginx需要的依赖包</h3>
+
+<pre><code>yum install gcc gcc-c++ make automake autoconf libtool pcre pcre-devel zlib zlib-devel openssl openssl-devel
+</code></pre>
+
+<h3>7.2 编译安装Lua需要的依赖包（centos默认可能装过了，可省略，rpm -qa|grep readline查询）</h3>
+
+<pre><code>yum install readline readline-devel
+
+或者手动编译安装
+
+wget -c ftp://ftp.gnu.org/gnu/readline/readline-6.2.tar.gz 
+tar -zxvf readline-6.2.tar.gz 
+cd readline-6.2
+./configure
+make &amp;&amp; make installl
+
+手动编译后如果指定了 prefix ，要修改一下 lua 的编译脚本
+修改lua src/Makefile
+修改MYCFLAGS=-I/usr/local/readline/include
+修改MYLDFLAGS=-L/usr/local/readline/lib
+直接执行lua命令，出现加载不了readline.so的问题，软链接 /usr/local/readline/lib/libreadline.so.6 到 /usr/lib/
+</code></pre>
+
+<h3>7.3 安装lua</h3>
+
+<pre><code>yum安装:
+yum install lua lua-devel
+
+安装Lua或者LuaJIT都是可以的，但是出于效率的考虑，推荐安装LuaJIT。源码安装LuaGIT如下：
+LuaGIT官方地址: http://luajit.org/
+</code></pre>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wget http://luajit.org/download/LuaJIT-2.0.4.tar.gz
+</span><span class='line'>cd /usr/local/src 
+</span><span class='line'>tar -zxvf LuaJIT-2.0.4.tar.gz 
+</span><span class='line'>cd LuaJIT-2.0.4
+</span><span class='line'>make
+</span><span class='line'>make install
+</span><span class='line'>ln -s /usr/local/lib/libluajit-5.1.so.2 /lib64/libluajit-5.1.so.2
+</span><span class='line'>export LUAJIT_LIB=/usr/local/lib
+</span><span class='line'>export LUAJIT_INC=/usr/local/include/luajit-2.0/</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>因为安装在缺省路径，所以LuaJIT对应的lib，include均在/usr/local目录里。
+</code></pre>
+
+<blockquote><p><a href="http://huoding.com/2012/08/31/156">请参考博文</a></p></blockquote>
+
+<h3>7.4 编译Tengine</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>shell&gt; wget http://tengine.taobao.org/download/tengine-&lt;VERSION&gt;.tar.gz
+</span><span class='line'>shell&gt; tar zxvf tengine-&lt;VERSION&gt;.tar.gz
+</span><span class='line'>shell&gt; cd tengine-&lt;VERSION&gt;
+</span><span class='line'>shell&gt; ./configure --prefix=/usr/local/tengine-2.1.0 
+</span><span class='line'>--with-pcre=/usr/include
+</span><span class='line'>--with-http_lua_module
+</span><span class='line'>--with-luajit-lib=/usr/local/lib/
+</span><span class='line'>--with-luajit-inc=/usr/local/include/luajit-2.0/ 
+</span><span class='line'>--with-lua-inc=/usr/local/include/luajit-2.0/
+</span><span class='line'>--with-lua-lib=/usr/local/lib/
+</span><span class='line'>--pid-path=/var/run/nginx.pid 
+</span><span class='line'>--group=www --user=www
+</span><span class='line'>--dso-path=/usr/local/tengine-2.1.0/modules 
+</span><span class='line'>--with-http_gzip_static_module 
+</span><span class='line'>--with-http_stub_status_module 
+</span><span class='line'>--with-poll_module  
+</span><span class='line'>--with-http_sub_module
+</span><span class='line'>--with-http_realip_module
+</span><span class='line'>--with-http_concat_module --with-http_lua_module  
+</span><span class='line'>--http-proxy-temp-path=/var/tmp/tengine-2.1.0/proxy_temp 
+</span><span class='line'>--http-fastcgi-temp-path=/var/tmp/tengine-2.1.0/fastcgi_temp 
+</span><span class='line'>--http-uwsgi-temp-path=/var/tmp/tengine-2.1.0/uwsgi_temp 
+</span><span class='line'>--http-scgi-temp-path=/var/tmp/tengine-2.1.0/cgi_temp 
+</span><span class='line'>--http-client-body-temp-path=/var/tmp/tengine-2.1.0/client_body_temp 
+</span><span class='line'>--http-log-path=/var/log/tengine-2.1.0/access.log 
+</span><span class='line'>--error-log-path=/var/log/tengine-2.1.0/error.log 
+</span><span class='line'>--with-ld-opt="-Wl,-rpath,$LUAJIT_LIB"
+</span><span class='line'>
+</span><span class='line'>shell&gt; make&& make install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>参数说明：由于Pcre是通过yum安装的，所以使用--with-pcre=/usr/include 指定。
+lua是手动安装的需要配置参数
+--with-http_lua_module 
+--with-luajit-lib=/usr/local/lib/ --with-luajit-inc=/usr/local/include/luajit-2.0/ 
+--with-lua-inc=/usr/local/include/luajit-2.0/ --with-lua-lib=/usr/local/lib/
+
+--prefix安装的目录
+
+作用：不指定prefix，则可执行文件默认放在/usr/local/bin,库文件默认在/usr/local/lib,配置文件在/usr/local/etc,其他资源文件放在/usr/local/share。若要卸载这个程序，要么在原来的make目录下执行make uninstall(前提是make文件指定过uninstall),要么去上述默认目录里把相关的文件夹一个个的删掉。但是，对于指定了prefix的目录的好处是卸载软件或者移植软件。当某个软件不再需要时，只须简单删除该文件安装目录，就可以把软件卸载干净；移植软件只需要拷贝整个目录到另外一个机器即可（相同的操作系统及环境依赖）。
+
+--with-ld-opt
+
+其中的 --with-ld-opt=-Wl,-rpath,/usr/local/lib:/opt/openresty/luajit/lib 意思是：这是链接器选项，目的是把/usr/loca/lib和/opt/openresty/luajit/lib这两个路径添加进nginx可执行文件的RPATH头重，这样在启动的时候，系统就可以找到正确的动态链接库文件。
+
+若不使用该参数指定动态的链接库，试着使用 ./nginx 启动tengine,如果运气不好的话，可能遇到如下错误：
+
+cannot open shared object file: No such file or directory
+
+这是什么情况呢？可以使用ldd命令来查看：
+ldd /usr/local/tengine-2.1.0/sbin/nginx
+会出现xxxx-xxxx.so =&gt; not found
+
+此类问题通常使用ldconfig命令就能解决，例如本例有可能出现的
+libluajit-&lt;VERSION&gt;.so =&gt; not found
+
+我们使用如下命令：（由于我们默认安装libluagit动态链接库默认安装至/usr/local/lib）
+</code></pre>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>shell&gt; echo "/usr/local/lib" &gt; /etc/ld.so.conf.d/usr_local_lib.conf
+</span><span class='line'>shell&gt; ldconfig</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>再次启动nginx，应该就OK了。
+</code></pre>
+
+<h3>7.5 测试lua是否可以使用了</h3>
+
+<p>配置下面代码至nginx.conf的server 中，并重新加载配置文件（./nginx -s reload），</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>location /lua {
+</span><span class='line'>    set $test "hello, world.";
+</span><span class='line'>    content_by_lua '
+</span><span class='line'>        ngx.header.content_type = "text/plain";
+</span><span class='line'>        ngx.say(ngx.var.test);
+</span><span class='line'>    ';
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+
 ]]></content>
   </entry>
   
@@ -1221,22 +1403,22 @@ git commit -m "some comment"
 <p>互联网有一张特别棒的Git命令思维导图，特拿来分享，感谢原作者:</p>
 
 <!-- -*- html -*- -->
-<a href='http://swmwlm.github.io/images/git/git-operate.png' style="text-decoration: none" id="image-1"><img src="http://swmwlm.github.io/images/git/resized_git-operate.png" alt="Click me." class="center"/></a>
-  <div id="image-dialog-1" style="display:none; overflow:hidden;" class="noTitle">
+<a href='http://swmwlm.github.io/images/git/git-operate.png' style="text-decoration: none" id="image-10"><img src="http://swmwlm.github.io/images/git/resized_git-operate.png" alt="Click me." class="center"/></a>
+  <div id="image-dialog-10" style="display:none; overflow:hidden;" class="noTitle">
     <div class="image-caption" align="center">
       <div class="capt-left">棒棒的Git.</div>
       <div class="capt-right">
         <a href="http://swmwlm.github.io/images/git/git-operate.png">permalink</a>
       </div>
     </div>
-    <div id="proxy1" align="center" class="proxy-container">
-      <img class="image-drag" src="http://swmwlm.github.io/images/logo.jpg" id="full_image-1" />
+    <div id="proxy10" align="center" class="proxy-container">
+      <img class="image-drag" src="http://swmwlm.github.io/images/logo.jpg" id="full_image-10" />
     </div>
   </div>
   <script type="text/javascript">
     jQuery(document).ready(function() {
         jQuery.imgpop({
-          id: "1",
+          id: "10",
           full_image: "/images/git/git-operate.png",
           full_width: 1759,
           full_height: 3162,
