@@ -4,7 +4,7 @@
   <title><![CDATA[Tag:nginx | Topking's Blog]]></title>
   <link href="http://swmwlm.github.io/tags/nginx/atom.xml" rel="self"/>
   <link href="http://swmwlm.github.io/"/>
-  <updated>2016-06-01T11:48:51+08:00</updated>
+  <updated>2016-06-01T14:18:35+08:00</updated>
   <id>http://swmwlm.github.io/</id>
   <author>
     <name><![CDATA[Topking]]></name>
@@ -52,31 +52,7 @@ cd /usr/local/tengine/sbin/
 
 <h2>4. 编译成功时，如下图</h2>
 
-<p><!-- -*- html -*- -->
-<a href='/images/tengine/tengine-lua-success.png' style="text-decoration: none" id="image-126"><img src="/images/tengine/resized_tengine-lua-success.png" alt="Click me." class="center"/></a>
-  <div id="image-dialog-126" style="display:none; overflow:hidden;" class="noTitle">
-    <div class="image-caption" align="center">
-      <div class="capt-left">lua安装成功.</div>
-      <div class="capt-right">
-        <a href="/images/tengine/tengine-lua-success.png">permalink</a>
-      </div>
-    </div>
-    <div id="proxy126" align="center" class="proxy-container">
-      <img class="image-drag" src="/images/logo.jpg" id="full_image-126" />
-    </div>
-  </div>
-  <script type="text/javascript">
-    jQuery(document).ready(function() {
-        jQuery.imgpop({
-          id: "126",
-          full_image: "/images/tengine/tengine-lua-success.png",
-          full_width: 512,
-          full_height: 182,
-          title: "lua安装成功."
-        });
-    });
-  </script>
-</p>
+<p><img src="/images/tengine/tengine-2.png"></p>
 
 <h2>5. 设置动态库</h2>
 
@@ -86,31 +62,7 @@ ldconfig
 
 <h2>6. 配置tengine的配置文件，动态加载模块，如下图所示：</h2>
 
-<p><!-- -*- html -*- -->
-<a href='/images/tengine/tengine-lua-config-dso.png' style="text-decoration: none" id="image-127"><img src="/images/tengine/resized_tengine-lua-config-dso.png" alt="Click me." class="center"/></a>
-  <div id="image-dialog-127" style="display:none; overflow:hidden;" class="noTitle">
-    <div class="image-caption" align="center">
-      <div class="capt-left">lua配置.</div>
-      <div class="capt-right">
-        <a href="/images/tengine/tengine-lua-config-dso.png">permalink</a>
-      </div>
-    </div>
-    <div id="proxy127" align="center" class="proxy-container">
-      <img class="image-drag" src="/images/logo.jpg" id="full_image-127" />
-    </div>
-  </div>
-  <script type="text/javascript">
-    jQuery(document).ready(function() {
-        jQuery.imgpop({
-          id: "127",
-          full_image: "/images/tengine/tengine-lua-config-dso.png",
-          full_width: 558,
-          full_height: 639,
-          title: "lua配置."
-        });
-    });
-  </script>
-</p>
+<p><img src="/images/tengine/tengine-1.png"></p>
 
 <p>使用./nginx -t 测试配置文件是否通过。提示成功，则打开浏览器访问/lua路径，测试第三方模块lua-nginx-module是否正常。</p>
 ]]></content>
