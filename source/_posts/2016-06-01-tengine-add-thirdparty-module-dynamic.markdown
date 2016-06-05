@@ -101,55 +101,95 @@ ldconfig
 	tar -zxvf LuaJIT-2.0.4.tar.gz 
 	cd LuaJIT-2.0.4
 	make
-	make install
-	ln -s /usr/local/lib/libluajit-5.1.so.2 /lib64/libluajit-5.1.so.2
-	export LUAJIT_LIB=/usr/local/lib
-	export LUAJIT_INC=/usr/local/include/luajit-2.0/
+	make install            											 (也可以使用make install PREFIX=/usr/local/luagit-2.0.4)
+	ln -s /usr/local/lib/libluajit-5.1.so.2 /lib64/libluajit-5.1.so.2    (ln -s /usr/local/luagit-2.0.4/lib/libluajit-5.1.so.2 /lib64/libluajit-5.1.so.2)
+	export LUAJIT_LIB=/usr/local/lib                              		 (export LUAJIT_LIB=/usr/local/luagit-2.0.4/lib)
+	export LUAJIT_INC=/usr/local/include/luajit-2.0/			  		 (export LUAJIT_INC=/usr/local/luagit-2.0.4/include/luajit-2.0/)
 ```
 	因为安装在缺省路径，所以LuaJIT对应的lib，include均在/usr/local目录里。
 >[请参考博文](http://huoding.com/2012/08/31/156)
+
+创建www用户和组:
+
+	sudo groupadd www
+	sudo useradd www -g www -s /sbin/nologin -M 
+
+
+另外，可以安装jemalloc，优化内存管理
+
+	wget http://www.canonware.com/download/jemalloc/jemalloc-3.6.0.tar.bz2
+	tar xjf jemalloc-3.6.0.tar.bz2
+	cd jemalloc-3.6.0
+	./configure
+	make && make install
+	echo '/usr/local/lib' > /etc/ld.so.conf.d/local.conf
+	ldconfig
+
+####7.3.1 使用jemalloc优化MySQL
+	方法1.
+
+    MySQL/MaridDB 5.5编译方法，cmake预编译时加上下面参数
+
+	-DCMAKE_EXE_LINKER_FLAGS="-ljemalloc" -DWITH_SAFEMALLOC=OFF
+
+	方法2.
+
+    修改mysqld_safe直接加载:
+
+    查找文件 /usr/local/mysql/bin/mysqld_safe
+    在#executing mysqld_safe 下面加上
+
+  	LD_PRELOAD=/usr/local/lib/libjemalloc.so
+
+    重新启动MYSQL
+
+    使用下面代码自动修改mysqld_safe文件
+
+	sed -i 's@executing mysqld_safe@executing mysqld_safe\nexport LD_PRELOAD=/usr/local/lib/libjemalloc.so@' /usr/local/mysql/bin/mysqld_safe
+	service mysqld restart
+
+
+####7.3.2 使用jemalloc优化Nginx
+
+	编译NGINX时添加以下参数:
+	--with-ld-opt="-ljemalloc"
+
+	具体实现：
+
+	cd lnmp/src/nginx-1.4.2
+	make clean
+	./configure --prefix=/usr/local/nginx --user=www --group=www \  
+	--with-http_stub_status_module --with-http_ssl_module --with-http_flv_module \ 
+	--with-http_gzip_static_module --with-ld-opt="-ljemalloc" (或者 --with-jemalloc)
+	make && make install
+
+验证 jemalloc 是否运行:
+
+	lsof -n | grep jemalloc
 
 ###7.4 编译Tengine
 	 
 
 ```
-shell> wget http://tengine.taobao.org/download/tengine-<VERSION>.tar.gz
-shell> tar zxvf tengine-<VERSION>.tar.gz
-shell> cd tengine-<VERSION>
-shell> ./configure --prefix=/usr/local/tengine-2.1.0 
---with-pcre=/usr/include
---with-http_lua_module
---with-luajit-lib=/usr/local/lib/
---with-luajit-inc=/usr/local/include/luajit-2.0/ 
---with-lua-inc=/usr/local/include/luajit-2.0/
---with-lua-lib=/usr/local/lib/
---pid-path=/var/run/nginx.pid 
---group=www --user=www
---dso-path=/usr/local/tengine-2.1.0/modules 
---with-http_gzip_static_module 
---with-http_stub_status_module 
---with-poll_module  
---with-http_sub_module
---with-http_realip_module
---with-http_concat_module --with-http_lua_module  
---http-proxy-temp-path=/var/tmp/tengine-2.1.0/proxy_temp 
---http-fastcgi-temp-path=/var/tmp/tengine-2.1.0/fastcgi_temp 
---http-uwsgi-temp-path=/var/tmp/tengine-2.1.0/uwsgi_temp 
---http-scgi-temp-path=/var/tmp/tengine-2.1.0/cgi_temp 
---http-client-body-temp-path=/var/tmp/tengine-2.1.0/client_body_temp 
---http-log-path=/var/log/tengine-2.1.0/access.log 
---error-log-path=/var/log/tengine-2.1.0/error.log 
---with-ld-opt="-Wl,-rpath,$LUAJIT_LIB"
+shell> wget http://tengine.taobao.org/download/tengine-2.1.2.tar.gz
+shell> tar zxvf tengine-2.1.2.tar.gz
+shell> cd tengine-2.1.2
+shell> ./configure --prefix=/usr/local/tengine-2.1.2 --with-http_lua_module --with-luajit-lib=/usr/local/luagit-2.0.4/lib/ --with-luajit-inc=/usr/local/luagit-2.0.4/include/luajit-2.0/ --pid-path=/var/run/nginx.pid --group=www --user=www --dso-path=/usr/local/tengine-2.1.2/modules --with-http_gzip_static_module --with-http_stub_status_module --with-poll_module --with-http_sub_module --with-http_realip_module --with-http_concat_module --http-proxy-temp-path=/var/tmp/tengine-2.1.2/proxy_temp --http-fastcgi-temp-path=/var/tmp/tengine-2.1.2/fastcgi_temp --http-uwsgi-temp-path=/var/tmp/tengine-2.1.2/uwsgi_temp --http-scgi-temp-path=/var/tmp/tengine-2.1.2/cgi_temp --http-client-body-temp-path=/var/tmp/tengine-2.1.2/client_body_temp --http-log-path=/var/log/tengine-2.1.2/access.log --error-log-path=/var/log/tengine-2.1.2/error.log --with-ld-opt="-Wl,-rpath,$LUAJIT_LIB,-ljemalloc"
 
 shell> make&& make install
 
+shell> ln -s /usr/local/tengine-2.1.2 /usr/local/nginx （创建软连接，可省略）
+shell> mkdir /var/tmp/tengine-2.1.2 -p           （创建所需的目录以及赋权）
+shell> chown -R www:www /var/tmp/tengine-2.1.2
+
+
+
 ```
 	
-	参数说明：由于Pcre是通过yum安装的，所以使用--with-pcre=/usr/include 指定。
+	参数说明：由于Pcre是通过yum安装的，不用使用--with-pcre=/path/to/ 指定。
 	lua是手动安装的需要配置参数
 	--with-http_lua_module 
-	--with-luajit-lib=/usr/local/lib/ --with-luajit-inc=/usr/local/include/luajit-2.0/ 
-	--with-lua-inc=/usr/local/include/luajit-2.0/ --with-lua-lib=/usr/local/lib/
+	--with-luajit-lib=/usr/local/luagit-2.0.4/lib/  --with-luajit-inc=/usr/local/luagit-2.0.4/include/luajit-2.0/ 
 
 	--prefix安装的目录
 
