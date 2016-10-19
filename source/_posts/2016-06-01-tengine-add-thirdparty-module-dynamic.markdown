@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "使用tengine DSO 来动态编译安装第三方模块（Lua-nginx-module）"
-date: 2015-12-30 14:28:58 +0800
+date: 2016-06-01 14:28:58 +0800
 comments: true
 categories: [nginx]
 tags: [nginx,tengine]
