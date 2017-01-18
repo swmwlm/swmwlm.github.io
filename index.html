@@ -112,7 +112,7 @@ $(document).ready(function() {
       
   <header>
     
-      <h2 class="entry-title"><a style="text-decoration:none;color:#000" href="/blog/2015/12/30/tengine-add-thirdparty-module-dynamic/">使用tengine DSO 来动态编译安装第三方模块（Lua-nginx-module）</a></h2>
+      <h2 class="entry-title"><a style="text-decoration:none;color:#000" href="/blog/2017/01/18/jwt-authentication-api/">使用JWT来做后台认证api支撑（jwt-authentication-api）</a></h2>
     
     
       <p class="meta">
@@ -121,10 +121,49 @@ $(document).ready(function() {
 
 
 
-<time class='entry-date' datetime='2015-12-30T14:28:58+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>2:28 pm</span></time>
+<time class='entry-date' datetime='2017-01-18T11:08:58+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>11:08 am</span></time>
         
         
-            | <a href="/blog/2015/12/30/tengine-add-thirdparty-module-dynamic/#comments">Comments</a>
+            | <a href="/blog/2017/01/18/jwt-authentication-api/#comments">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>为移动端api做认证时，通过token的方式来做认证。使用jwt规范，具体实现如（<a href="https://github.com/auth0/java-jwt">请参考java-jwt文档</a>）；
+总体流程：用户登录后，签发token给客户端，并保存该token到缓存jwtCache中，客户端每次访问api时，请求头中带token过来，判断该token是否是签发过的token，若是运行访问，不是，则拒绝访问；</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/01/18/jwt-authentication-api/">阅读全文 &rarr;</a>
+    </footer>
+  
+
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h2 class="entry-title"><a style="text-decoration:none;color:#000" href="/blog/2016/06/01/tengine-add-thirdparty-module-dynamic/">使用tengine DSO 来动态编译安装第三方模块（Lua-nginx-module）</a></h2>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-06-01T14:28:58+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2016</span></span> <span class='time'>2:28 pm</span></time>
+        
+        
+            | <a href="/blog/2016/06/01/tengine-add-thirdparty-module-dynamic/#comments">Comments</a>
         
       </p>
     
@@ -137,7 +176,7 @@ $(document).ready(function() {
   
   
     <footer>
-      <a rel="full-article" href="/blog/2015/12/30/tengine-add-thirdparty-module-dynamic/">阅读全文 &rarr;</a>
+      <a rel="full-article" href="/blog/2016/06/01/tengine-add-thirdparty-module-dynamic/">阅读全文 &rarr;</a>
     </footer>
   
 
@@ -456,47 +495,9 @@ $(document).ready(function() {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h2 class="entry-title"><a style="text-decoration:none;color:#000" href="/blog/2015/11/21/projectmanagementtools/">Linux安装jira6.3.6,安装破解以及数据导入的详细步骤</a></h2>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-11-21T18:42:49+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>6:42 pm</span></time>
-        
-        
-            | <a href="/blog/2015/11/21/projectmanagementtools/#comments">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>序言：</p>
-
-<p>JIRA 是澳大利亚 Atlassian 公司开发的一款优秀的问题跟踪管理软件工具，可以对各种类型的问题进行跟踪管理，包括缺陷、任务、需求、改进等。JIRA采用J2EE技术，能够跨平台部署。它正被广泛的开源软件组织，以及全球著名的公司使用。</p>
-
-<p> </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/11/21/projectmanagementtools/">阅读全文 &rarr;</a>
-    </footer>
-  
-
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/posts/2">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -529,6 +530,7 @@ $(document).ready(function() {
 <li><a style="font-size: 100%" href="/tags/ajax/">ajax</a></li>
 <li><a style="font-size: 100%" href="/tags/chocolatey/">chocolatey</a></li>
 <li><a style="font-size: 100%" href="/tags/idea/">idea</a></li>
+<li><a style="font-size: 100%" href="/tags/java/">java</a></li>
 <li><a style="font-size: 100%" href="/tags/kkpager/">kkpager</a></li>
 <li><a style="font-size: 100%" href="/tags/mysql/">mysql</a></li>
 <li><a style="font-size: 100%" href="/tags/nginx/">nginx</a></li>
@@ -545,6 +547,7 @@ $(document).ready(function() {
 <a style="font-size: 100%" href="/tags/ajax/">ajax</a>
 <a style="font-size: 100%" href="/tags/chocolatey/">chocolatey</a>
 <a style="font-size: 100%" href="/tags/idea/">idea</a>
+<a style="font-size: 100%" href="/tags/java/">java</a>
 <a style="font-size: 100%" href="/tags/kkpager/">kkpager</a>
 <a style="font-size: 100%" href="/tags/mysql/">mysql</a>
 <a style="font-size: 100%" href="/tags/nginx/">nginx</a>
@@ -557,18 +560,22 @@ $(document).ready(function() {
 </section>
 <section>
   <h1>Category Cloud</h1>
-    <span id="category-tag-cloud"><a href='/blog/categories/ajax' style='font-size: 130.0%'>Ajax(1)</a> <a href='/blog/categories/git' style='font-size: 130.0%'>Git(1)</a> <a href='/blog/categories/java' style='font-size: 160.0%'>Java(2)</a> <a href='/blog/categories/linux' style='font-size: 160.0%'>Linux(2)</a> <a href='/blog/categories/mysql' style='font-size: 130.0%'>Mysql(1)</a> <a href='/blog/categories/nginx' style='font-size: 130.0%'>Nginx(1)</a> <a href='/blog/categories/octopress' style='font-size: 130.0%'>Octopress(1)</a> <a href='/blog/categories/windows' style='font-size: 160.0%'>Windows(2)</a> </span>
+    <span id="category-tag-cloud"><a href='/blog/categories/ajax' style='font-size: 130.0%'>Ajax(1)</a> <a href='/blog/categories/git' style='font-size: 130.0%'>Git(1)</a> <a href='/blog/categories/java' style='font-size: 160.0%'>Java(2)</a> <a href='/blog/categories/jwt' style='font-size: 130.0%'>Jwt(1)</a> <a href='/blog/categories/linux' style='font-size: 160.0%'>Linux(2)</a> <a href='/blog/categories/mysql' style='font-size: 130.0%'>Mysql(1)</a> <a href='/blog/categories/nginx' style='font-size: 130.0%'>Nginx(1)</a> <a href='/blog/categories/octopress' style='font-size: 130.0%'>Octopress(1)</a> <a href='/blog/categories/windows' style='font-size: 160.0%'>Windows(2)</a> </span>
 </section>
 <section>
   <h1>Top Categories</h1>
-    <ul id="top-category-list"><li><a href='/blog/categories/linux'>Linux (2)</a></li><li><a href='/blog/categories/java'>Java (2)</a></li><li><a href='/blog/categories/windows'>Windows (2)</a></li><li><a href='/blog/categories/git'>Git (1)</a></li><li><a href='/blog/categories/octopress'>Octopress (1)</a></li><li><a href='/blog/categories/mysql'>Mysql (1)</a></li><li><a href='/blog/categories/ajax'>Ajax (1)</a></li><li><a href='/blog/categories/nginx'>Nginx (1)</a></li></ul>
+    <ul id="top-category-list"><li><a href='/blog/categories/linux'>Linux (2)</a></li><li><a href='/blog/categories/java'>Java (2)</a></li><li><a href='/blog/categories/windows'>Windows (2)</a></li><li><a href='/blog/categories/git'>Git (1)</a></li><li><a href='/blog/categories/mysql'>Mysql (1)</a></li><li><a href='/blog/categories/octopress'>Octopress (1)</a></li><li><a href='/blog/categories/ajax'>Ajax (1)</a></li><li><a href='/blog/categories/nginx'>Nginx (1)</a></li><li><a href='/blog/categories/jwt'>Jwt (1)</a></li></ul>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2015/12/30/tengine-add-thirdparty-module-dynamic/">使用tengine DSO 来动态编译安装第三方模块（Lua-nginx-module）</a>
+        <a href="/blog/2017/01/18/jwt-authentication-api/">使用JWT来做后台认证api支撑（jwt-authentication-api）</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/01/tengine-add-thirdparty-module-dynamic/">使用tengine DSO 来动态编译安装第三方模块（Lua-nginx-module）</a>
       </li>
     
       <li class="post">
@@ -581,10 +588,6 @@ $(document).ready(function() {
     
       <li class="post">
         <a href="/blog/2015/12/18/chocolatey/">利用Chocolatey快速在Windows下搭建一个开发环境</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/12/17/git/">Git命令</a>
       </li>
     
   </ul>
@@ -649,7 +652,7 @@ $(document).ready(function() {
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Topking -
+  Copyright &copy; 2017 - Topking -
   <span class="credit">Powered by <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256815831'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1256815831%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script></span>
 </p>
 <div id="full" style="width:0px; height:0px; position:fixed; right:180px; bottom:150px; z-index:100; text-align:center; background-color:transparent; cursor:pointer;">

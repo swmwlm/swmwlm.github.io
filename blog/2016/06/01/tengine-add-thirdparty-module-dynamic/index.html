@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://swmwlm.github.io/blog/2015/12/30/tengine-add-thirdparty-module-dynamic/">
+  <link rel="canonical" href="http://swmwlm.github.io/blog/2016/06/01/tengine-add-thirdparty-module-dynamic/">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Topking's Blog" type="application/atom+xml">
@@ -118,7 +118,7 @@ $(document).ready(function() {
 
 
 
-<time class='entry-date' datetime='2015-12-30T14:28:58+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>2:28 pm</span></time>
+<time class='entry-date' datetime='2016-06-01T14:28:58+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2016</span></span> <span class='time'>2:28 pm</span></time>
         
         
             | <a href="#comments">Comments</a>
@@ -241,16 +241,78 @@ LuaGIT官方地址: http://luajit.org/
 </span><span class='line'>tar -zxvf LuaJIT-2.0.4.tar.gz 
 </span><span class='line'>cd LuaJIT-2.0.4
 </span><span class='line'>make
-</span><span class='line'>make install
-</span><span class='line'>ln -s /usr/local/lib/libluajit-5.1.so.2 /lib64/libluajit-5.1.so.2
-</span><span class='line'>export LUAJIT_LIB=/usr/local/lib
-</span><span class='line'>export LUAJIT_INC=/usr/local/include/luajit-2.0/</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>make install                                                       (也可以使用make install PREFIX=/usr/local/luagit-2.0.4)
+</span><span class='line'>ln -s /usr/local/lib/libluajit-5.1.so.2 /lib64/libluajit-5.1.so.2    (ln -s /usr/local/luagit-2.0.4/lib/libluajit-5.1.so.2 /lib64/libluajit-5.1.so.2)
+</span><span class='line'>export LUAJIT_LIB=/usr/local/lib                                       (export LUAJIT_LIB=/usr/local/luagit-2.0.4/lib)
+</span><span class='line'>export LUAJIT_INC=/usr/local/include/luajit-2.0/                   (export LUAJIT_INC=/usr/local/luagit-2.0.4/include/luajit-2.0/)</span></code></pre></td></tr></table></div></figure>
 
 
 <pre><code>因为安装在缺省路径，所以LuaJIT对应的lib，include均在/usr/local目录里。
 </code></pre>
 
 <blockquote><p><a href="http://huoding.com/2012/08/31/156">请参考博文</a></p></blockquote>
+
+<p>创建www用户和组:</p>
+
+<pre><code>sudo groupadd www
+sudo useradd www -g www -s /sbin/nologin -M 
+</code></pre>
+
+<p>另外，可以安装jemalloc，优化内存管理</p>
+
+<pre><code>wget http://www.canonware.com/download/jemalloc/jemalloc-3.6.0.tar.bz2
+tar xjf jemalloc-3.6.0.tar.bz2
+cd jemalloc-3.6.0
+./configure
+make &amp;&amp; make install
+echo '/usr/local/lib' &gt; /etc/ld.so.conf.d/local.conf
+ldconfig
+</code></pre>
+
+<h4>7.3.1 使用jemalloc优化MySQL</h4>
+
+<pre><code>方法1.
+
+MySQL/MaridDB 5.5编译方法，cmake预编译时加上下面参数
+
+-DCMAKE_EXE_LINKER_FLAGS="-ljemalloc" -DWITH_SAFEMALLOC=OFF
+
+方法2.
+
+修改mysqld_safe直接加载:
+
+查找文件 /usr/local/mysql/bin/mysqld_safe
+在#executing mysqld_safe 下面加上
+
+LD_PRELOAD=/usr/local/lib/libjemalloc.so
+
+重新启动MYSQL
+
+使用下面代码自动修改mysqld_safe文件
+
+sed -i 's@executing mysqld_safe@executing mysqld_safe\nexport LD_PRELOAD=/usr/local/lib/libjemalloc.so@' /usr/local/mysql/bin/mysqld_safe
+service mysqld restart
+</code></pre>
+
+<h4>7.3.2 使用jemalloc优化Nginx</h4>
+
+<pre><code>编译NGINX时添加以下参数:
+--with-ld-opt="-ljemalloc"
+
+具体实现：
+
+cd lnmp/src/nginx-1.4.2
+make clean
+./configure --prefix=/usr/local/nginx --user=www --group=www \  
+--with-http_stub_status_module --with-http_ssl_module --with-http_flv_module \ 
+--with-http_gzip_static_module --with-ld-opt="-ljemalloc" (或者 --with-jemalloc)
+make &amp;&amp; make install
+</code></pre>
+
+<p>验证 jemalloc 是否运行:</p>
+
+<pre><code>lsof -n | grep jemalloc
+</code></pre>
 
 <h3>7.4 编译Tengine</h3>
 
@@ -266,60 +328,25 @@ LuaGIT官方地址: http://luajit.org/
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>shell&gt; wget http://tengine.taobao.org/download/tengine-&lt;VERSION&gt;.tar.gz
-</span><span class='line'>shell&gt; tar zxvf tengine-&lt;VERSION&gt;.tar.gz
-</span><span class='line'>shell&gt; cd tengine-&lt;VERSION&gt;
-</span><span class='line'>shell&gt; ./configure --prefix=/usr/local/tengine-2.1.0 
-</span><span class='line'>--with-pcre=/usr/include
-</span><span class='line'>--with-http_lua_module
-</span><span class='line'>--with-luajit-lib=/usr/local/lib/
-</span><span class='line'>--with-luajit-inc=/usr/local/include/luajit-2.0/ 
-</span><span class='line'>--with-lua-inc=/usr/local/include/luajit-2.0/
-</span><span class='line'>--with-lua-lib=/usr/local/lib/
-</span><span class='line'>--pid-path=/var/run/nginx.pid 
-</span><span class='line'>--group=www --user=www
-</span><span class='line'>--dso-path=/usr/local/tengine-2.1.0/modules 
-</span><span class='line'>--with-http_gzip_static_module 
-</span><span class='line'>--with-http_stub_status_module 
-</span><span class='line'>--with-poll_module  
-</span><span class='line'>--with-http_sub_module
-</span><span class='line'>--with-http_realip_module
-</span><span class='line'>--with-http_concat_module --with-http_lua_module  
-</span><span class='line'>--http-proxy-temp-path=/var/tmp/tengine-2.1.0/proxy_temp 
-</span><span class='line'>--http-fastcgi-temp-path=/var/tmp/tengine-2.1.0/fastcgi_temp 
-</span><span class='line'>--http-uwsgi-temp-path=/var/tmp/tengine-2.1.0/uwsgi_temp 
-</span><span class='line'>--http-scgi-temp-path=/var/tmp/tengine-2.1.0/cgi_temp 
-</span><span class='line'>--http-client-body-temp-path=/var/tmp/tengine-2.1.0/client_body_temp 
-</span><span class='line'>--http-log-path=/var/log/tengine-2.1.0/access.log 
-</span><span class='line'>--error-log-path=/var/log/tengine-2.1.0/error.log 
-</span><span class='line'>--with-ld-opt="-Wl,-rpath,$LUAJIT_LIB"
+</pre></td><td class='code'><pre><code class=''><span class='line'>shell&gt; wget http://tengine.taobao.org/download/tengine-2.1.2.tar.gz
+</span><span class='line'>shell&gt; tar zxvf tengine-2.1.2.tar.gz
+</span><span class='line'>shell&gt; cd tengine-2.1.2
+</span><span class='line'>shell&gt; ./configure --prefix=/usr/local/tengine-2.1.2 --with-http_lua_module --with-luajit-lib=/usr/local/luagit-2.0.4/lib/ --with-luajit-inc=/usr/local/luagit-2.0.4/include/luajit-2.0/ --pid-path=/var/run/nginx.pid --group=www --user=www --dso-path=/usr/local/tengine-2.1.2/modules --with-http_gzip_static_module --with-http_stub_status_module --with-poll_module --with-http_sub_module --with-http_realip_module --with-http_concat_module --http-proxy-temp-path=/var/tmp/tengine-2.1.2/proxy_temp --http-fastcgi-temp-path=/var/tmp/tengine-2.1.2/fastcgi_temp --http-uwsgi-temp-path=/var/tmp/tengine-2.1.2/uwsgi_temp --http-scgi-temp-path=/var/tmp/tengine-2.1.2/cgi_temp --http-client-body-temp-path=/var/tmp/tengine-2.1.2/client_body_temp --http-log-path=/var/log/tengine-2.1.2/access.log --error-log-path=/var/log/tengine-2.1.2/error.log --with-ld-opt="-Wl,-rpath,$LUAJIT_LIB,-ljemalloc"
 </span><span class='line'>
 </span><span class='line'>shell&gt; make&& make install
+</span><span class='line'>
+</span><span class='line'>shell&gt; ln -s /usr/local/tengine-2.1.2 /usr/local/nginx （创建软连接，可省略）
+</span><span class='line'>shell&gt; mkdir /var/tmp/tengine-2.1.2 -p           （创建所需的目录以及赋权）
+</span><span class='line'>shell&gt; chown -R www:www /var/tmp/tengine-2.1.2
+</span><span class='line'>
+</span><span class='line'>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>参数说明：由于Pcre是通过yum安装的，所以使用--with-pcre=/usr/include 指定。
+<pre><code>参数说明：由于Pcre是通过yum安装的，不用使用--with-pcre=/path/to/ 指定。
 lua是手动安装的需要配置参数
 --with-http_lua_module 
---with-luajit-lib=/usr/local/lib/ --with-luajit-inc=/usr/local/include/luajit-2.0/ 
---with-lua-inc=/usr/local/include/luajit-2.0/ --with-lua-lib=/usr/local/lib/
+--with-luajit-lib=/usr/local/luagit-2.0.4/lib/  --with-luajit-inc=/usr/local/luagit-2.0.4/include/luajit-2.0/ 
 
 --prefix安装的目录
 
@@ -390,7 +417,7 @@ libluajit-&lt;VERSION&gt;.so =&gt; not found
 
 
 
-<time class='entry-date' datetime='2015-12-30T14:28:58+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>2:28 pm</span></time>
+<time class='entry-date' datetime='2016-06-01T14:28:58+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2016</span></span> <span class='time'>2:28 pm</span></time>
       
 
 <span class="categories">
@@ -437,6 +464,8 @@ libluajit-&lt;VERSION&gt;.so =&gt; not found
         <a class="basic-alignment left" href="/blog/2015/12/30/ajax-backspace/" title="Previous Post: ajax分页时，点击第N页链接，回退会返回第一页解决方法">&laquo; ajax分页时，点击第N页链接，回退会返回第一页解决方法</a>
       
       
+        <a class="basic-alignment right" href="/blog/2017/01/18/jwt-authentication-api/" title="Next Post: 使用JWT来做后台认证api支撑（jwt-authentication-api）">使用JWT来做后台认证api支撑（jwt-authentication-api） &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -445,7 +474,7 @@ libluajit-&lt;VERSION&gt;.so =&gt; not found
   <section>
     <h1>Comments</h1>
     <div id="comments" aria-live="polite"><!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="/blog/2015/12/30/tengine-add-thirdparty-module-dynamic" data-title="使用tengine DSO 来动态编译安装第三方模块（Lua-nginx-module）" data-url="http://swmwlm.github.io/blog/2015/12/30/tengine-add-thirdparty-module-dynamic/"></div>
+	<div class="ds-thread" data-thread-key="/blog/2016/06/01/tengine-add-thirdparty-module-dynamic" data-title="使用tengine DSO 来动态编译安装第三方模块（Lua-nginx-module）" data-url="http://swmwlm.github.io/blog/2016/06/01/tengine-add-thirdparty-module-dynamic/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -491,6 +520,7 @@ var duoshuoQuery = {short_name:"swmwlm"};
 <li><a style="font-size: 100%" href="/tags/ajax/">ajax</a></li>
 <li><a style="font-size: 100%" href="/tags/chocolatey/">chocolatey</a></li>
 <li><a style="font-size: 100%" href="/tags/idea/">idea</a></li>
+<li><a style="font-size: 100%" href="/tags/java/">java</a></li>
 <li><a style="font-size: 100%" href="/tags/kkpager/">kkpager</a></li>
 <li><a style="font-size: 100%" href="/tags/mysql/">mysql</a></li>
 <li><a style="font-size: 100%" href="/tags/nginx/">nginx</a></li>
@@ -507,6 +537,7 @@ var duoshuoQuery = {short_name:"swmwlm"};
 <a style="font-size: 100%" href="/tags/ajax/">ajax</a>
 <a style="font-size: 100%" href="/tags/chocolatey/">chocolatey</a>
 <a style="font-size: 100%" href="/tags/idea/">idea</a>
+<a style="font-size: 100%" href="/tags/java/">java</a>
 <a style="font-size: 100%" href="/tags/kkpager/">kkpager</a>
 <a style="font-size: 100%" href="/tags/mysql/">mysql</a>
 <a style="font-size: 100%" href="/tags/nginx/">nginx</a>
@@ -519,18 +550,22 @@ var duoshuoQuery = {short_name:"swmwlm"};
 </section>
 <section>
   <h1>Category Cloud</h1>
-    <span id="category-tag-cloud"><a href='/blog/categories/ajax' style='font-size: 130.0%'>Ajax(1)</a> <a href='/blog/categories/git' style='font-size: 130.0%'>Git(1)</a> <a href='/blog/categories/java' style='font-size: 160.0%'>Java(2)</a> <a href='/blog/categories/linux' style='font-size: 160.0%'>Linux(2)</a> <a href='/blog/categories/mysql' style='font-size: 130.0%'>Mysql(1)</a> <a href='/blog/categories/nginx' style='font-size: 130.0%'>Nginx(1)</a> <a href='/blog/categories/octopress' style='font-size: 130.0%'>Octopress(1)</a> <a href='/blog/categories/windows' style='font-size: 160.0%'>Windows(2)</a> </span>
+    <span id="category-tag-cloud"><a href='/blog/categories/ajax' style='font-size: 130.0%'>Ajax(1)</a> <a href='/blog/categories/git' style='font-size: 130.0%'>Git(1)</a> <a href='/blog/categories/java' style='font-size: 160.0%'>Java(2)</a> <a href='/blog/categories/jwt' style='font-size: 130.0%'>Jwt(1)</a> <a href='/blog/categories/linux' style='font-size: 160.0%'>Linux(2)</a> <a href='/blog/categories/mysql' style='font-size: 130.0%'>Mysql(1)</a> <a href='/blog/categories/nginx' style='font-size: 130.0%'>Nginx(1)</a> <a href='/blog/categories/octopress' style='font-size: 130.0%'>Octopress(1)</a> <a href='/blog/categories/windows' style='font-size: 160.0%'>Windows(2)</a> </span>
 </section>
 <section>
   <h1>Top Categories</h1>
-    <ul id="top-category-list"><li><a href='/blog/categories/linux'>Linux (2)</a></li><li><a href='/blog/categories/java'>Java (2)</a></li><li><a href='/blog/categories/windows'>Windows (2)</a></li><li><a href='/blog/categories/git'>Git (1)</a></li><li><a href='/blog/categories/octopress'>Octopress (1)</a></li><li><a href='/blog/categories/mysql'>Mysql (1)</a></li><li><a href='/blog/categories/ajax'>Ajax (1)</a></li><li><a href='/blog/categories/nginx'>Nginx (1)</a></li></ul>
+    <ul id="top-category-list"><li><a href='/blog/categories/linux'>Linux (2)</a></li><li><a href='/blog/categories/java'>Java (2)</a></li><li><a href='/blog/categories/windows'>Windows (2)</a></li><li><a href='/blog/categories/git'>Git (1)</a></li><li><a href='/blog/categories/mysql'>Mysql (1)</a></li><li><a href='/blog/categories/octopress'>Octopress (1)</a></li><li><a href='/blog/categories/ajax'>Ajax (1)</a></li><li><a href='/blog/categories/nginx'>Nginx (1)</a></li><li><a href='/blog/categories/jwt'>Jwt (1)</a></li></ul>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2015/12/30/tengine-add-thirdparty-module-dynamic/">使用tengine DSO 来动态编译安装第三方模块（Lua-nginx-module）</a>
+        <a href="/blog/2017/01/18/jwt-authentication-api/">使用JWT来做后台认证api支撑（jwt-authentication-api）</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/01/tengine-add-thirdparty-module-dynamic/">使用tengine DSO 来动态编译安装第三方模块（Lua-nginx-module）</a>
       </li>
     
       <li class="post">
@@ -543,10 +578,6 @@ var duoshuoQuery = {short_name:"swmwlm"};
     
       <li class="post">
         <a href="/blog/2015/12/18/chocolatey/">利用Chocolatey快速在Windows下搭建一个开发环境</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/12/17/git/">Git命令</a>
       </li>
     
   </ul>
@@ -612,7 +643,7 @@ var duoshuoQuery = {short_name:"swmwlm"};
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Topking -
+  Copyright &copy; 2017 - Topking -
   <span class="credit">Powered by <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256815831'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1256815831%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script></span>
 </p>
 <div id="full" style="width:0px; height:0px; position:fixed; right:180px; bottom:150px; z-index:100; text-align:center; background-color:transparent; cursor:pointer;">

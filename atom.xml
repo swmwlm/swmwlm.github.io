@@ -4,7 +4,7 @@
   <title><![CDATA[Topking's Blog]]></title>
   <link href="http://swmwlm.github.io/atom.xml" rel="self"/>
   <link href="http://swmwlm.github.io/"/>
-  <updated>2016-06-01T16:30:20+08:00</updated>
+  <updated>2017-01-18T11:26:03+08:00</updated>
   <id>http://swmwlm.github.io/</id>
   <author>
     <name><![CDATA[Topking]]></name>
@@ -14,10 +14,83 @@
 
   
   <entry>
+    <title type="html"><![CDATA[使用JWT来做后台认证api支撑（jwt-authentication-api）]]></title>
+    <link href="http://swmwlm.github.io/blog/2017/01/18/jwt-authentication-api/"/>
+    <updated>2017-01-18T11:08:58+08:00</updated>
+    <id>http://swmwlm.github.io/blog/2017/01/18/jwt-authentication-api</id>
+    <content type="html"><![CDATA[<p>为移动端api做认证时，通过token的方式来做认证。使用jwt规范，具体实现如（<a href="https://github.com/auth0/java-jwt">请参考java-jwt文档</a>）；
+总体流程：用户登录后，签发token给客户端，并保存该token到缓存jwtCache中，客户端每次访问api时，请求头中带token过来，判断该token是否是签发过的token，若是运行访问，不是，则拒绝访问；</p>
+
+<!--more-->
+
+
+<pre><code>遇到的问题：
+
+        1.单使用jwt，当到过期时间时，用户继续访问会被强制性退出。
+        2.当用户在web端修改了用户密码，或者禁止用户登录，怎样判定该token失效，让用户退出登录；
+
+解决方法： 
+
+        1.与ehcache集成，设定缓存的失效时间与过期存活时间。
+        2.用户修改密码或者禁止登录时，对该用户的jwtCache缓存进行清除；拦截器中判定该token是否存在 于缓存该用户的集合中，若存在，则有效，不存在则无效，退出登录；
+</code></pre>
+
+<h2>1. 登录成功，生成token:</h2>
+
+<pre><code>1.1 token中payload的自定义数据为（userId，签发日期,随机数），随机数是为了同一用户在不同设备同时登录时（或者并发之类），使得签发的token做唯一性处理；
+
+1.2 secret定义为配置文件的jwtSecret:uuid；
+
+1.3 把生成的token存放在缓存jwtCache中；其中jwtCache缓存定义的过期时间为十四天，过期还可以存活的时间设置为半小时；缓存存放时以userId为key，value值为Set&lt;String&gt;类型的token集合；
+
+1.4 把生成的 token 返回给客户端调用者；
+</code></pre>
+
+<h2>2. 当用户的密码被修改或者loginFlag=0，从jwtCache缓存中清除该userId对应的值；</h2>
+
+<h2>3. 拦截器校验token是否有效；我们说登录成功后，签发出去的token都是永久可校验通过的；</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>try{
+</span><span class='line'>      3.1 获取客户端请求过来的token=request.getHeader("token");
+</span><span class='line'>
+</span><span class='line'>      3.2 校验token（JWT jwt = verifier.verify(token)）;
+</span><span class='line'>
+</span><span class='line'>          3.2.1 获取当前token中的userId,签发日期；
+</span><span class='line'>                  Set&lt;String&gt; tokens=jwtCache.get(userId);
+</span><span class='line'>                  判断当前用户所签发的所有tokens中是否存在该token，若不存在，表示该token已过期失效，禁止访问api；
+</span><span class='line'>
+</span><span class='line'>          3.2.2 若存在该token，表示该token未过期，允许访问api；
+</span><span class='line'>
+</span><span class='line'>  }catch(JWTVerificationException e){
+</span><span class='line'>  ------------------------
+</span><span class='line'>      3.3 INVALID:校验失败的token，禁止继续访问api
+</span><span class='line'>  }</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[使用tengine DSO 来动态编译安装第三方模块（Lua-nginx-module）]]></title>
-    <link href="http://swmwlm.github.io/blog/2015/12/30/tengine-add-thirdparty-module-dynamic/"/>
-    <updated>2015-12-30T14:28:58+08:00</updated>
-    <id>http://swmwlm.github.io/blog/2015/12/30/tengine-add-thirdparty-module-dynamic</id>
+    <link href="http://swmwlm.github.io/blog/2016/06/01/tengine-add-thirdparty-module-dynamic/"/>
+    <updated>2016-06-01T14:28:58+08:00</updated>
+    <id>http://swmwlm.github.io/blog/2016/06/01/tengine-add-thirdparty-module-dynamic</id>
     <content type="html"><![CDATA[<p>在使用nginx时，需要增加或者改动一个模块，都需要重新编译nginx文件。最近使用了tengine，它提供的DSO工具来动态加载模块。本例测试需要动态增加lua-nginx模块，记录一下安装过程。</p>
 
 <!--more-->
@@ -131,16 +204,78 @@ LuaGIT官方地址: http://luajit.org/
 </span><span class='line'>tar -zxvf LuaJIT-2.0.4.tar.gz 
 </span><span class='line'>cd LuaJIT-2.0.4
 </span><span class='line'>make
-</span><span class='line'>make install
-</span><span class='line'>ln -s /usr/local/lib/libluajit-5.1.so.2 /lib64/libluajit-5.1.so.2
-</span><span class='line'>export LUAJIT_LIB=/usr/local/lib
-</span><span class='line'>export LUAJIT_INC=/usr/local/include/luajit-2.0/</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>make install                                                       (也可以使用make install PREFIX=/usr/local/luagit-2.0.4)
+</span><span class='line'>ln -s /usr/local/lib/libluajit-5.1.so.2 /lib64/libluajit-5.1.so.2    (ln -s /usr/local/luagit-2.0.4/lib/libluajit-5.1.so.2 /lib64/libluajit-5.1.so.2)
+</span><span class='line'>export LUAJIT_LIB=/usr/local/lib                                       (export LUAJIT_LIB=/usr/local/luagit-2.0.4/lib)
+</span><span class='line'>export LUAJIT_INC=/usr/local/include/luajit-2.0/                   (export LUAJIT_INC=/usr/local/luagit-2.0.4/include/luajit-2.0/)</span></code></pre></td></tr></table></div></figure>
 
 
 <pre><code>因为安装在缺省路径，所以LuaJIT对应的lib，include均在/usr/local目录里。
 </code></pre>
 
 <blockquote><p><a href="http://huoding.com/2012/08/31/156">请参考博文</a></p></blockquote>
+
+<p>创建www用户和组:</p>
+
+<pre><code>sudo groupadd www
+sudo useradd www -g www -s /sbin/nologin -M 
+</code></pre>
+
+<p>另外，可以安装jemalloc，优化内存管理</p>
+
+<pre><code>wget http://www.canonware.com/download/jemalloc/jemalloc-3.6.0.tar.bz2
+tar xjf jemalloc-3.6.0.tar.bz2
+cd jemalloc-3.6.0
+./configure
+make &amp;&amp; make install
+echo '/usr/local/lib' &gt; /etc/ld.so.conf.d/local.conf
+ldconfig
+</code></pre>
+
+<h4>7.3.1 使用jemalloc优化MySQL</h4>
+
+<pre><code>方法1.
+
+MySQL/MaridDB 5.5编译方法，cmake预编译时加上下面参数
+
+-DCMAKE_EXE_LINKER_FLAGS="-ljemalloc" -DWITH_SAFEMALLOC=OFF
+
+方法2.
+
+修改mysqld_safe直接加载:
+
+查找文件 /usr/local/mysql/bin/mysqld_safe
+在#executing mysqld_safe 下面加上
+
+LD_PRELOAD=/usr/local/lib/libjemalloc.so
+
+重新启动MYSQL
+
+使用下面代码自动修改mysqld_safe文件
+
+sed -i 's@executing mysqld_safe@executing mysqld_safe\nexport LD_PRELOAD=/usr/local/lib/libjemalloc.so@' /usr/local/mysql/bin/mysqld_safe
+service mysqld restart
+</code></pre>
+
+<h4>7.3.2 使用jemalloc优化Nginx</h4>
+
+<pre><code>编译NGINX时添加以下参数:
+--with-ld-opt="-ljemalloc"
+
+具体实现：
+
+cd lnmp/src/nginx-1.4.2
+make clean
+./configure --prefix=/usr/local/nginx --user=www --group=www \  
+--with-http_stub_status_module --with-http_ssl_module --with-http_flv_module \ 
+--with-http_gzip_static_module --with-ld-opt="-ljemalloc" (或者 --with-jemalloc)
+make &amp;&amp; make install
+</code></pre>
+
+<p>验证 jemalloc 是否运行:</p>
+
+<pre><code>lsof -n | grep jemalloc
+</code></pre>
 
 <h3>7.4 编译Tengine</h3>
 
@@ -156,60 +291,25 @@ LuaGIT官方地址: http://luajit.org/
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>shell&gt; wget http://tengine.taobao.org/download/tengine-&lt;VERSION&gt;.tar.gz
-</span><span class='line'>shell&gt; tar zxvf tengine-&lt;VERSION&gt;.tar.gz
-</span><span class='line'>shell&gt; cd tengine-&lt;VERSION&gt;
-</span><span class='line'>shell&gt; ./configure --prefix=/usr/local/tengine-2.1.0 
-</span><span class='line'>--with-pcre=/usr/include
-</span><span class='line'>--with-http_lua_module
-</span><span class='line'>--with-luajit-lib=/usr/local/lib/
-</span><span class='line'>--with-luajit-inc=/usr/local/include/luajit-2.0/ 
-</span><span class='line'>--with-lua-inc=/usr/local/include/luajit-2.0/
-</span><span class='line'>--with-lua-lib=/usr/local/lib/
-</span><span class='line'>--pid-path=/var/run/nginx.pid 
-</span><span class='line'>--group=www --user=www
-</span><span class='line'>--dso-path=/usr/local/tengine-2.1.0/modules 
-</span><span class='line'>--with-http_gzip_static_module 
-</span><span class='line'>--with-http_stub_status_module 
-</span><span class='line'>--with-poll_module  
-</span><span class='line'>--with-http_sub_module
-</span><span class='line'>--with-http_realip_module
-</span><span class='line'>--with-http_concat_module --with-http_lua_module  
-</span><span class='line'>--http-proxy-temp-path=/var/tmp/tengine-2.1.0/proxy_temp 
-</span><span class='line'>--http-fastcgi-temp-path=/var/tmp/tengine-2.1.0/fastcgi_temp 
-</span><span class='line'>--http-uwsgi-temp-path=/var/tmp/tengine-2.1.0/uwsgi_temp 
-</span><span class='line'>--http-scgi-temp-path=/var/tmp/tengine-2.1.0/cgi_temp 
-</span><span class='line'>--http-client-body-temp-path=/var/tmp/tengine-2.1.0/client_body_temp 
-</span><span class='line'>--http-log-path=/var/log/tengine-2.1.0/access.log 
-</span><span class='line'>--error-log-path=/var/log/tengine-2.1.0/error.log 
-</span><span class='line'>--with-ld-opt="-Wl,-rpath,$LUAJIT_LIB"
+</pre></td><td class='code'><pre><code class=''><span class='line'>shell&gt; wget http://tengine.taobao.org/download/tengine-2.1.2.tar.gz
+</span><span class='line'>shell&gt; tar zxvf tengine-2.1.2.tar.gz
+</span><span class='line'>shell&gt; cd tengine-2.1.2
+</span><span class='line'>shell&gt; ./configure --prefix=/usr/local/tengine-2.1.2 --with-http_lua_module --with-luajit-lib=/usr/local/luagit-2.0.4/lib/ --with-luajit-inc=/usr/local/luagit-2.0.4/include/luajit-2.0/ --pid-path=/var/run/nginx.pid --group=www --user=www --dso-path=/usr/local/tengine-2.1.2/modules --with-http_gzip_static_module --with-http_stub_status_module --with-poll_module --with-http_sub_module --with-http_realip_module --with-http_concat_module --http-proxy-temp-path=/var/tmp/tengine-2.1.2/proxy_temp --http-fastcgi-temp-path=/var/tmp/tengine-2.1.2/fastcgi_temp --http-uwsgi-temp-path=/var/tmp/tengine-2.1.2/uwsgi_temp --http-scgi-temp-path=/var/tmp/tengine-2.1.2/cgi_temp --http-client-body-temp-path=/var/tmp/tengine-2.1.2/client_body_temp --http-log-path=/var/log/tengine-2.1.2/access.log --error-log-path=/var/log/tengine-2.1.2/error.log --with-ld-opt="-Wl,-rpath,$LUAJIT_LIB,-ljemalloc"
 </span><span class='line'>
 </span><span class='line'>shell&gt; make&& make install
+</span><span class='line'>
+</span><span class='line'>shell&gt; ln -s /usr/local/tengine-2.1.2 /usr/local/nginx （创建软连接，可省略）
+</span><span class='line'>shell&gt; mkdir /var/tmp/tengine-2.1.2 -p           （创建所需的目录以及赋权）
+</span><span class='line'>shell&gt; chown -R www:www /var/tmp/tengine-2.1.2
+</span><span class='line'>
+</span><span class='line'>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>参数说明：由于Pcre是通过yum安装的，所以使用--with-pcre=/usr/include 指定。
+<pre><code>参数说明：由于Pcre是通过yum安装的，不用使用--with-pcre=/path/to/ 指定。
 lua是手动安装的需要配置参数
 --with-http_lua_module 
---with-luajit-lib=/usr/local/lib/ --with-luajit-inc=/usr/local/include/luajit-2.0/ 
---with-lua-inc=/usr/local/include/luajit-2.0/ --with-lua-lib=/usr/local/lib/
+--with-luajit-lib=/usr/local/luagit-2.0.4/lib/  --with-luajit-inc=/usr/local/luagit-2.0.4/include/luajit-2.0/ 
 
 --prefix安装的目录
 
@@ -1403,22 +1503,22 @@ git commit -m "some comment"
 <p>互联网有一张特别棒的Git命令思维导图，特拿来分享，感谢原作者:</p>
 
 <!-- -*- html -*- -->
-<a href='http://swmwlm.github.io/images/git/git-operate.png' style="text-decoration: none" id="image-10"><img src="http://swmwlm.github.io/images/git/resized_git-operate.png" alt="Click me." class="center"/></a>
-  <div id="image-dialog-10" style="display:none; overflow:hidden;" class="noTitle">
+<a href='http://swmwlm.github.io/images/git/git-operate.png' style="text-decoration: none" id="image-73"><img src="http://swmwlm.github.io/images/git/resized_git-operate.png" alt="Click me." class="center"/></a>
+  <div id="image-dialog-73" style="display:none; overflow:hidden;" class="noTitle">
     <div class="image-caption" align="center">
       <div class="capt-left">棒棒的Git.</div>
       <div class="capt-right">
         <a href="http://swmwlm.github.io/images/git/git-operate.png">permalink</a>
       </div>
     </div>
-    <div id="proxy10" align="center" class="proxy-container">
-      <img class="image-drag" src="http://swmwlm.github.io/images/logo.jpg" id="full_image-10" />
+    <div id="proxy73" align="center" class="proxy-container">
+      <img class="image-drag" src="http://swmwlm.github.io/images/logo.jpg" id="full_image-73" />
     </div>
   </div>
   <script type="text/javascript">
     jQuery(document).ready(function() {
         jQuery.imgpop({
-          id: "10",
+          id: "73",
           full_image: "/images/git/git-operate.png",
           full_width: 1759,
           full_height: 3162,

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://swmwlm.github.io/blog/2015/12/30/tengine-add-thirdparty-module-dynamic/</loc>
-    <lastmod>2015-12-30T14:28:58+08:00</lastmod>
+    <loc>http://swmwlm.github.io/blog/2017/01/18/jwt-authentication-api/</loc>
+    <lastmod>2017-01-18T11:08:58+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/blog/2016/06/01/tengine-add-thirdparty-module-dynamic/</loc>
+    <lastmod>2016-06-01T14:28:58+08:00</lastmod>
   </url>
   <url>
     <loc>http://swmwlm.github.io/blog/2015/12/30/ajax-backspace/</loc>
@@ -101,6 +105,9 @@
     <loc>http://swmwlm.github.io/tags/tengine/</loc>
   </url>
   <url>
+    <loc>http://swmwlm.github.io/tags/java/</loc>
+  </url>
+  <url>
     <loc>http://swmwlm.github.io/blog/categories/linux/</loc>
   </url>
   <url>
@@ -123,5 +130,8 @@
   </url>
   <url>
     <loc>http://swmwlm.github.io/blog/categories/nginx/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/blog/categories/jwt/</loc>
   </url>
 </urlset>
