@@ -60,10 +60,37 @@
     <loc>http://swmwlm.github.io/archives/tags.html</loc>
   </url>
   <url>
-    <loc>http://swmwlm.github.io/tags/octopress/</loc>
+    <loc>http://swmwlm.github.io/blog/categories/linux/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/blog/categories/java/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/blog/categories/windows/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/blog/categories/octopress/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/blog/categories/git/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/blog/categories/mysql/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/blog/categories/ajax/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/blog/categories/nginx/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/blog/categories/jwt/</loc>
   </url>
   <url>
     <loc>http://swmwlm.github.io/tags/seo/</loc>
+  </url>
+  <url>
+    <loc>http://swmwlm.github.io/tags/octopress/</loc>
   </url>
   <url>
     <loc>http://swmwlm.github.io/tags/idea/</loc>
@@ -108,39 +135,12 @@
     <loc>http://swmwlm.github.io/tags/java/</loc>
   </url>
   <url>
-    <loc>http://swmwlm.github.io/blog/categories/linux/</loc>
-  </url>
-  <url>
-    <loc>http://swmwlm.github.io/blog/categories/java/</loc>
-  </url>
-  <url>
-    <loc>http://swmwlm.github.io/blog/categories/windows/</loc>
-  </url>
-  <url>
-    <loc>http://swmwlm.github.io/blog/categories/octopress/</loc>
-  </url>
-  <url>
-    <loc>http://swmwlm.github.io/blog/categories/git/</loc>
-  </url>
-  <url>
-    <loc>http://swmwlm.github.io/blog/categories/mysql/</loc>
-  </url>
-  <url>
-    <loc>http://swmwlm.github.io/blog/categories/ajax/</loc>
-  </url>
-  <url>
-    <loc>http://swmwlm.github.io/blog/categories/nginx/</loc>
-  </url>
-  <url>
-    <loc>http://swmwlm.github.io/blog/categories/jwt/</loc>
-  </url>
-  <url>
-    <loc>http://swmwlm.github.io/cv/cv.html</loc>
-    <lastmod>2017-02-09T09:33:01+08:00</lastmod>
+    <loc>http://swmwlm.github.io/cv/example.html</loc>
+    <lastmod>2017-02-09T09:33:12+08:00</lastmod>
   </url>
   <url>
     <loc>http://swmwlm.github.io/cv/index.html</loc>
-    <lastmod>2017-02-09T09:33:12+08:00</lastmod>
+    <lastmod>2017-02-09T09:33:01+08:00</lastmod>
   </url>
   <url>
     <loc>http://swmwlm.github.io/cv/static/fonts/demo.html</loc>
